@@ -1,0 +1,10 @@
+class FaqTexts
+{
+  static const MINING_HOW_DO_THESE = "A mining device uses powerful processors to solve the complex puzzles used to secure and validate transactions on a blockchain. By providing some of the global hash power needed, you receive rewards and get paid in crypto-currency. Then you can choose to keep coins or exchange it for other coins or currency.";
+  static const MINING_CAN_ANYONE = "A mining device uses powerful processors to solve the complex puzzles used to secure and validate transactions on a blockchain. By providing some of the global hash power needed, you receive rewards and get paid in crypto-currency. Then you can choose to keep coins or exchange it for other coins or currency.";
+  static const MINING_WHAT_ARE = "A mining device uses powerful processors to solve the complex puzzles used to secure and validate transactions on a blockchain. By providing some of the global hash power needed, you receive rewards and get paid in crypto-currency. Then you can choose to keep coins or exchange it for other coins or currency.";
+  static const MINING_SAFE = "A mining device uses powerful processors to solve the complex puzzles used to secure and validate transactions on a blockchain. By providing some of the global hash power needed, you receive rewards and get paid in crypto-currency. Then you can choose to keep coins or exchange it for other coins or currency.";
+  static const MINING_CRYPTOCURRENCY = "A mining device uses powerful processors to solve the complex puzzles used to secure and validate transactions on a blockchain. By providing some of the global hash power needed, you receive rewards and get paid in crypto-currency. Then you can choose to keep coins or exchange it for other coins or currency.";
+  static const MINING_WHYIS = "A mining device uses powerful processors to solve the complex puzzles used to secure and validate transactions on a blockchain. By providing some of the global hash power needed, you receive rewards and get paid in crypto-currency. Then you can choose to keep coins or exchange it for other coins or currency.";
+ 
+}
