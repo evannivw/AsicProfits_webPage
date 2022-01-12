@@ -13,10 +13,8 @@ import 'package:json_annotation/json_annotation.dart';
 /// the star denotes the source file name.
 part 'MinerModel.g.dart';
 
-
 @JsonSerializable(explicitToJson: true)
-class MinerModel
-{
+class MinerModel {
   String _model = "";
   String _color = "yellow";
   String _release = "Coming soon";
@@ -40,69 +38,70 @@ class MinerModel
   String get noise => _noise;
   String get algo => _algo;
   String get visitLink => _visitLink;
-
+  DateTime? date;
 
   ///Set secction
-  set model(String value)
-  {
+  set model(String value) {
     _model = value;
   }
-  set color(String value)
-  {
+
+  set color(String value) {
     _color = value;
   }
-  set release(String value)
-  {
+
+  set release(String value) {
     _release = value;
   }
-  set hashrate(String value,)
-  {
+
+  set hashrate(
+    String value,
+  ) {
     _hashrate = value;
   }
-  set hashrateUnits(String value,)
-  {
+
+  set hashrateUnits(
+    String value,
+  ) {
     _hashrateUnits = value;
   }
-  set power(String value)
-  {
+
+  set power(String value) {
     _power = value;
   }
-  set noise(String value)
-  {
+
+  set noise(String value) {
     _noise = value;
   }
-  set algo(String value)
-  {
+
+  set algo(String value) {
     _algo = value;
   }
-  set visitLink(String value)
-  {
+
+  set visitLink(String value) {
     _visitLink = value;
   }
 
-
-  factory MinerModel.fromJson(Map<String, dynamic> json) => _$MinerModelFromJson(json);
+  factory MinerModel.fromJson(Map<String, dynamic> json) =>
+      _$MinerModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MinerModelToJson(this);
 
-
   ///Init secction
-  MinerModel(
-    {
-      String model = "",
-      String color = "yellow",
-      String release = "Coming soon",
-      String hashrate = "0",
-      String hasrateUnits = "H/s",
-      String power = "0",
-      String noise = "0",
-      String algo = "EtHash",
-      String visitLink = "",
-      List<MinableCoinModel> minableCoinList = const [],
-      List<WhereToBuyModel> whereToBuyList = const [],
-      List<MiningPoolModel> miningPoolList = const [],
-    }
-  ){
+  MinerModel({
+    String model = "",
+    String color = "yellow",
+    String release = "Coming soon",
+    String hashrate = "0",
+    String hasrateUnits = "H/s",
+    String power = "0",
+    String noise = "0",
+    String algo = "EtHash",
+    String visitLink = "",
+    List<MinableCoinModel> minableCoinList = const [],
+    List<WhereToBuyModel> whereToBuyList = const [],
+    List<MiningPoolModel> miningPoolList = const [],
+    this.date,
+  }) {
     _model = model;
     _color = color;
     _release = release;
@@ -143,7 +142,5 @@ class MinerModel
     algo = json['algo'] ?? "";
     visitLink = json['visitLink'] ?? "";
   }*/
-
-
 
 }

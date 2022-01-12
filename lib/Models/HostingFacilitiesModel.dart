@@ -9,10 +9,8 @@ import 'package:json_annotation/json_annotation.dart';
 /// the star denotes the source file name.
 part 'HostingFacilitiesModel.g.dart';
 
-
 @JsonSerializable(explicitToJson: true)
-class HostingFacilitiesModel
-{
+class HostingFacilitiesModel {
   String _id = "";
   String _namePlace = "";
   String _nameState = "";
@@ -24,7 +22,7 @@ class HostingFacilitiesModel
   String _energy = "";
   String imageURL = "";
   String visitLink = "";
-
+  DateTime? date;
 
   ///Get secction
   String get namePlace => _namePlace;
@@ -36,65 +34,60 @@ class HostingFacilitiesModel
   String get MQO => _MQO;
   String get energy => _energy;
   String get id => _id;
-  
-  
+
   ///Set secction
-  set namePlace(String value)
-  {
+  set namePlace(String value) {
     _namePlace = value;
   }
-  set nameState(String value)
-  {
+
+  set nameState(String value) {
     _nameState = value;
   }
-  set nameCountry(String value)
-  {
+
+  set nameCountry(String value) {
     _nameCountry = value;
   }
-  set status(String value)
-  {
+
+  set status(String value) {
     _status = value;
   }
-  set price(String value)
-  {
+
+  set price(String value) {
     _price = value;
   }
-  set security(String value)
-  {
+
+  set security(String value) {
     _security = value;
   }
-  set MQO(String value)
-  {
+
+  set MQO(String value) {
     _MQO = value;
   }
-  set energy(String value)
-  {
+
+  set energy(String value) {
     _energy = value;
   }
-  
 
-
-  factory HostingFacilitiesModel.fromJson(Map<String, dynamic> json) => _$HostingFacilitiesModelFromJson(json);
+  factory HostingFacilitiesModel.fromJson(Map<String, dynamic> json) =>
+      _$HostingFacilitiesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$HostingFacilitiesModelToJson(this);
 
-
   ///Init secction
-  HostingFacilitiesModel(
-    {
-      String id = "",
-      String namePlace = "",
-      String nameState = "",
-      String nameCountry = "",
-      String status = "Available",
-      String price = "",
-      String security = "",
-      String MQO = "",
-      String energy = "Green",
-      String imageURL = "",
-      String visitLink = "",
-    }
-  ){
+  HostingFacilitiesModel({
+    String id = "",
+    String namePlace = "",
+    String nameState = "",
+    String nameCountry = "",
+    String status = "Available",
+    String price = "",
+    String security = "",
+    String MQO = "",
+    String energy = "Green",
+    String imageURL = "",
+    String visitLink = "",
+    this.date,
+  }) {
     _id = id;
     _namePlace = namePlace;
     _nameState = nameState;
