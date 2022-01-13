@@ -1,4 +1,3 @@
-
 import 'package:asic_miner_website/Helpers/UIHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -9,28 +8,26 @@ import 'package:json_annotation/json_annotation.dart';
 part 'WhereToBuyModel.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class WhereToBuyModel
-{
-  String id = "";
+class WhereToBuyModel {
   String imageURL = "";
   String nameSeller = "";
   String subtitle = "";
-  String country = "";
+  String countryImageURL = "";
   String price = "";
   String available = "";
   String moreInfo = "";
   String shipping = "";
   String visitLink = "";
 
-  factory WhereToBuyModel.fromJson(Map<String, dynamic> json) => _$WhereToBuyModelFromJson(json);
+  factory WhereToBuyModel.fromJson(Map<String, dynamic> json) =>
+      _$WhereToBuyModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$WhereToBuyModelToJson(this);
 
   WhereToBuyModel({
-    this.id = "",
     this.nameSeller = "",
     this.subtitle = "",
-    this.country = "",
+    this.countryImageURL = "",
     this.price = "",
     this.available = "",
     this.moreInfo = "",

@@ -8,7 +8,6 @@ part of 'MiningPoolModel.dart';
 
 MiningPoolModel _$MiningPoolModelFromJson(Map<String, dynamic> json) =>
     MiningPoolModel(
-      id: json['id'] as String? ?? "",
       imageURL: json['imageURL'] as String? ?? "",
       name: json['name'] as String? ?? "",
       webPage: json['webPage'] as String? ?? "",
@@ -23,7 +22,6 @@ MiningPoolModel _$MiningPoolModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MiningPoolModelToJson(MiningPoolModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'imageURL': instance.imageURL,
       'name': instance.name,
       'webPage': instance.webPage,

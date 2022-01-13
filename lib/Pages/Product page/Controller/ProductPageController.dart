@@ -12,7 +12,11 @@ class ProductPageController {
       print(respuesta.error.toString());
       return;
     }
-    hostingFacilitiesList = respuesta.listValue!;
-    print("Hosting facilities: " + hostingFacilitiesList.length.toString());
+    hostingFacilitiesList = respuesta.listValue!
+        .map((e) => HostingFacilitiesModel.fromJson(e))
+        .toList();
+    if (hostingFacilitiesList.length > 6) {
+      hostingFacilitiesList.removeRange(6, hostingFacilitiesList.length);
+    }
   }
 }

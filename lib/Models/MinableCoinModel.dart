@@ -1,4 +1,3 @@
-
 import 'package:asic_miner_website/Helpers/UIHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -9,17 +8,15 @@ import 'package:json_annotation/json_annotation.dart';
 part 'MinableCoinModel.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class MinableCoinModel
-{
-  String id = "";
+class MinableCoinModel {
   String imageURL = "";
 
-  factory MinableCoinModel.fromJson(Map<String, dynamic> json) => _$MinableCoinModelFromJson(json);
+  factory MinableCoinModel.fromJson(Map<String, dynamic> json) =>
+      _$MinableCoinModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MinableCoinModelToJson(this);
 
   MinableCoinModel({
-    this.id = "",
     this.imageURL = "",
   });
 }

@@ -12,6 +12,7 @@ import 'package:asic_miner_website/Helpers/WindowHelper.dart';
 import 'package:asic_miner_website/Models/HostingFacilitiesModel.dart';
 import 'package:asic_miner_website/Models/MinableCoinModel.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
+import 'package:asic_miner_website/Pages/Product%20page/Controller/ProductPageController.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Bottom%20Widgets/BotonInfoWidget.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Bottom%20Widgets/WeeklyAsicWidget2.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Buying%20Options/BuyingOpportunitiesWidget.dart';
@@ -22,42 +23,59 @@ import 'package:flutter/material.dart';
 import 'MiningPoolsCard.dart';
 import 'WhereToBuyCard.dart';
 
-class ProductPageDesktopView extends StatefulWidget
-{
-  ProductPageDesktopView({@required currentMiner, @required currentHostingFacilities});
+class ProductPageDesktopView extends StatefulWidget {
+  ProductPageDesktopView(
+      {@required this.currentMiner,
+      @required this.currentHostingFacilities = const [],
+      @required controller});
 
-  final MinerModel currentMiner = MinerModel();
-  final List<HostingFacilitiesModel> currentHostingFacilities = [];
-
+  MinerModel? currentMiner;
+  List<HostingFacilitiesModel> currentHostingFacilities;
+  final ProductPageController controller = ProductPageController();
   @override
   State<StatefulWidget> createState() {
     return _ProductPageDesktopView();
   }
-  
 }
 
-class _ProductPageDesktopView extends State<ProductPageDesktopView>
-{
+class _ProductPageDesktopView extends State<ProductPageDesktopView> {
+  MinerModel _minerModel = MinerModel();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _minerModel = widget.currentMiner ?? MinerModel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      
       children: [
         Row(
           children: [
-            MediumText("Miners", color: DocColors.gray,),
-            Icon(Icons.arrow_right,size: 15,color: DocColors.white.getValue(),),
-            MediumText(widget.currentMiner.model,),
+            MediumText(
+              "Miners",
+              color: DocColors.gray,
+            ),
+            Icon(
+              Icons.arrow_right,
+              size: 15,
+              color: DocColors.white.getValue(),
+            ),
+            MediumText(
+              _minerModel.model,
+            ),
           ],
         ),
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 1140),
           child: mainView(),
         ),
-        
 
         //Bottom widgets
-        VerticalSpacing(height: 100,),
+        VerticalSpacing(
+          height: 100,
+        ),
         WeeklyAsicWidget2(),
         BuyingOpportunitiesWidget(),
         BottomInfoWidget()
@@ -65,87 +83,95 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
     );
   }
 
-  Widget mainView()
-  {
+  Widget mainView() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SpecsRowWidget(),
         whereToBuyWidget(),
-        VerticalSpacing(height: 30,),
+        VerticalSpacing(
+          height: 30,
+        ),
         miningPoolsWidget(),
       ],
     );
   }
 
   //All pf the gpu specs
-  Widget SpecsRowWidget()
-  {
+  Widget SpecsRowWidget() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
         width: 1130,
-        margin: EdgeInsets.only(top:50,bottom: 50),
+        margin: EdgeInsets.only(top: 50, bottom: 50),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             //Specs
             Container(
-              width: 554,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CardWidget(
-                    width: 554,
-                    height: 396,
-                    color: DocColors(Color(0xFFFFFFFF).withOpacity(0.03)),
-                    margin: EdgeInsets.zero,
-                    child: Container(
-                      width: 446,
-                      height: 336,
-                      child: Image.asset('assets/images/miner.png'),
+                width: 554,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CardWidget(
+                      width: 554,
+                      height: 396,
+                      color: DocColors(Color(0xFFFFFFFF).withOpacity(0.03)),
+                      margin: EdgeInsets.zero,
+                      child: Container(
+                        width: 446,
+                        height: 336,
+                        child: Image.network(_minerModel.imageURL),
+                      ),
                     ),
-                  ),
-                  VerticalSpacing(height: 5,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      gpuCardButton(SVGWidgets.chatIcon),
-                      gpuCardButton(SVGWidgets.twitterIcon),
-                      gpuCardButton(SVGWidgets.mailIcon),
-                      gpuCardButton(SVGWidgets.redditIcon),
-                      gpuCardButton(SVGWidgets.shareIcon),
-                    ],
-                  ),
-                  VerticalSpacing(height: 40,),
-                  BoldText("Specs",fontSize: FontSizes.xxl,),
-                  VerticalSpacing(),
-                  
-                  //Specs
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      specsText("Manufacturer", "Bitmain"),
-                      specsText("Model", widget.currentMiner.model),
-                      specsText("Release", widget.currentMiner.release,color: DocColors.green),
-                      specsText("Size", "195 x 290 x 400mm"),
-                      specsText("Weight", "14200g"),
-                      specsText("Noise level", "${widget.currentMiner.noise}db"),
-                      specsText("Fan(s)", "4"),
-                      specsText("Power", "${widget.currentMiner.power}W",icon: SVGWidgets.powerIcon),
-                      specsText("Voltage", "12V"),
-                      specsText("Interface", "Ethernet"),
-                      specsText("Temperature", "5 - 45 °C",icon: SVGWidgets.temperatureIcon),
-                      specsText("Humidity", "5 - 95 %"),
-                    ],
-                  )
-                ],
-              )
-            ),
-            
+                    VerticalSpacing(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        gpuCardButton(SVGWidgets.chatIcon),
+                        gpuCardButton(SVGWidgets.twitterIcon),
+                        gpuCardButton(SVGWidgets.mailIcon),
+                        gpuCardButton(SVGWidgets.redditIcon),
+                        gpuCardButton(SVGWidgets.shareIcon),
+                      ],
+                    ),
+                    VerticalSpacing(
+                      height: 40,
+                    ),
+                    BoldText(
+                      "Specs",
+                      fontSize: FontSizes.xxl,
+                    ),
+                    VerticalSpacing(),
+
+                    //Specs
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        specsText("Manufacturer", _minerModel.manu),
+                        specsText("Model", _minerModel.model),
+                        specsText("Release", _minerModel.release,
+                            color: DocColors.green),
+                        specsText("Size", _minerModel.size),
+                        specsText("Weight", "${_minerModel.manu}g"),
+                        specsText("Noise level", "${_minerModel.noise}db"),
+                        specsText("Fan(s)", "${_minerModel.fans}"),
+                        specsText("Power", "${_minerModel.power}W",
+                            icon: SVGWidgets.powerIcon),
+                        specsText("Voltage", "${_minerModel.voltage}V"),
+                        specsText("Interface", _minerModel.interface),
+                        specsText("Temperature", "${_minerModel.temperature}°C",
+                            icon: SVGWidgets.temperatureIcon),
+                        specsText("Humidity", "${_minerModel.humidity}%"),
+                      ],
+                    )
+                  ],
+                )),
+
             //HorizontalSpacing(width: 20,),
 
             //Chart
@@ -155,22 +181,26 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BoldText(widget.currentMiner.model,fontSize: FontSizes.xxl,),
-                  CustomText("Model Antminer E9 (3Gh) from Bitmain mining EtHash algorithm with a maximum hashrate of 3Gh/s for a power consumption of 2556W.",
+                  BoldText(
+                    _minerModel.model,
+                    fontSize: FontSizes.xxl,
+                  ),
+                  CustomText(
+                    _minerModel.desc,
                     color: DocColors.gray,
                     fontFamily: Fonts.medium,
                     maxLines: 3,
                   ),
-
-                  VerticalSpacing(height: 20,),
-
+                  VerticalSpacing(
+                    height: 20,
+                  ),
                   Container(
                     height: 150,
                     child: CustomChart(),
                   ),
-
-                  VerticalSpacing(height: 20,),
-
+                  VerticalSpacing(
+                    height: 20,
+                  ),
                   gpuChartSpecs([
                     MediumText("Income:"),
                     MediumText("\$218.86/day"),
@@ -179,42 +209,75 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
                   ]),
                   gpuChartSpecs([
                     MediumText("Electricity:"),
-                    MediumText("-\$11.66/day",color: DocColors.red,),
-                    MediumText("-\$349.66/month",color: DocColors.red,),
-                    MediumText("-\$4,195.93/year",color: DocColors.red,),
+                    MediumText(
+                      "-\$11.66/day",
+                      color: DocColors.red,
+                    ),
+                    MediumText(
+                      "-\$349.66/month",
+                      color: DocColors.red,
+                    ),
+                    MediumText(
+                      "-\$4,195.93/year",
+                      color: DocColors.red,
+                    ),
                   ]),
                   gpuChartSpecs([
                     MediumText("Profit:"),
-                    MediumText("\$207.20/day",color: DocColors.green,),
-                    MediumText("\$6,565.66/month",color: DocColors.green,),
-                    MediumText("\$74,591.99/year",color: DocColors.green,),
-                  ],borderColor: DocColors.green),
-
-                  VerticalSpacing(height: 40,),
-                  BoldText("Algorithms",fontSize: FontSizes.xxl,),
-                  VerticalSpacing(height: 20,),
-
+                    MediumText(
+                      "\$207.20/day",
+                      color: DocColors.green,
+                    ),
+                    MediumText(
+                      "\$6,565.66/month",
+                      color: DocColors.green,
+                    ),
+                    MediumText(
+                      "\$74,591.99/year",
+                      color: DocColors.green,
+                    ),
+                  ], borderColor: DocColors.green),
+                  VerticalSpacing(
+                    height: 40,
+                  ),
+                  BoldText(
+                    "Algorithms",
+                    fontSize: FontSizes.xxl,
+                  ),
+                  VerticalSpacing(
+                    height: 20,
+                  ),
                   algorithmsWidget(),
-
-                  VerticalSpacing(height: 40,),
-                  BoldText("Hosting Facilities",fontSize: FontSizes.xxl,),
-                  VerticalSpacing(height: 20,),
-
+                  VerticalSpacing(
+                    height: 40,
+                  ),
+                  BoldText(
+                    "Hosting Facilities",
+                    fontSize: FontSizes.xxl,
+                  ),
+                  VerticalSpacing(
+                    height: 20,
+                  ),
                   hostingFacilities(widget.currentHostingFacilities),
-
-                  VerticalSpacing(height: 40,),
+                  VerticalSpacing(
+                    height: 40,
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        BoldText("Minable Coins",fontSize: FontSizes.xxl,),
-                        for(var coin in widget.currentMiner.minableCoinList)
-                        coinWidget(coin),
+                        BoldText(
+                          "Minable Coins",
+                          fontSize: FontSizes.xxl,
+                        ),
+                        for (var coin in _minerModel.minableCoinList)
+                          coinWidget(coin),
                       ],
                     ),
                   ),
-                  VerticalSpacing(height: 20,),
-
+                  VerticalSpacing(
+                    height: 20,
+                  ),
                 ],
               ),
             ),
@@ -223,19 +286,16 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
       ),
     );
   }
-  
+
   //
-  Widget coinWidget(MinableCoinModel coin)
-  {
+  Widget coinWidget(MinableCoinModel coin) {
     return Container(
       width: 44,
       height: 44,
-      margin: EdgeInsets.only(left:10,right: 10),
+      margin: EdgeInsets.only(left: 10, right: 10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Color(0xFF333336),
-        borderRadius: BorderRadius.circular(999)
-      ),
+          color: Color(0xFF333336), borderRadius: BorderRadius.circular(999)),
       child: Image.network(
         coin.imageURL,
         fit: BoxFit.contain,
@@ -244,90 +304,122 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
   }
 
   //Current hosting facilities of gpu
-  Widget hostingFacilities(List<HostingFacilitiesModel> hostings)
-  {
+  Widget hostingFacilities(List<HostingFacilitiesModel> hostings) {
     return CardWidget(
       height: null,
       color: DocColors(Color(0xFFFFFFFF).withOpacity(0.03)),
       margin: EdgeInsets.zero,
-      padding: EdgeInsets.only(top:10,bottom: 10,left:7.5,right: 7.5),
+      padding: EdgeInsets.only(top: 8, bottom: 8, left: 7.5, right: 7.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          for(var hosting in hostings)
-          CardWidget(
-            color: DocColors.transparent,
-            margin: EdgeInsets.zero,
-            height: 56,
-            width: 518,
-            hoverColor: DocColors(Color(0xFFFFFFFF).withOpacity(0.03)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-                //Place
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MediumText(hosting.namePlace,fontSize: FontSizes(11),),
-                    MediumText("${hosting.nameState}, ${hosting.nameCountry}",fontSize: FontSizes(11),color: DocColors.gray,),
-                  ],
-                ),
-
-                //Price
-                Row(children: [
-                  MediumText("Price",fontSize: FontSizes(8),color: DocColors.gray,),
-                  HorizontalSpacing(width: 2,),
-                  MediumText("\$${hosting.price} / kWh",fontSize: FontSizes(10),color: DocColors.green,),
-                ],),
-
-                //Available
-                Row(children: [
-                  Container(
-                    width: 13,
-                    height: 13,
-                    child:
-                    hosting.status.toLowerCase().contains("available") ?
-                    SVGWidgets.checkIcon:
-                    SVGWidgets.thumbDownIcon,
+          for (var hosting in hostings)
+            CardWidget(
+              color: DocColors.transparent,
+              margin: EdgeInsets.zero,
+              height: 56,
+              width: 518,
+              alignment: Alignment.center,
+              padding: EdgeInsets.only(left: 10, right: 10, top: 9, bottom: 9),
+              hoverColor: DocColors(Color(0xFFFFFFFF).withOpacity(0.03)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //Place
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MediumText(
+                        hosting.namePlace,
+                        fontSize: FontSizes(11),
+                      ),
+                      MediumText(
+                        "${hosting.nameState}, ${hosting.nameCountry}",
+                        fontSize: FontSizes(11),
+                        color: DocColors.gray,
+                      ),
+                    ],
                   ),
-                  HorizontalSpacing(width: 5,),
-                  MediumText(hosting.status ,color: DocColors.gray,fontSize: FontSizes(10),),
-                ],),
 
-                //Energy
-                Row(children: [
-                  Container(
-                    width: 13,
-                    height: 13,
-                    child: SVGWidgets.leafIcon,
+                  //Price
+                  Row(
+                    children: [
+                      MediumText(
+                        "Price",
+                        fontSize: FontSizes(8),
+                        color: DocColors.gray,
+                      ),
+                      HorizontalSpacing(
+                        width: 2,
+                      ),
+                      MediumText(
+                        "\$${hosting.price} / kWh",
+                        fontSize: FontSizes(10),
+                        color: DocColors.green,
+                      ),
+                    ],
                   ),
-                  HorizontalSpacing(width: 5,),
-                  MediumText("${hosting.energy} Energy",color: DocColors.gray,fontSize: FontSizes(10),),
-                ],),     
 
-                //Button
-                BasicButton(
-                  onPressed: (){
-                    WindowHelper().openInNewTab(hosting.visitLink);
-                  },
-                  width: 66,
-                  height: 29,
-                  baseColor: DocColors(Color(0xFF39383D)),
-                  text: "Visit",
-                )          
-              ],
-            ),
-          )
-        
+                  //Available
+                  Row(
+                    children: [
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child: hosting.status.toLowerCase().contains("enable")
+                            ? SVGWidgets.checkIcon
+                            : SVGWidgets.thumbDownIcon,
+                      ),
+                      HorizontalSpacing(
+                        width: 5,
+                      ),
+                      MediumText(
+                        hosting.status,
+                        color: DocColors.gray,
+                        fontSize: FontSizes(10),
+                      ),
+                    ],
+                  ),
+
+                  //Energy
+                  Row(
+                    children: [
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child: SVGWidgets.leafIcon,
+                      ),
+                      HorizontalSpacing(
+                        width: 5,
+                      ),
+                      MediumText(
+                        "${hosting.energy} Energy",
+                        color: DocColors.gray,
+                        fontSize: FontSizes(10),
+                      ),
+                    ],
+                  ),
+
+                  //Button
+                  BasicButton(
+                    onPressed: () {
+                      WindowHelper().openInNewTab(hosting.visitLink);
+                    },
+                    width: 66,
+                    height: 29,
+                    baseColor: DocColors(Color(0xFF39383D)),
+                    text: "Visit",
+                  )
+                ],
+              ),
+            )
         ],
       ),
     );
   }
 
   //Current algo supported by gpu
-  Widget algorithmsWidget()
-  {
+  Widget algorithmsWidget() {
     return Column(
       children: [
         CardWidget(
@@ -338,30 +430,28 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText("Algorythm"),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText("Algorythm"),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText("Hashrate"),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText("Hashrate"),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText("Consumption"),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText("Consumption"),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText("Efficiency"),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText("Efficiency"),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText("Profitability"),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText("Profitability"),
               ),
-              
             ],
           ),
         ),
-
         CardWidget(
           margin: EdgeInsets.zero,
           color: DocColors(Color(0xFFFFFFFF).withOpacity(0.03)),
@@ -370,27 +460,34 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText(widget.currentMiner.algo),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText(_minerModel.algo),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText(widget.currentMiner.hashrate+widget.currentMiner.hashrateUnits),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText(
+                    _minerModel.hashrate + _minerModel.hashrateUnits),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText("${widget.currentMiner.power}W"),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText("${_minerModel.power}W"),
               ),
               ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 65,maxWidth: 97),
-                child:MediumText("0.852j/Mh"),
+                constraints: BoxConstraints(minWidth: 65, maxWidth: 97),
+                child: MediumText("${_minerModel.efficiency}j/Mh"),
               ),
-              
-              Row(children: [
-                MediumText("\$168.39",color: DocColors.green,),
-                MediumText("/day",color: DocColors.gray,),
-              ],)
-             
+              Row(
+                children: [
+                  MediumText(
+                    "\$168.39",
+                    color: DocColors.green,
+                  ),
+                  MediumText(
+                    "/day",
+                    color: DocColors.gray,
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -399,30 +496,30 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
   }
 
   //Gpu charts
-  Widget gpuChartSpecs(List<Widget> widgetList,{DocColors borderColor = DocColors.black})
-  {
+  Widget gpuChartSpecs(List<Widget> widgetList,
+      {DocColors borderColor = DocColors.black}) {
     return CardWidget(
       height: 34,
-      margin: EdgeInsets.only(top:5,bottom: 5),
+      margin: EdgeInsets.only(top: 5, bottom: 5),
       color: DocColors.black,
       borderColor: borderColor,
-      padding: EdgeInsets.only(left:15,right: 15),
+      padding: EdgeInsets.only(left: 15, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          for(var widget in widgetList)
-          ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 95,maxWidth: 124),
-            child: widget,
-          )
+          for (var widget in widgetList)
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: 95, maxWidth: 124),
+              child: widget,
+            )
         ],
       ),
     );
   }
 
   //Gpu specs
-  Widget specsText(String title, String value,{DocColors color = DocColors.white, Widget? icon })
-  {
+  Widget specsText(String title, String value,
+      {DocColors color = DocColors.white, Widget? icon}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -432,41 +529,51 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
           children: [
             Container(
               width: 110,
-              child: MediumText(title+":",color: DocColors.gray,),
+              child: MediumText(
+                title + ":",
+                color: DocColors.gray,
+              ),
             ),
             Container(
               width: 110,
             ),
             Container(
-              width: 150,
-              child: Row(
-                children: [
-                  Container(
-                    width: 12,
-                    height: 12,
-                    child: icon,
-                  ),
-                  HorizontalSpacing(width: 7.5,),
-                  MediumText(value,fontSize: FontSizes.xs,color: color,),
-                ],
-              )
-            ),
+                width: 150,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 12,
+                      height: 12,
+                      child: icon,
+                    ),
+                    HorizontalSpacing(
+                      width: 7.5,
+                    ),
+                    MediumText(
+                      value,
+                      fontSize: FontSizes.xs,
+                      color: color,
+                    ),
+                  ],
+                )),
             Container(
               width: 95,
             ),
           ],
         ),
         VerticalSpacing(),
-        Divider(color: DocColors.gray.getValue(),thickness: 0.25,)
+        Divider(
+          color: DocColors.gray.getValue(),
+          thickness: 0.25,
+        )
       ],
     );
   }
 
   //Button to go social link
-  Widget gpuCardButton(Widget icon)
-  {
+  Widget gpuCardButton(Widget icon) {
     return BasicButton(
-      onPressed: (){},
+      onPressed: () {},
       width: 107,
       height: 33,
       cornerRadius: 5,
@@ -481,37 +588,51 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView>
   }
 
   //Where to buy gpu
-  Widget whereToBuyWidget()
-  {
+  Widget whereToBuyWidget() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BoldText("Where to buy",fontSize: FontSizes.xxl,),
-        VerticalSpacing(height: 20,),
-        for(var seller in widget.currentMiner.whereToBuyList)
-        WhereToBuyCard(seller: seller,),
+        BoldText(
+          "Where to buy",
+          fontSize: FontSizes.xxl,
+        ),
+        VerticalSpacing(
+          height: 20,
+        ),
+        for (var seller in _minerModel.whereToBuyList)
+          WhereToBuyCard(
+            seller: seller,
+          ),
       ],
     );
   }
 
   //Mining pools of gpu
-  Widget miningPoolsWidget()
-  {
+  Widget miningPoolsWidget() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BoldText("Mining Pools",fontSize: FontSizes.xxl,),
-        VerticalSpacing(height: 20,),
-        for(var pool in widget.currentMiner.miningPoolList)
-        MiningPoolsCard(miningPool: pool,),
+        BoldText(
+          "Mining Pools",
+          fontSize: FontSizes.xxl,
+        ),
+        VerticalSpacing(
+          height: 20,
+        ),
+        for (var pool in _minerModel.miningPoolList)
+          MiningPoolsCard(
+            miningPool: pool,
+          ),
       ],
     );
   }
 
-  Widget cardsText(String text)
-  {
-    return MediumText(text,fontSize: FontSizes.xxs,);
+  Widget cardsText(String text) {
+    return MediumText(
+      text,
+      fontSize: FontSizes.xxs,
+    );
   }
 }

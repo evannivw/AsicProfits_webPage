@@ -32,6 +32,40 @@ class FirestoreDatabase<T> {
     return true;
   }
 
+  String getKey(FirestoreTable table) {
+    return FirebaseFirestore.instance.collection(_getFunction(table)).doc().id;
+  }
+
+  ///Set section
+  ///
+  ///
+  Future<FirestoreResult<bool>> set(
+      T value, FirestoreTable table, String id) async {
+    if (!_checkId(id)) {
+      return FirestoreResult<bool>(error: "id incorrecto");
+    }
+    var query =
+        FirebaseFirestore.instance.collection(_getFunction(table)).doc(id);
+    var respuesta = _callSet(query, value);
+    if (respuesta == null) {
+      return FirestoreResult(error: "error en call set");
+    }
+    return FirestoreResult(value: true);
+  }
+
+  Future _callSet(dynamic query, dynamic value) async {
+    try {
+      return await query.set(value.toJson());
+    } catch (e) {
+      return null;
+    }
+  }
+
+  ///Get section
+  ///
+  ///
+
+  //get specific document caller by id
   Future<FirestoreResult<T>> getDocument(
       FirestoreTable table, String id) async {
     if (!_checkId(id)) {
@@ -59,7 +93,8 @@ class FirestoreDatabase<T> {
     return FirestoreResult(value: data);
   }
 
-  Future<FirestoreResult<T>> get(FirestoreTable table,
+  //get list of documents in table
+  Future<FirestoreResult<dynamic>> get(FirestoreTable table,
       {int limit = 30, String orderBy = "date"}) async {
     var query = FirebaseFirestore.instance
         .collection(_getFunction(table))
@@ -71,20 +106,18 @@ class FirestoreDatabase<T> {
       return FirestoreResult(error: "Error en get");
     }
 
-    List<T> returnList = [];
-
+    List<dynamic> returnList = [];
     for (var doc in document.docs) {
-      if (doc.exists) {
-        var data = _convertValue(doc.data());
-        if (data != null) {
-          returnList.add(data);
-        }
+      var data = _convertValue(doc.data());
+      if (data != null) {
+        returnList.add(data);
       }
     }
 
     return FirestoreResult(listValue: returnList);
   }
 
+  //local function to call get
   Future<dynamic> _callGet({
     DocumentReference? documentReference,
     CollectionReference? collectionReference,
@@ -105,9 +138,12 @@ class FirestoreDatabase<T> {
     }
   }
 
-  T? _convertValue(Object? data) {
+  //convert value from object to class [T]
+  dynamic _convertValue(Object? data) {
     try {
-      var value = jsonDecode(data.toString());
+      var value = data; //json.decode(data.toString());
+      //print(value);
+      //var returnValue = T.fromJson(value);
       return value;
     } catch (e) {
       return null;

@@ -9,6 +9,7 @@ import 'package:asic_miner_website/Admin%20Pages/Main%20page/AdminMain.dart';
 import 'package:asic_miner_website/BasicWidgets/ButtonWidgets/BasicButton.dart';
 import 'package:asic_miner_website/BasicWidgets/CardWidgets/CardWidget.dart';
 import 'package:asic_miner_website/BasicWidgets/Colors/Doc_Colors.dart';
+import 'package:asic_miner_website/BasicWidgets/CustomLoading/CustomLoading.dart';
 import 'package:asic_miner_website/BasicWidgets/PageWidget/View_Type.dart';
 import 'package:asic_miner_website/BasicWidgets/PageWidget/page_widget.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Black_Text.dart';
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: true ? AdminLogin() : const TabPageView(title: "ASIC Profits main"),
+      home: false ? AdminMain() : const TabPageView(title: "ASIC Profits main"),
     );
   }
 }

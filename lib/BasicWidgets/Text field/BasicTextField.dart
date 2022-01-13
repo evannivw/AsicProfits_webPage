@@ -5,19 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BasicTextField extends StatelessWidget {
-  BasicTextField({
-    this.maxLength = 50,
-    this.controller,
-    this.hintText = "",
-    this.useObscureText = false,
-  });
+  BasicTextField(
+      {this.maxLength = 50,
+      this.controller,
+      this.hintText = "",
+      this.useObscureText = false,
+      this.onValueChange});
   int maxLength;
   TextEditingController? controller;
   String hintText;
   bool useObscureText;
+  Function(String)? onValueChange;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onValueChange,
       maxLength: maxLength,
       controller: controller,
       style: GoogleFonts.getFont(

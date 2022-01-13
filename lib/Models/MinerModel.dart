@@ -15,71 +15,31 @@ part 'MinerModel.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class MinerModel {
-  String _model = "";
-  String _color = "yellow";
-  String _release = "Coming soon";
-  String _hashrate = "0";
-  String _hashrateUnits = "H/s";
-  String _power = "0";
-  String _noise = "0";
-  String _algo = "EtHash";
-  String _visitLink = "";
+  String id;
+  String model;
+  String color;
+  String release;
+  String hashrate;
+  String hashrateUnits;
+  String power;
+  String noise;
+  String algo;
+  String visitLink;
+  String manu;
+  String desc;
+  String fans;
+  String voltage;
+  String interface;
+  String temperature;
+  String humidity;
+  String weight;
+  String size;
+  String efficiency;
+  String imageURL;
   List<MinableCoinModel> minableCoinList = [];
   List<WhereToBuyModel> whereToBuyList = [];
   List<MiningPoolModel> miningPoolList = [];
-
-  ///Get secction
-  String get model => _model;
-  String get color => _color;
-  String get release => _release;
-  String get hashrate => _hashrate;
-  String get hashrateUnits => _hashrateUnits;
-  String get power => _power;
-  String get noise => _noise;
-  String get algo => _algo;
-  String get visitLink => _visitLink;
   DateTime? date;
-
-  ///Set secction
-  set model(String value) {
-    _model = value;
-  }
-
-  set color(String value) {
-    _color = value;
-  }
-
-  set release(String value) {
-    _release = value;
-  }
-
-  set hashrate(
-    String value,
-  ) {
-    _hashrate = value;
-  }
-
-  set hashrateUnits(
-    String value,
-  ) {
-    _hashrateUnits = value;
-  }
-
-  set power(String value) {
-    _power = value;
-  }
-
-  set noise(String value) {
-    _noise = value;
-  }
-
-  set algo(String value) {
-    _algo = value;
-  }
-
-  set visitLink(String value) {
-    _visitLink = value;
-  }
 
   factory MinerModel.fromJson(Map<String, dynamic> json) =>
       _$MinerModelFromJson(json);
@@ -88,33 +48,32 @@ class MinerModel {
 
   ///Init secction
   MinerModel({
-    String model = "",
-    String color = "yellow",
-    String release = "Coming soon",
-    String hashrate = "0",
-    String hasrateUnits = "H/s",
-    String power = "0",
-    String noise = "0",
-    String algo = "EtHash",
-    String visitLink = "",
-    List<MinableCoinModel> minableCoinList = const [],
-    List<WhereToBuyModel> whereToBuyList = const [],
-    List<MiningPoolModel> miningPoolList = const [],
+    this.id = "",
+    this.model = "N/A",
+    this.color = "yellow",
+    this.release = "Coming soon",
+    this.hashrate = "0",
+    this.hashrateUnits = "H/s",
+    this.power = "0",
+    this.noise = "0",
+    this.algo = "EtHash",
+    this.visitLink = "",
+    this.manu = "0",
+    this.desc = "0",
+    this.voltage = "0",
+    this.fans = "0",
+    this.interface = "Ethernet",
+    this.temperature = "0",
+    this.humidity = "0",
+    this.weight = "0",
+    this.size = "0",
+    this.efficiency = "0",
+    this.minableCoinList = const [],
+    this.whereToBuyList = const [],
+    this.miningPoolList = const [],
     this.date,
-  }) {
-    _model = model;
-    _color = color;
-    _release = release;
-    _hashrate = hashrate;
-    _hashrateUnits = hasrateUnits;
-    _power = power;
-    _noise = noise;
-    _algo = algo;
-    _visitLink = visitLink;
-    this.minableCoinList = minableCoinList;
-    this.whereToBuyList = whereToBuyList;
-    this.miningPoolList = miningPoolList;
-  }
+    this.imageURL = "",
+  });
 
   /*//Convert class in to json 
   Map<String, dynamic> toJson() => {

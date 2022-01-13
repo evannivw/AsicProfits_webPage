@@ -12,8 +12,8 @@ class AsicProfitsMainController {
       print(respuesta.error.toString());
       return;
     }
-    minersList = respuesta.listValue!;
-    print("Lista length: " + minersList.length.toString());
+    minersList =
+        respuesta.listValue!.map((e) => MinerModel.fromJson(e)).toList();
     /*await Future.delayed(Duration(seconds: 1));
     minersList = List.generate(20, (index) {
       return MinerModel();

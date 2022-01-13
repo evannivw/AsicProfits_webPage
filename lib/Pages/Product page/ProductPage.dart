@@ -26,18 +26,16 @@ import 'package:asic_miner_website/TabPage%20View/Controller/TabPageViewControll
 import '../../Proyect Widgets/Bottom Widgets/WeeklyAsicWidget.dart';
 import 'package:flutter/material.dart';
 
-class ProductPage extends StatefulWidget
-{
+class ProductPage extends StatefulWidget {
   ProductPage({@required this.currentMiner});
   MinerModel? currentMiner;
   @override
   State<StatefulWidget> createState() {
     return _ProductPage();
   }
-  
 }
-class _ProductPage extends State<ProductPage>
-{
+
+class _ProductPage extends State<ProductPage> {
   int _currentPage = 0;
   ProductPageController controller = ProductPageController();
   @override
@@ -46,27 +44,22 @@ class _ProductPage extends State<ProductPage>
     loadHostingFacilities();
   }
 
-  void loadHostingFacilities()async
-  {
+  void loadHostingFacilities() async {
     await controller.loadHostingFacilities();
-    if(mounted)
-    setState(() {
-      
-    });
+    if (mounted) setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return SceneController.isMobilView ?
-    ProductPageMobileView(
-      currentMiner: widget.currentMiner,
-      currentHostingFacilities: controller.hostingFacilitiesList,
-    ) 
-    : 
-    ProductPageDesktopView(
-      currentMiner: widget.currentMiner,
-      currentHostingFacilities: controller.hostingFacilitiesList,
-    );
+    return SceneController.isMobilView
+        ? ProductPageMobileView(
+            currentMiner: widget.currentMiner,
+            currentHostingFacilities: controller.hostingFacilitiesList,
+          )
+        : ProductPageDesktopView(
+            controller: controller,
+            currentMiner: widget.currentMiner,
+            currentHostingFacilities: controller.hostingFacilitiesList,
+          );
   }
-
 }
