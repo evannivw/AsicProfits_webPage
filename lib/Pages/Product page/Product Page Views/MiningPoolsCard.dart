@@ -13,18 +13,20 @@ import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.da
 import 'package:flutter/material.dart';
 
 class MiningPoolsCard extends StatelessWidget {
-  MiningPoolsCard({@required miningPool});
+  MiningPoolsCard({@required this.miningPool});
 
-  final MiningPoolModel miningPool = MiningPoolModel();
+  MiningPoolModel? miningPool;
+  MiningPoolModel _miningPool = MiningPoolModel();
   @override
   Widget build(BuildContext context) {
+    _miningPool = miningPool ?? MiningPoolModel();
     return SceneController.isMobilView ? mobileView() : desktopView();
   }
 
   Widget mobileView() {
     return GestureDetector(
       onTap: () {
-        WindowHelper().openInNewTab(miningPool.visitLink);
+        WindowHelper().openInNewTab(_miningPool.visitLink);
       },
       child: CardWidget(
         height: 57,
@@ -40,25 +42,25 @@ class MiningPoolsCard extends StatelessWidget {
             Container(
               width: 102,
               height: 23,
-              color: DocColors.blue_2.getValue(),
+              child: Image.network(_miningPool.visitLink),
             ),
 
             //Link
             BoldText(
-              miningPool.name,
+              _miningPool.name,
               fontSize: FontSizes.s,
             ),
 
             //Referral Code
             MediumText(
-              miningPool.referalCode,
+              _miningPool.referalCode,
               color: DocColors.green,
             ),
 
             //Button
             BasicButton(
               onPressed: () {
-                WindowHelper().openInNewTab(miningPool.visitLink);
+                WindowHelper().openInNewTab(_miningPool.visitLink);
               },
               width: 66,
               height: 29,
@@ -101,44 +103,54 @@ class MiningPoolsCard extends StatelessWidget {
             children: [
               //Imagen
               Container(
-                width: 102,
-                height: 23,
-                color: DocColors.blue_2.getValue(),
+                width: 111,
+                height: 36,
+                child: Image.network(_miningPool.imageURL),
               ),
 
               //Link
-              Column(
-                children: [
-                  MediumText(
-                    miningPool.name,
-                    color: DocColors.green,
-                  ),
-                  MediumText(
-                    miningPool.webPage,
-                    color: DocColors.gray,
-                    fontSize: FontSizes.xs,
-                  ),
-                ],
+              Container(
+                width: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MediumText(
+                      _miningPool.name,
+                      color: DocColors.green,
+                    ),
+                    MediumText(
+                      _miningPool.webPage,
+                      color: DocColors.gray,
+                      fontSize: FontSizes.xs,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
               ),
 
               //Mining plans
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  for (var coin in miningPool.miningPlans) coinWidget(coin),
-                ],
+              Container(
+                width: 250,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for (var coin in _miningPool.miningPlans) coinWidget(coin),
+                  ],
+                ),
               ),
 
               //Referral Code
-              MediumText("“${miningPool.referalCode}"),
+              Container(
+                  width: 100, child: MediumText("“${_miningPool.referalCode}")),
 
               //Fees
-              MediumText("${miningPool.fees}%"),
+              Container(width: 100, child: MediumText("${_miningPool.fees}%")),
 
               //Button
               BasicButton(
                 onPressed: () {
-                  WindowHelper().openInNewTab(miningPool.imageURL);
+                  WindowHelper().openInNewTab(_miningPool.imageURL);
                 },
                 width: 66,
                 height: 29,
@@ -154,6 +166,9 @@ class MiningPoolsCard extends StatelessWidget {
   }
 
   Widget coinWidget(MinableCoinModel coin) {
+    if (coin.imageURL.isEmpty) {
+      return Container();
+    }
     return Container(
       width: 32,
       height: 32,

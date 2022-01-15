@@ -5,15 +5,18 @@ import 'package:asic_miner_website/BasicWidgets/Spacing/HorizontalSpacing.dart';
 import 'package:asic_miner_website/BasicWidgets/Spacing/VerticalSpacing.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
+import 'package:asic_miner_website/Helpers/WindowHelper.dart';
 import 'package:asic_miner_website/Models/HostingFacilitiesModel.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
 import 'package:flutter/material.dart';
 
 class HostingCard extends StatelessWidget {
-  HostingCard({@required hosting});
-  final HostingFacilitiesModel hosting = HostingFacilitiesModel();
+  HostingCard({@required this.hosting});
+  HostingFacilitiesModel? hosting;
+  HostingFacilitiesModel _hosting = HostingFacilitiesModel();
   @override
   Widget build(BuildContext context) {
+    _hosting = hosting ?? HostingFacilitiesModel();
     return CardWidget(
       color: DocColors(Colors.white.withOpacity(0.05)),
       width: 320,
@@ -27,8 +30,7 @@ class HostingCard extends StatelessWidget {
           Container(
             width: 323,
             height: 123,
-            color: DocColors.white.getValue(),
-            child: Image.network(hosting.imageURL, fit: BoxFit.contain),
+            child: Image.network(_hosting.imageURL, fit: BoxFit.contain),
           ),
 
           //Place
@@ -36,7 +38,7 @@ class HostingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               MediumText(
-                "${hosting.namePlace}, ${hosting.nameState}",
+                "${_hosting.namePlace}, ${_hosting.nameState}",
                 fontSize: FontSizes(13),
               ),
               Row(
@@ -46,7 +48,9 @@ class HostingCard extends StatelessWidget {
                     width: 5,
                   ),
                   MediumText(
-                    hosting.status,
+                    _hosting.status.toLowerCase() == "enable"
+                        ? "Available"
+                        : "Disable",
                     fontSize: FontSizes(8.5),
                     color: DocColors.gray,
                   )
@@ -60,15 +64,14 @@ class HostingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               hostingInfoWidget(
-                "\$${hosting.price} / kWh",
-                "${hosting.MQO} / kWh",
+                "\$${_hosting.price} / kWh",
+                "${_hosting.MQO} / kWh",
                 icon1: SVGWidgets.dollarIcon,
                 icon2: SVGWidgets.powerIcon,
               ),
-              hostingInfoWidget(
-                  "\$${hosting.security} / kWh", "${hosting.energy} / kWh",
-                  icon1: SVGWidgets.dollarIcon,
-                  icon2: SVGWidgets.dollarIcon,
+              hostingInfoWidget("${_hosting.security}", "${_hosting.energy}",
+                  icon1: SVGWidgets.shield2Icon,
+                  icon2: SVGWidgets.leaf2Icon,
                   title1: "Security",
                   title2: "Energy",
                   crossAxisAlignment: CrossAxisAlignment.start),
@@ -76,7 +79,9 @@ class HostingCard extends StatelessWidget {
           ),
 
           BasicButton(
-            onPressed: () {},
+            onPressed: () {
+              WindowHelper().openInNewTab(_hosting.visitLink);
+            },
             baseColor: DocColors.blue,
             width: 112,
             height: 30,

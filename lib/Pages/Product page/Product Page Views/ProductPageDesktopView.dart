@@ -600,6 +600,21 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
         VerticalSpacing(
           height: 20,
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            cardsText("Sellers", 250),
+            cardsText("", 150),
+            cardsText("Price", 100),
+            cardsText("Availability", 100),
+            cardsText("More Info", 100),
+            cardsText("Shipping", 100),
+            cardsText("", 100),
+          ],
+        ),
+        VerticalSpacing(
+          height: 5,
+        ),
         for (var seller in _minerModel.whereToBuyList)
           WhereToBuyCard(
             seller: seller,
@@ -621,6 +636,20 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
         VerticalSpacing(
           height: 20,
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            cardsText("Top 10", 250),
+            cardsText("", 100),
+            cardsText("Mining plans", 250),
+            cardsText("Referral code", 100),
+            cardsText("Fees", 100),
+            cardsText("", 100),
+          ],
+        ),
+        VerticalSpacing(
+          height: 5,
+        ),
         for (var pool in _minerModel.miningPoolList)
           MiningPoolsCard(
             miningPool: pool,
@@ -629,10 +658,13 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
     );
   }
 
-  Widget cardsText(String text) {
-    return MediumText(
-      text,
-      fontSize: FontSizes.xxs,
+  Widget cardsText(String text, double width) {
+    return Container(
+      width: width,
+      child: MediumText(
+        text,
+        fontSize: FontSizes.xxs,
+      ),
     );
   }
 }
