@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: url.toLowerCase().contains("admin")
-          ? AdminMain()
+          ? AdminLogin()
           : const TabPageView(title: "ASIC Profits main"),
     );
   }
