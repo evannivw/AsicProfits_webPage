@@ -1,3 +1,4 @@
+import 'package:asic_miner_website/Admin%20Pages/Add%20Deal/AddDeal.dart';
 import 'package:asic_miner_website/Admin%20Pages/Add%20Hosting%20Page/AddHostingPage.dart';
 import 'package:asic_miner_website/Admin%20Pages/Add%20Miner%20Page/AddMinerPage.dart';
 import 'package:asic_miner_website/Admin%20Pages/Add%20Partner%20Page/AddPartnerPage.dart';
@@ -56,9 +57,6 @@ class _AdminMain extends PageWidget<AdminMain> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              width: 130,
-            ),
             BoldText(
               "Admin page",
               fontSize: FontSizes(40),
@@ -72,6 +70,13 @@ class _AdminMain extends PageWidget<AdminMain> {
                     pushMenu(AdminCalculator());
                   },
                   text: "Calculator",
+                ),
+                HorizontalSpacing(),
+                BasicButton(
+                  onPressed: () {
+                    pushMenu(AddDeal(dealMiner: MinerModel()));
+                  },
+                  text: "Deal",
                 ),
                 HorizontalSpacing(),
                 Theme(
