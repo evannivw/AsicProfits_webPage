@@ -1,4 +1,5 @@
 import 'package:asic_miner_website/BasicWidgets/Page%20view/ExpandablePageView.dart';
+import 'package:asic_miner_website/BasicWidgets/Page%20view/NonPageView.dart';
 import 'package:asic_miner_website/BasicWidgets/PageWidget/page_widget.dart';
 import 'package:asic_miner_website/TabPage%20View/Controller/TabPageViewController.dart';
 import 'package:asic_miner_website/Pages/Contact%20Page/ContactPage.dart';
@@ -17,27 +18,30 @@ import 'package:flutter/material.dart';
 import '../Pages/Asic Profits Main/AsicProfitsMain.dart';
 import '../Pages/Top Widget/TopWidget.dart';
 
-class TabPageView extends StatefulWidget
-{
+class TabPageView extends StatefulWidget {
   const TabPageView({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
   State<StatefulWidget> createState() {
     return _TabPageView();
-  } 
+  }
 }
-class _TabPageView extends PageWidget<TabPageView>
-{
+
+class _TabPageView extends PageWidget<TabPageView> {
   TabPageViewController controller = TabPageViewController();
   @override
   void initState() {
     super.initState();
     controller.setInitialPage(MainPage.Main);
+    controller.addListener(onControllerEvent);
+  }
+
+  void onControllerEvent() {
+    setState(() {});
   }
 
   @override
-  Widget bottomWidget()
-  {
+  Widget bottomWidget() {
     return BottomWidget();
   }
 
@@ -45,29 +49,66 @@ class _TabPageView extends PageWidget<TabPageView>
   Widget desktopView() {
     return Column(
       children: [
-        TopWidget(viewType: super.viewType,tabPageViewController: controller,),
-        SizedBox(height: 50,),
+        TopWidget(
+          viewType: super.viewType,
+          tabPageViewController: controller,
+        ),
+        SizedBox(
+          height: 50,
+        ),
         pageView()
       ],
     );
   }
 
   //Page view
-  Widget pageView()
-  {
-    return ExpandablePageView(
-      
-      controller: controller.pageController,
-      onPageChanged: onPageChanged,
-      initialPage: controller.currentPage,
+  Widget pageView() {
+    return NonPageView(
+      tabPageViewController: controller,
       children: [
-        AsicProfitsMain(viewType: super.viewType,tabPageViewController: controller,),
-        ProductPage(currentMiner: controller.currentMiner,),
+        AsicProfitsMain(
+          viewType: super.viewType,
+          tabPageViewController: controller,
+        ),
+        ProductPage(
+          currentMiner: controller.currentMiner,
+        ),
         MHCPage(),
         VendorsPage(),
         FaqPage(),
-        ContactPage(tabPageViewController: controller,),
-        PPPage(viewType: super.viewType,),
+        ContactPage(
+          tabPageViewController: controller,
+        ),
+        PPPage(
+          viewType: super.viewType,
+        ),
+        TermsPage(),
+        HostingPage(),
+        HostingAplicactionPage(tabPageViewController: controller),
+        ThankYouView(tabPageViewController: controller),
+      ],
+    );
+    return ExpandablePageView(
+      //controller: controller.pageController,
+      onPageChanged: onPageChanged,
+      initialPage: controller.currentPage,
+      children: [
+        AsicProfitsMain(
+          viewType: super.viewType,
+          tabPageViewController: controller,
+        ),
+        ProductPage(
+          currentMiner: controller.currentMiner,
+        ),
+        MHCPage(),
+        VendorsPage(),
+        FaqPage(),
+        ContactPage(
+          tabPageViewController: controller,
+        ),
+        PPPage(
+          viewType: super.viewType,
+        ),
         TermsPage(),
         HostingPage(),
         HostingAplicactionPage(tabPageViewController: controller),
@@ -76,8 +117,7 @@ class _TabPageView extends PageWidget<TabPageView>
     );
   }
 
-  void onPageChanged(int page)
-  {
+  void onPageChanged(int page) {
     setState(() {
       //currentPage = page;
     });

@@ -6,6 +6,7 @@ enum FirestoreTable {
   users,
   miners,
   hostings,
+  partners,
 }
 
 class FirestoreResult<T> {
@@ -24,6 +25,8 @@ class FirestoreDatabase<T> {
         return "miners";
       case FirestoreTable.hostings:
         return "hostings";
+      case FirestoreTable.partners:
+        return "partners";
     }
   }
 

@@ -32,7 +32,16 @@ class _TopWidget extends State<TopWidget> {
 
   void addPageListener() {
     currentTappedButton = widget.tabPageViewController?.currentPage ?? 0;
-    widget.tabPageViewController?.pageController.addListener(() {
+    widget.tabPageViewController?.addListener(() {
+      int page = widget.tabPageViewController?.currentPage ?? 0;
+      currentTappedButton;
+      if (currentTappedButton != page) {
+        setState(() {
+          currentTappedButton = page;
+        });
+      }
+    });
+    /*widget.tabPageViewController?.pageController.addListener(() {
       int page = widget.tabPageViewController?.pageController.page?.round() ??
           currentTappedButton;
       if (currentTappedButton != page) {
@@ -40,7 +49,7 @@ class _TopWidget extends State<TopWidget> {
           currentTappedButton = page;
         });
       }
-    });
+    });*/
   }
 
   @override

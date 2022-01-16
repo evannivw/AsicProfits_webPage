@@ -1,5 +1,6 @@
 import 'package:asic_miner_website/Admin%20Pages/Add%20Hosting%20Page/AddHostingPage.dart';
 import 'package:asic_miner_website/Admin%20Pages/Add%20Miner%20Page/AddMinerPage.dart';
+import 'package:asic_miner_website/Admin%20Pages/Add%20Partner%20Page/AddPartnerPage.dart';
 import 'package:asic_miner_website/Admin%20Pages/Admin%20Calculator/AdminCalculator.dart';
 import 'package:asic_miner_website/Admin%20Pages/Main%20page/Controller/AdminMainPageController.dart';
 import 'package:asic_miner_website/BasicWidgets/ButtonWidgets/BasicButton.dart';
@@ -14,6 +15,7 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Bold_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
+import 'package:asic_miner_website/Models/PartnersModel.dart';
 import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Asic%20Profits%20Views/ProfitabilityWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -127,6 +129,17 @@ class _AdminMain extends PageWidget<AdminMain> {
                               onTap: () {
                                 //Navigator.pop(context1);
                                 pushMenu(AddHostingPage());
+                              },
+                            ),
+                            PopupMenuItem(
+                              child: MediumText("Partner"),
+                              value: 1,
+                              onTap: () {
+                                //Navigator.pop(context1);
+                                pushMenu(AddPartnerPage(
+                                  currentPartner: PartnersModel(),
+                                  callback: () {},
+                                ));
                               },
                             ),
                           ]),

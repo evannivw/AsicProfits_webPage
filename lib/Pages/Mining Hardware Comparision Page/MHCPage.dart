@@ -25,16 +25,14 @@ import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.da
 import '../../Proyect Widgets/Bottom Widgets/WeeklyAsicWidget.dart';
 import 'package:flutter/material.dart';
 
-class MHCPage extends StatefulWidget
-{
+class MHCPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _MHCPage();
   }
-  
 }
-class _MHCPage extends State<MHCPage>
-{
+
+class _MHCPage extends State<MHCPage> {
   MHCPageController _controller = MHCPageController();
 
   @override
@@ -42,8 +40,7 @@ class _MHCPage extends State<MHCPage>
     return desktopView();
   }
 
-  Widget desktopView()
-  {
+  Widget desktopView() {
     return Column(
       //direction: Axis.vertical,
       //crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,11 +48,27 @@ class _MHCPage extends State<MHCPage>
       children: [
         Row(
           children: [
-            MediumText("Miners", color: DocColors.gray,),
-            Icon(Icons.arrow_right,size: 15,color: DocColors.gray.getValue(),),
-            MediumText("Comparison",color: DocColors.gray,),
-            Icon(Icons.arrow_right,size: 15,color: DocColors.white.getValue(),),
-            MediumText("Compare",),
+            MediumText(
+              "Miners",
+              color: DocColors.gray,
+            ),
+            Icon(
+              Icons.arrow_right,
+              size: 15,
+              color: DocColors.gray.getValue(),
+            ),
+            MediumText(
+              "Comparison",
+              color: DocColors.gray,
+            ),
+            Icon(
+              Icons.arrow_right,
+              size: 15,
+              color: DocColors.white.getValue(),
+            ),
+            MediumText(
+              "Compare",
+            ),
           ],
         ),
         VerticalSpacing(),
@@ -63,7 +76,9 @@ class _MHCPage extends State<MHCPage>
           constraints: BoxConstraints(maxWidth: 1000),
           child: mainView(),
         ),
-        VerticalSpacing(height: 100,),
+        VerticalSpacing(
+          height: 100,
+        ),
         WeeklyAsicWidget2(),
         BuyingOpportunitiesWidget(),
         BottomInfoWidget(),
@@ -71,49 +86,54 @@ class _MHCPage extends State<MHCPage>
     );
   }
 
-  Widget mainView()
-  {
+  Widget mainView() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         //Titulo
-        BoldText("Mining hardware comparison",fontSize:SceneController.isMobilView ? FontSizes(35): FontSizes(40),),
+        BoldText(
+          "Mining hardware comparison",
+          fontSize: SceneController.isMobilView ? FontSizes(35) : FontSizes(40),
+        ),
         MediumText(
           "Compare hashrate, profitability, and power consumption of different hardware",
           fontSize: FontSizes.m,
           color: DocColors.gray,
         ),
-        VerticalSpacing(height: 40,),
+        VerticalSpacing(
+          height: 40,
+        ),
 
         comparisionCardWidget(),
 
-        VerticalSpacing(height: 20,),
-        
+        VerticalSpacing(
+          height: 20,
+        ),
+
         //Compare gpu card
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ComparisionCardWidget(),
-            HorizontalSpacing(width: 20,),
+            HorizontalSpacing(
+              width: 20,
+            ),
             ComparisionCardWidget(),
           ],
         )
       ],
     );
-
   }
 
   //First card where you choose what gpu to compare
-  Widget comparisionCardWidget()
-  {
+  Widget comparisionCardWidget() {
     return CardWidget(
       width: 668,
-      height: 180,
+      height: 185,
       color: DocColors(Color(0xFF2B2B2F)),
       padding: EdgeInsets.zero,
       child: Column(
         children: [
-          
           Padding(
             padding: EdgeInsets.all(20),
             child: Row(
@@ -121,92 +141,79 @@ class _MHCPage extends State<MHCPage>
               children: [
                 dropdownWithTitle("Currency"),
                 textfieldWithTitle("Electricity"),
-                dropdownWithTitle("Reward calculation",dropDownLista: ["Current"]),
+                dropdownWithTitle("Reward calculation",
+                    dropDownLista: ["Current"]),
               ],
             ),
           ),
-
-          Divider(thickness: 0.25,color: DocColors.gray.getValue(),height: 0,),
-          
+          Divider(
+            thickness: 0.25,
+            color: DocColors.gray.getValue(),
+            height: 0,
+          ),
           Padding(
-            padding: EdgeInsets.only(top:20,bottom: 20,left: 20,right:20),
+            padding: EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MediumText("Filter",fontSize: FontSizes(11),color: DocColors.gray,),
+                MediumText(
+                  "Filter",
+                  fontSize: FontSizes(11),
+                  color: DocColors.gray,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    checkBoxWithTitle("With alerts", _controller.enableAlerts,
+                        () {
+                      setState(() {
+                        _controller.enableAlerts = !_controller.enableAlerts;
+                      });
+                    }),
+                    checkBoxWithTitle("Specs", _controller.enableSpecs, () {
+                      setState(() {
+                        _controller.enableSpecs = !_controller.enableSpecs;
+                      });
+                    }),
                     checkBoxWithTitle(
-                      "With alerts",
-                      _controller.enableAlerts,
-                      (){
-                        setState(() {
-                          _controller.enableAlerts = !_controller.enableAlerts;
-                        });
-                      }
-                    ),
+                        "Daily profits", _controller.enableDailyProfits, () {
+                      setState(() {
+                        _controller.enableDailyProfits =
+                            !_controller.enableDailyProfits;
+                      });
+                    }),
+                    checkBoxWithTitle("Algorithms", _controller.enableAlgo, () {
+                      setState(() {
+                        _controller.enableAlgo = !_controller.enableAlgo;
+                      });
+                    }),
                     checkBoxWithTitle(
-                      "Specs",
-                      _controller.enableSpecs,
-                      (){
-                        setState(() {
-                          _controller.enableSpecs = !_controller.enableSpecs;
-                        });
-                      }
-                    ),
-                    checkBoxWithTitle(
-                      "Daily profits",
-                      _controller.enableDailyProfits,
-                      (){
-                        setState(() {
-                          _controller.enableDailyProfits = !_controller.enableDailyProfits;
-                        });
-                      }
-                    ),
-                    checkBoxWithTitle(
-                      "Algorithms",
-                      _controller.enableAlgo,
-                      (){
-                        setState(() {
-                          _controller.enableAlgo = !_controller.enableAlgo;
-                        });
-                      }
-                    ),
-                    checkBoxWithTitle(
-                      "Minable Coins",
-                      _controller.enableMinableCoins,
-                      (){
-                        setState(() {
-                          _controller.enableMinableCoins = !_controller.enableMinableCoins;
-                        });
-                      }
-                    ),
-                    checkBoxWithTitle(
-                      "In Stock",
-                      _controller.enableInStock,
-                      (){
-                        setState(() {
-                          _controller.enableInStock = !_controller.enableInStock;
-                        });
-                      }
-                    ),
+                        "Minable Coins", _controller.enableMinableCoins, () {
+                      setState(() {
+                        _controller.enableMinableCoins =
+                            !_controller.enableMinableCoins;
+                      });
+                    }),
+                    checkBoxWithTitle("In Stock", _controller.enableInStock,
+                        () {
+                      setState(() {
+                        _controller.enableInStock = !_controller.enableInStock;
+                      });
+                    }),
                   ],
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 
   //First card - checkbox
-  Widget checkBoxWithTitle(String title,bool enable, Function() onTap)
-  {
+  Widget checkBoxWithTitle(String title, bool enable, Function() onTap) {
     return Container(
-      margin: EdgeInsets.only(top:10),
+      margin: EdgeInsets.only(top: 10),
       child: Row(
         children: [
           Container(
@@ -214,33 +221,42 @@ class _MHCPage extends State<MHCPage>
             height: 13,
             child: InkWell(
               onTap: onTap,
-              child: 
-              enable ?
-              SVGWidgets.checkboxFilledIcon :
-              SVGWidgets.checkboxEmptyIcon,
+              child: enable
+                  ? SVGWidgets.checkboxFilledIcon
+                  : SVGWidgets.checkboxEmptyIcon,
             ),
           ),
-          HorizontalSpacing(width: 7.5,),
-          MediumText(title,fontSize: FontSizes.xs,)
+          HorizontalSpacing(
+            width: 7.5,
+          ),
+          MediumText(
+            title,
+            fontSize: FontSizes.xs,
+          )
         ],
       ),
     );
   }
 
-
-  Widget dropdownWithTitle(String title, {List<String> dropDownLista = const ["USD"]})
-  {
+  Widget dropdownWithTitle(String title,
+      {List<String> dropDownLista = const ["USD"]}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MediumText(title,fontSize: FontSizes(11),color: DocColors.gray,),
-        VerticalSpacing(height: 5,),
+        MediumText(
+          title,
+          fontSize: FontSizes(11),
+          color: DocColors.gray,
+        ),
+        VerticalSpacing(
+          height: 5,
+        ),
         CardWidget(
           width: 194,
           height: 30,
           margin: EdgeInsets.zero,
           color: DocColors(Color(0xFF414045)),
-          padding: EdgeInsets.only(left:10,right: 10),
+          padding: EdgeInsets.only(left: 10, right: 10),
           child: DropdownButton<String>(
             isExpanded: true,
             underline: Container(),
@@ -252,47 +268,53 @@ class _MHCPage extends State<MHCPage>
             items: dropDownLista.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: MediumText(value,fontSize: FontSizes.xs,),
+                child: MediumText(
+                  value,
+                  fontSize: FontSizes.xs,
+                ),
               );
             }).toList(),
-            onChanged: (str) {
-
-            },
+            onChanged: (str) {},
           ),
         )
       ],
     );
   }
 
-
-  Widget textfieldWithTitle(String title, )
-  {
+  Widget textfieldWithTitle(
+    String title,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MediumText(title,fontSize: FontSizes(11),color: DocColors.gray,),
-        VerticalSpacing(height: 5,),
-        CardWidget(
-          width: 194,
-          height: 30,
-          margin: EdgeInsets.zero,
-          color: DocColors(Color(0xFF414045)),
-          padding: EdgeInsets.only(left:10,right: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: BasicTextField(maxLength: 5,)
-              ),
-              RegularText("USD/kWh",fontSize: const FontSizes(11),),
-            ],
-          )
+        MediumText(
+          title,
+          fontSize: FontSizes(11),
+          color: DocColors.gray,
         ),
+        VerticalSpacing(
+          height: 5,
+        ),
+        CardWidget(
+            width: 194,
+            height: 30,
+            margin: EdgeInsets.zero,
+            color: DocColors(Color(0xFF414045)),
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                    child: BasicTextField(
+                  maxLength: 5,
+                )),
+                RegularText(
+                  "USD/kWh",
+                  fontSize: const FontSizes(11),
+                ),
+              ],
+            )),
       ],
     );
   }
-  
-
-  
-
 }

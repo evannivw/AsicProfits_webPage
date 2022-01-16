@@ -27,8 +27,10 @@ import '../../Proyect Widgets/Bottom Widgets/WeeklyAsicWidget.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
-  ProductPage({@required this.currentMiner});
+  ProductPage({Key? key, @required this.currentMiner, tabPageViewController})
+      : super(key: key);
   MinerModel? currentMiner;
+  final TabPageViewController tabPageViewController = TabPageViewController();
   @override
   State<StatefulWidget> createState() {
     return _ProductPage();
@@ -37,10 +39,12 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPage extends State<ProductPage> {
   int _currentPage = 0;
+  MinerModel _currentMiner = MinerModel();
   ProductPageController controller = ProductPageController();
   @override
   void initState() {
     super.initState();
+    _currentMiner = widget.currentMiner ?? MinerModel();
     loadHostingFacilities();
   }
 
@@ -53,12 +57,12 @@ class _ProductPage extends State<ProductPage> {
   Widget build(BuildContext context) {
     return SceneController.isMobilView
         ? ProductPageMobileView(
-            currentMiner: widget.currentMiner,
+            currentMiner: _currentMiner,
             currentHostingFacilities: controller.hostingFacilitiesList,
           )
         : ProductPageDesktopView(
             controller: controller,
-            currentMiner: widget.currentMiner,
+            currentMiner: _currentMiner,
             currentHostingFacilities: controller.hostingFacilitiesList,
           );
   }
