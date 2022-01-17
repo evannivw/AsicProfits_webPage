@@ -33,11 +33,11 @@ class _AdminMain extends PageWidget<AdminMain> {
   @override
   void initState() {
     super.initState();
-    loadMinersList();
+    loadAll();
   }
 
-  void loadMinersList() async {
-    await controller.loadMinersList();
+  void loadAll({bool loadDeal = true}) async {
+    await controller.loadAll(loadDeal: loadDeal);
     if (mounted) setState(() {});
   }
 
@@ -74,7 +74,10 @@ class _AdminMain extends PageWidget<AdminMain> {
                 HorizontalSpacing(),
                 BasicButton(
                   onPressed: () {
-                    pushMenu(AddDeal(dealMiner: MinerModel()));
+                    pushMenu(AddDeal(
+                      dealModel: controller.deal,
+                      minerList: controller.minersList,
+                    ));
                   },
                   text: "Deal",
                 ),
@@ -123,7 +126,7 @@ class _AdminMain extends PageWidget<AdminMain> {
                                 pushMenu(AddMinerPage(
                                   currentMiner: new MinerModel(),
                                   callback: () {
-                                    loadMinersList();
+                                    loadAll(loadDeal: false);
                                   },
                                 ));
                               },
@@ -167,7 +170,7 @@ class _AdminMain extends PageWidget<AdminMain> {
                 nextPage: AddMinerPage(
                   currentMiner: miner,
                   callback: () {
-                    loadMinersList();
+                    loadAll(loadDeal: false);
                   },
                 ));
           },

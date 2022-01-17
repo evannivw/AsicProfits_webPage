@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: kDebugMode
-          ? AdminMain()
+          ? const TabPageView(title: "ASIC Profits main")
           : url.toLowerCase().contains("admin")
               ? AdminLogin()
               : const TabPageView(title: "ASIC Profits main"),

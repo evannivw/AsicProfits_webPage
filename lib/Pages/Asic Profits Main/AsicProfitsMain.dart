@@ -43,11 +43,11 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
   @override
   void initState() {
     super.initState();
-    loadMinersList();
+    loadAll();
   }
 
-  void loadMinersList() async {
-    await controller.loadMinersList();
+  void loadAll() async {
+    await controller.loadAll();
     setState(() {});
   }
 
@@ -337,9 +337,7 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
             Container(
               width: 65,
               height: 95,
-              child: controller.minersList.length == 0
-                  ? Container()
-                  : Image.network(controller.minersList.last.imageURL),
+              child: Image.network(controller.deal.miner?.imageURL ?? ""),
               //child:Image.asset('assets/images/miner.png')
             ),
             BasicButton(
@@ -421,7 +419,7 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                     child: SVGWidgets.power2Icon),
                 HorizontalSpacing(),
                 MediumText(
-                  "Price: \$0.064 / kWh",
+                  "Price: ${controller.deal.price}",
                   fontSize: FontSizes.xs,
                 ),
               ],
@@ -445,7 +443,7 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                     Positioned(
                         top: 25,
                         child: BoldText(
-                          "270",
+                          controller.deal.spots,
                           fontSize: FontSizes.xxl,
                           color: DocColors.white,
                         ))
@@ -462,7 +460,9 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
               ],
             ),
             BasicButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.tabPageViewController?.nextPage(MainPage.Hosting);
+              },
               width: 81,
               height: 24,
               baseColor: DocColors.gray_3,

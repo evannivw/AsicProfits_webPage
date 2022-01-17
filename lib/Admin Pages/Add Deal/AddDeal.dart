@@ -20,6 +20,7 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Regular_Text.dart';
 import 'package:asic_miner_website/Helpers/UIHelper.dart';
+import 'package:asic_miner_website/Models/DealModel.dart';
 import 'package:asic_miner_website/Models/HostingFacilitiesModel.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
 import 'package:asic_miner_website/Models/PartnersModel.dart';
@@ -29,8 +30,8 @@ import 'package:asic_miner_website/main.dart';
 import 'package:flutter/material.dart';
 
 class AddDeal extends StatefulWidget {
-  AddDeal({@required this.dealMiner, this.minerList = const [], this.callback});
-  MinerModel? dealMiner;
+  AddDeal({@required this.dealModel, this.minerList = const [], this.callback});
+  DealModel? dealModel;
   List<MinerModel> minerList;
   Function? callback;
   @override
@@ -41,7 +42,7 @@ class AddDeal extends StatefulWidget {
 
 class _AddDeal extends PageWidget<AddDeal> {
   AddDealController controller = AddDealController();
-
+  DealModel _dealModel = DealModel();
   @override
   double get maxWidth => 600;
 
@@ -49,6 +50,7 @@ class _AddDeal extends PageWidget<AddDeal> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _dealModel = widget.dealModel ?? DealModel();
     //controller.fillTextsControllers();
   }
 
@@ -87,11 +89,16 @@ class _AddDeal extends PageWidget<AddDeal> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        dropDownWidget("Deal of the day", ["test", "test1"], (str) {
-          //controller.trust = str;
+        dropDownWidget(
+            "Deal of the day", widget.minerList.map((e) => e.model).toList(),
+            (str) {
+          for (var miner in widget.minerList) {
+            if (miner.model == str) {}
+          }
         }),
         inputWidget("Hosting facilities price", controller.priceTEC),
-        inputWidget("Hosting facilities spots", controller.spotsTEC),
+        inputWidget("Hosting facilities spots", controller.spotsTEC,
+            maxLength: 3),
         VerticalSpacing(
           height: 40,
         ),

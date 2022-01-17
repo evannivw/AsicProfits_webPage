@@ -7,6 +7,7 @@ enum FirestoreTable {
   miners,
   hostings,
   partners,
+  deal,
 }
 
 class FirestoreResult<T> {
@@ -27,6 +28,8 @@ class FirestoreDatabase<T> {
         return "hostings";
       case FirestoreTable.partners:
         return "partners";
+      case FirestoreTable.deal:
+        return "deal";
     }
   }
 
@@ -69,7 +72,7 @@ class FirestoreDatabase<T> {
   ///
 
   //get specific document caller by id
-  Future<FirestoreResult<T>> getDocument(
+  Future<FirestoreResult<dynamic>> getDocument(
       FirestoreTable table, String id) async {
     if (!_checkId(id)) {
       return FirestoreResult(error: "Id incorrecto");
