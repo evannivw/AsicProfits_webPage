@@ -316,9 +316,11 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
             ),
             Container(
               width: 115,
-              height: 60,
-              color: DocColors.blue.getValue(),
-              //child: CustomChart(),
+              height: 80,
+              //color: DocColors.blue.getValue(),
+              child: CustomChart(
+                useSmallChart: true,
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 4),
@@ -337,7 +339,10 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
             Container(
               width: 65,
               height: 95,
-              child: Image.network(controller.deal.miner?.imageURL ?? ""),
+              child: controller.deal.miner == null ||
+                      controller.deal.miner?.imageURL == ""
+                  ? Container()
+                  : Image.network(controller.deal.miner?.imageURL ?? ""),
               //child:Image.asset('assets/images/miner.png')
             ),
             BasicButton(

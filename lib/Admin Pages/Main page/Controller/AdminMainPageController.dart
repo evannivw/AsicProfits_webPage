@@ -26,5 +26,6 @@ class AdminMainPageController {
       return;
     }
     deal = DealModel.fromJson(dealRespuesta.value);
+    print("deal spots: " + deal.spots);
   }
 }

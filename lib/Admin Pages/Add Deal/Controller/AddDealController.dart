@@ -9,7 +9,7 @@ class AddDealController {
   MinerModel dealMiner = MinerModel();
   void fillTEC(DealModel _deal) {
     priceTEC = TextEditingController(text: _deal.price);
-    spotsTEC = TextEditingController(text: _deal.price);
+    spotsTEC = TextEditingController(text: _deal.spots);
     dealMiner = _deal.miner ?? MinerModel();
   }
 

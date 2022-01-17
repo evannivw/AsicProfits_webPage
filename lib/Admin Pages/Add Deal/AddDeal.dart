@@ -51,7 +51,7 @@ class _AddDeal extends PageWidget<AddDeal> {
     // TODO: implement initState
     super.initState();
     _dealModel = widget.dealModel ?? DealModel();
-    //controller.fillTextsControllers();
+    controller.fillTEC(_dealModel);
   }
 
   @override
@@ -89,11 +89,12 @@ class _AddDeal extends PageWidget<AddDeal> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        dropDownWidget(
-            "Deal of the day", widget.minerList.map((e) => e.model).toList(),
-            (str) {
+        dropDownWidget("Deal of the day", controller.dealMiner.model,
+            widget.minerList.map((e) => e.model).toList(), (str) {
           for (var miner in widget.minerList) {
-            if (miner.model == str) {}
+            if (miner.model == str) {
+              controller.dealMiner = miner;
+            }
           }
         }),
         inputWidget("Hosting facilities price", controller.priceTEC),
@@ -182,8 +183,8 @@ class _AddDeal extends PageWidget<AddDeal> {
     );
   }
 
-  Widget dropDownWidget(
-      String title, List<String> dropList, Function(String) callback) {
+  Widget dropDownWidget(String title, String initialValue,
+      List<String> dropList, Function(String) callback) {
     return Container(
       margin: EdgeInsets.only(top: 10, bottom: 10),
       child: Column(
@@ -204,6 +205,7 @@ class _AddDeal extends PageWidget<AddDeal> {
             color: DocColors(Color(0xFF333237).withOpacity(0.35)),
             child: BasicDropDown(
               dropList: dropList,
+              initValue: initialValue,
               onValueChange: (p0) => callback(p0 ?? dropList[0]),
             ),
           ),
