@@ -73,7 +73,13 @@ class _TabPageView extends PageWidget<TabPageView> {
         ProductPage(
           currentMiner: controller.currentMiner,
         ),
-        MHCPage(),
+        MHCPage(
+          idC1: controller.idC1,
+          idC2: controller.idC2,
+          cantC1: controller.cantC1,
+          cantC2: controller.cantC2,
+          minersList: controller.minerList,
+        ),
         VendorsPage(),
         FaqPage(),
         ContactPage(

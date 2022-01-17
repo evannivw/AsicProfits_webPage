@@ -36,6 +36,7 @@ class MinerModel {
   String size;
   String efficiency;
   String imageURL;
+  String status;
   List<MinableCoinModel> minableCoinList = [];
   List<WhereToBuyModel> whereToBuyList = [];
   List<MiningPoolModel> miningPoolList = [];
@@ -73,6 +74,7 @@ class MinerModel {
     this.miningPoolList = const [],
     this.date,
     this.imageURL = "",
+    this.status = "",
   });
 
   /*//Convert class in to json 

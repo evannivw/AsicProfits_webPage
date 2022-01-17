@@ -42,6 +42,7 @@ MinerModel _$MinerModelFromJson(Map<String, dynamic> json) => MinerModel(
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       imageURL: json['imageURL'] as String? ?? "",
+      status: json['status'] as String? ?? "",
     );
 
 Map<String, dynamic> _$MinerModelToJson(MinerModel instance) =>
@@ -67,6 +68,7 @@ Map<String, dynamic> _$MinerModelToJson(MinerModel instance) =>
       'size': instance.size,
       'efficiency': instance.efficiency,
       'imageURL': instance.imageURL,
+      'status': instance.status,
       'minableCoinList':
           instance.minableCoinList.map((e) => e.toJson()).toList(),
       'whereToBuyList': instance.whereToBuyList.map((e) => e.toJson()).toList(),

@@ -26,6 +26,7 @@ import 'package:asic_miner_website/Pages/Top%20Widget/Top%20Widget%20Views/SideV
 import 'package:asic_miner_website/Pages/Top%20Widget/TopWidget.dart';
 import 'package:asic_miner_website/Pages/Vendors%20Page/VendorsPage.dart';
 import 'package:asic_miner_website/TabPage%20View/TabPageView.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -71,9 +72,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: url.toLowerCase().contains("admin")
-          ? AdminLogin()
-          : const TabPageView(title: "ASIC Profits main"),
+      home: kDebugMode
+          ? AdminMain()
+          : url.toLowerCase().contains("admin")
+              ? AdminLogin()
+              : const TabPageView(title: "ASIC Profits main"),
     );
   }
 }

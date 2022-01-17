@@ -87,8 +87,13 @@ class _AddMinerPage extends PageWidget<AddMinerPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        dropDownWidget("Color", ["Yellow", "Red", "Blue"], (str) {
+        dropDownWidget("Color", controller.color, ["Yellow", "Red", "Blue"],
+            (str) {
           controller.color = str;
+        }),
+        dropDownWidget("Status", controller.status, ["enable", "disable"],
+            (str) {
+          controller.status = str;
         }),
         inputWidget("Model", controller: controller.modelTEC),
         inputWidget("Manufacturer", controller: controller.manuTEC),
@@ -276,8 +281,8 @@ class _AddMinerPage extends PageWidget<AddMinerPage> {
     );
   }
 
-  Widget dropDownWidget(
-      String hintText, List<String> dropList, Function(String) callback) {
+  Widget dropDownWidget(String hintText, String initialValue,
+      List<String> dropList, Function(String) callback) {
     return Container(
       margin: EdgeInsets.only(top: 10, bottom: 10),
       child: Column(
@@ -299,6 +304,7 @@ class _AddMinerPage extends PageWidget<AddMinerPage> {
             child: BasicDropDown(
               hintText: hintText,
               dropList: dropList,
+              initValue: initialValue,
               onValueChange: (str) {
                 if (str != null) {
                   callback(str);

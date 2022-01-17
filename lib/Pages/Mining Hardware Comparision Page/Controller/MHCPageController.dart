@@ -1,9 +1,8 @@
-class MHCPageController
-{
-  bool enableAlerts = false;
-  bool enableSpecs = false;
-  bool enableDailyProfits = false;
-  bool enableAlgo = false;
-  bool enableMinableCoins = false;
-  bool enableInStock = false;
+class MHCPageController {
+  bool enableAlerts = true;
+  bool enableSpecs = true;
+  bool enableDailyProfits = true;
+  bool enableAlgo = true;
+  bool enableMinableCoins = true;
+  bool enableInStock = true;
 }

@@ -162,6 +162,15 @@ class _AdminMain extends PageWidget<AdminMain> {
           title: "Miners",
           minerList: controller.minersList,
           isAdmin: true,
+          callback: (miner) {
+            SceneController.push(context,
+                nextPage: AddMinerPage(
+                  currentMiner: miner,
+                  callback: () {
+                    loadMinersList();
+                  },
+                ));
+          },
         ),
         VerticalSpacing(
           height: 100,

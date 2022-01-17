@@ -337,11 +337,18 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
             Container(
               width: 65,
               height: 95,
-              color: DocColors.blue.getValue(),
+              child: controller.minersList.length == 0
+                  ? Container()
+                  : Image.network(controller.minersList.last.imageURL),
               //child:Image.asset('assets/images/miner.png')
             ),
             BasicButton(
-              onPressed: () {},
+              onPressed: () async {
+                widget.tabPageViewController
+                    ?.setCurrentMiner(controller.minersList.last);
+                await Future.delayed(Duration(milliseconds: 50));
+                widget.tabPageViewController?.nextPage(MainPage.Product);
+              },
               width: 81,
               height: 24,
               padding: EdgeInsets.all(0),
@@ -353,11 +360,6 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
             )
           ],
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [],
-        )
       ],
     );
   }
@@ -513,6 +515,10 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                             child: BasicTextField(
                               maxLength: 3,
                               controller: TextEditingController(text: "1"),
+                              onValueChange: (p0) {
+                                var cant = int.tryParse(p0);
+                                controller.cantC1 = cant ?? 1;
+                              },
                             )),
                         MediumText(
                           "X",
@@ -547,8 +553,11 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                     iconDisabledColor: DocColors.white.getValue(),
                     iconEnabledColor: DocColors.white.getValue(),
                     iconSize: 15,
-                    value: 'AMD RX 5700 XT',
-                    items: <String>['AMD RX 5700 XT', 'B', 'C', 'D']
+                    value: controller.minersList.length == 0
+                        ? null
+                        : controller.minersList.first.model,
+                    items: controller.minersList
+                        .map((e) => e.model)
                         .map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -558,7 +567,16 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (str) {},
+                    onChanged: (str) {
+                      if (str == null) return;
+                      for (int i = 0; i < controller.minersList.length; i++) {
+                        var miner = controller.minersList[i];
+                        if (miner.model == str) {
+                          controller.idC1 = i;
+                          return;
+                        }
+                      }
+                    },
                   ),
                 )
               ],
@@ -598,6 +616,10 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                             child: BasicTextField(
                               maxLength: 3,
                               controller: TextEditingController(text: "1"),
+                              onValueChange: (p0) {
+                                var cant = int.tryParse(p0);
+                                controller.cantC2 = cant ?? 1;
+                              },
                             )),
                         MediumText(
                           "X",
@@ -632,8 +654,11 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                     iconDisabledColor: DocColors.white.getValue(),
                     iconEnabledColor: DocColors.white.getValue(),
                     iconSize: 15,
-                    value: 'AMD RX 5700 XT',
-                    items: <String>['AMD RX 5700 XT', 'B', 'C', 'D']
+                    value: controller.minersList.length == 0
+                        ? null
+                        : controller.minersList.last.model,
+                    items: controller.minersList
+                        .map((e) => e.model)
                         .map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -643,7 +668,16 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (str) {},
+                    onChanged: (str) {
+                      if (str == null) return;
+                      for (int i = 0; i < controller.minersList.length; i++) {
+                        var miner = controller.minersList[i];
+                        if (miner.model == str) {
+                          controller.idC2 = i;
+                          return;
+                        }
+                      }
+                    },
                   ),
                 )
               ],
@@ -654,7 +688,16 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             BasicButton(
-                onPressed: () {},
+                onPressed: () async {
+                  widget.tabPageViewController?.minerList =
+                      controller.minersList;
+                  widget.tabPageViewController?.idC1 = controller.idC1;
+                  widget.tabPageViewController?.idC2 = controller.idC2;
+                  widget.tabPageViewController?.cantC1 = controller.cantC1;
+                  widget.tabPageViewController?.cantC2 = controller.cantC2;
+                  await Future.delayed(Duration(milliseconds: 50));
+                  widget.tabPageViewController?.nextPage(MainPage.MHC);
+                },
                 width: 90,
                 height: 24,
                 baseColor: DocColors.gray_3,

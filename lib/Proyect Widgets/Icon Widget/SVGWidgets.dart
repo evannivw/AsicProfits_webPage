@@ -49,8 +49,12 @@ class SVGWidgets {
   static Widget get shield2Icon => SvgPicture.string(shield2SVG);
 
   static Widget get leaf2Icon => SvgPicture.string(leaf2SVG);
+
+  static Widget get thumbsDownRedIcon => SvgPicture.string(thumbsDownSVG);
 }
 
+const String thumbsDownSVG =
+    '<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.32204 12.0863L4.0625 8.9375V1.625H11.375L13 6.5V8.9375H8.125V11.5465C8.125 12.3493 7.47426 13 6.67154 13C6.07721 13 5.54276 12.6382 5.32204 12.0863Z" fill="#FF4500"/><path d="M2.4375 8.9375H0V1.625H2.4375V8.9375Z" fill="#FF4500"/></svg>';
 const String leaf2SVG =
     '<svg width="8" height="9" viewBox="0 0 8 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.40589 0C2.4203 0 0 2.17827 0 4.8653V8.10885H1.08118L1.08118 5.18197L3.40187 2.86127L4.16638 3.62578L2.16236 5.6298V7.00364C4.89413 6.75953 7.02766 4.68519 7.02766 2.16236L7.02766 0H5.40589Z" fill="#FFBA00"/></svg>';
 const String shield2SVG =

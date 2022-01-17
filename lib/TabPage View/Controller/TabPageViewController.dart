@@ -22,6 +22,11 @@ class TabPageViewController extends ChangeNotifier {
   int _currentPage = 0;
   int get currentPage => _currentPage;
   MinerModel get currentMiner => _currentMiner;
+  List<MinerModel> minerList = [];
+  int idC1 = 0;
+  int idC2 = 0;
+  int cantC1 = 0;
+  int cantC2 = 0;
   void nextPage(MainPage page) {
     _currentPage = page.index;
     notifyListeners();

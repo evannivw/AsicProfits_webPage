@@ -29,8 +29,9 @@ import 'package:asic_miner_website/main.dart';
 import 'package:flutter/material.dart';
 
 class AddDeal extends StatefulWidget {
-  AddDeal({@required this.dealMiner, this.callback});
+  AddDeal({@required this.dealMiner, this.minerList = const [], this.callback});
   MinerModel? dealMiner;
+  List<MinerModel> minerList;
   Function? callback;
   @override
   State<StatefulWidget> createState() {

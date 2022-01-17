@@ -12,6 +12,7 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/Fonts.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Regular_Text.dart';
+import 'package:asic_miner_website/Models/MinerModel.dart';
 import 'package:asic_miner_website/Pages/FAQ%20Page/FAQ%20views/ExpansionCard.dart';
 import 'package:asic_miner_website/Pages/FAQ%20Page/Faq%20Text/FaqTexts.dart';
 import 'package:asic_miner_website/Pages/Hosting%20Page/Hosting%20page%20views/HostingCard.dart';
@@ -26,6 +27,17 @@ import '../../Proyect Widgets/Bottom Widgets/WeeklyAsicWidget.dart';
 import 'package:flutter/material.dart';
 
 class MHCPage extends StatefulWidget {
+  MHCPage(
+      {this.cantC1 = 0,
+      this.cantC2 = 0,
+      this.idC1 = 0,
+      this.idC2 = 0,
+      this.minersList = const []});
+  int cantC1;
+  int cantC2;
+  int idC1;
+  int idC2;
+  List<MinerModel> minersList;
   @override
   State<StatefulWidget> createState() {
     return _MHCPage();
@@ -114,11 +126,33 @@ class _MHCPage extends State<MHCPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ComparisionCardWidget(),
+            ComparisionCardWidget(
+              minerModel: widget.idC1 >= widget.minersList.length
+                  ? MinerModel()
+                  : widget.minersList[widget.idC1],
+              minerList: widget.minersList,
+              cantidad: widget.cantC1,
+              showSpecs: _controller.enableSpecs,
+              showAlgo: _controller.enableAlgo,
+              showMinableCoins: _controller.enableMinableCoins,
+              showProfits: _controller.enableDailyProfits,
+              showInStock: _controller.enableInStock,
+            ),
             HorizontalSpacing(
               width: 20,
             ),
-            ComparisionCardWidget(),
+            ComparisionCardWidget(
+              minerModel: widget.idC2 >= widget.minersList.length
+                  ? MinerModel()
+                  : widget.minersList[widget.idC2],
+              minerList: widget.minersList,
+              cantidad: widget.cantC2,
+              showSpecs: _controller.enableSpecs,
+              showAlgo: _controller.enableAlgo,
+              showMinableCoins: _controller.enableMinableCoins,
+              showProfits: _controller.enableDailyProfits,
+              showInStock: _controller.enableInStock,
+            ),
           ],
         )
       ],

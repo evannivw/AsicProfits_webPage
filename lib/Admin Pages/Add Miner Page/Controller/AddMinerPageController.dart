@@ -38,6 +38,7 @@ class AddMinerPageController {
   String imageURL = "";
   String id = "";
   String color = "";
+  String status = "";
 
   void fillTextsControllers(MinerModel miner) {
     modelTEC = TextEditingController(text: miner.model);
@@ -59,6 +60,7 @@ class AddMinerPageController {
     costperkwTEC = TextEditingController(text: "");
     poolFeeTEC = TextEditingController(text: "");
     visitLinkTEC = TextEditingController(text: miner.visitLink);
+    status = miner.status;
     color = miner.color.isEmpty ? "Yellow" : miner.color;
     if (miner.id.isEmpty) {
       id = FirestoreDatabase().getKey(FirestoreTable.miners);
@@ -141,6 +143,7 @@ class AddMinerPageController {
     _miner.visitLink = visitLinkTEC.text;
     _miner.imageURL = imageURL;
     _miner.color = color;
+    _miner.status = status;
     return _miner;
   }
 }

@@ -3,7 +3,10 @@ import 'package:asic_miner_website/Models/MinerModel.dart';
 
 class AsicProfitsMainController {
   List<MinerModel> minersList = [];
-
+  int idC1 = 0;
+  int idC2 = 0;
+  int cantC1 = 0;
+  int cantC2 = 0;
   //Loads miners list and stored in minersList
   Future loadMinersList() async {
     var respuesta =

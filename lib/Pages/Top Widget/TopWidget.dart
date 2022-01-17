@@ -216,13 +216,13 @@ class _TopWidget extends State<TopWidget> {
                         setTappedButton(MainPage.MHC);
                       },
                     ),
-                    PopupMenuItem(
+                    /*PopupMenuItem(
                       child: MediumText("Product(test)"),
                       value: 1,
                       onTap: () {
                         setTappedButton(MainPage.Product);
                       },
-                    ),
+                    ),*/
                   ]),
         ),
         SizedBox(
