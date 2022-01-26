@@ -237,12 +237,61 @@ class _TopWidget extends State<TopWidget> {
         SizedBox(
           width: 10,
         ),
-        BasicButton(
-            text: "Partners",
-            baseColor: getButtonColor(MainPage.Vendors.index),
-            onPressed: () {
-              setTappedButton(MainPage.Vendors);
-            }),
+        Theme(
+          data: Theme.of(context).copyWith(
+              tooltipTheme: TooltipThemeData(
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+            ),
+          )),
+          child: PopupMenuButton(
+              child: IgnorePointer(
+                ignoring: true,
+                child: BasicButton(
+                  baseColor: getButtonColor(MainPage.Vendors.index, ids: [
+                    MainPage.Vendors.index,
+                    MainPage.Hosting.index,
+                  ]),
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MediumText(
+                        "Partners",
+                        color: DocColors.white,
+                      ),
+                      //SizedBox(width: 2,),
+                      Container(
+                        width: 10,
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.arrow_drop_down_sharp,
+                          size: 15,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              color: DocColors.black_2.getValue(),
+              tooltip: "",
+              itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: MediumText("Partners"),
+                      value: 1,
+                      onTap: () {
+                        setTappedButton(MainPage.Vendors);
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: MediumText("Hosting facilities"),
+                      value: 1,
+                      onTap: () {
+                        setTappedButton(MainPage.Hosting);
+                      },
+                    ),
+                  ]),
+        ),
         SizedBox(
           width: 10,
         ),

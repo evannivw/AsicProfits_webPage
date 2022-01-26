@@ -11,8 +11,10 @@ class BuyingOpportunitiesController {
       print("error llamada list-miners" + respuesta.error.toString());
       return;
     }
-    minerList =
-        respuesta.listValue!.map((e) => MinerModel.fromJson(e)).toList();
+    var list = respuesta.listValue!.map((e) => MinerModel.fromJson(e)).toList();
+    minerList = list
+        .where((element) => element.status.toLowerCase() == "enable")
+        .toList();
     /*await Future.delayed(Duration(seconds: 1));
     minersList = List.generate(20, (index) {
       return MinerModel();

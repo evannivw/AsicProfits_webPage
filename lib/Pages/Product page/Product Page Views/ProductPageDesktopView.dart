@@ -62,8 +62,11 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
               size: 15,
               color: DocColors.white.getValue(),
             ),
-            MediumText(
-              _minerModel.model,
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 100),
+              child: MediumText(
+                _minerModel.model,
+              ),
             ),
           ],
         ),
@@ -538,7 +541,7 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
               width: 110,
             ),
             Container(
-                width: 150,
+                width: 200,
                 child: Row(
                   children: [
                     Container(
@@ -549,10 +552,13 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
                     HorizontalSpacing(
                       width: 7.5,
                     ),
-                    MediumText(
-                      value,
-                      fontSize: FontSizes.xs,
-                      color: color,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 175),
+                      child: MediumText(
+                        value,
+                        fontSize: FontSizes.xs,
+                        color: color,
+                      ),
                     ),
                   ],
                 )),

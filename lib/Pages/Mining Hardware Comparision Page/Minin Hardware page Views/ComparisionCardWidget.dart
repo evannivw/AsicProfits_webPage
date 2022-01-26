@@ -45,7 +45,13 @@ class _ComparisionCardWidget extends State<ComparisionCardWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    setMiner();
+  }
+
+  void setMiner() async {
+    await Future.delayed(Duration(milliseconds: 500));
     _miner = widget.minerModel ?? MinerModel();
+    if (mounted) setState(() {});
   }
 
   @override
@@ -296,8 +302,10 @@ class _ComparisionCardWidget extends State<ComparisionCardWidget> {
                 Expanded(
                     child: BasicTextField(
                   maxLength: 3,
-                  controller:
-                      TextEditingController(text: widget.cantidad.toString()),
+                  controller: TextEditingController(
+                      text: widget.cantidad < 1
+                          ? "1"
+                          : widget.cantidad.toString()),
                 )),
                 RegularText(
                   "x",

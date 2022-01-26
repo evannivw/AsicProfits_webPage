@@ -10,7 +10,7 @@ class AsicProfitsMainController {
   int cantC1 = 0;
   int cantC2 = 0;
   //Loads miners list and stored in minersList
-  Future loadAll() async {
+  Future loadAll({bool loadDeals = true}) async {
     var respuesta =
         await FirestoreDatabase<MinerModel>().get(FirestoreTable.miners);
     if (respuesta.error != null || respuesta.listValue == null) {
@@ -25,6 +25,7 @@ class AsicProfitsMainController {
     });*/
 
     //load deal
+    if (!loadDeals) return;
     var dealRespuesta = await FirestoreDatabase<DealModel>()
         .getDocument(FirestoreTable.deal, "deal1");
     if (dealRespuesta.error != null || dealRespuesta.value == null) {

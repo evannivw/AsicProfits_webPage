@@ -60,10 +60,13 @@ class BuyingOptionCard extends StatelessWidget {
                             _miner.manu,
                             fontSize: FontSizes.xs,
                           ),
-                          MediumText(
-                            _miner.model,
-                            fontSize: FontSizes.xs,
-                            color: DocColors.gray,
+                          ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: 100),
+                            child: MediumText(
+                              _miner.model,
+                              fontSize: FontSizes.xs,
+                              color: DocColors.gray,
+                            ),
                           )
                         ],
                       )

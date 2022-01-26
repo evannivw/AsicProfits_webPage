@@ -765,16 +765,28 @@ class _ProductPageMobileView extends State<ProductPageMobileView> {
                             decoration: BoxDecoration(
                                 color: const Color(0xFF1D362E),
                                 borderRadius: BorderRadius.circular(999)),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxWidth: (MediaQuery.of(context).size.width /
+                                          2.2) -
+                                      10),
+                              child: MediumText(
+                                value,
+                                fontSize: FontSizes.s,
+                                color: color,
+                              ),
+                            ),
+                          )
+                        : ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxWidth:
+                                    (MediaQuery.of(context).size.width / 2.2) -
+                                        20),
                             child: MediumText(
                               value,
                               fontSize: FontSizes.s,
                               color: color,
                             ),
-                          )
-                        : MediumText(
-                            value,
-                            fontSize: FontSizes.s,
-                            color: color,
                           ),
                   ],
                 )),

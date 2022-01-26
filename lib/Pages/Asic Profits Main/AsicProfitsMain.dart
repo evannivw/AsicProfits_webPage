@@ -46,8 +46,8 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
     loadAll();
   }
 
-  void loadAll() async {
-    await controller.loadAll();
+  void loadAll({bool loadDeal = true}) async {
+    await controller.loadAll(loadDeals: loadDeal);
     setState(() {});
   }
 
@@ -67,12 +67,16 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
         VerticalSpacing(height: 30),
         container2(),
         ProfitabilityWidget(
-            minerList: controller.minersList,
-            callback: (miner) async {
-              widget.tabPageViewController?.setCurrentMiner(miner);
-              await Future.delayed(Duration(milliseconds: 50));
-              widget.tabPageViewController?.nextPage(MainPage.Product);
-            }),
+          minerList: controller.minersList,
+          callback: (miner) async {
+            widget.tabPageViewController?.setCurrentMiner(miner);
+            await Future.delayed(Duration(milliseconds: 50));
+            widget.tabPageViewController?.nextPage(MainPage.Product);
+          },
+          shouldReloadCallback: () {
+            loadAll(loadDeal: false);
+          },
+        ),
         WeeklyAsicWidget2(),
         SceneController.isMobilView ? Container() : BuyingOpportunitiesWidget(),
         SceneController.isMobilView ? Container() : BottomInfoWidget(),

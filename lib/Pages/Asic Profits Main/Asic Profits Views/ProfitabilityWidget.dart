@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:advanced_datatable/advanced_datatable_source.dart';
 import 'package:advanced_datatable/datatable.dart';
 import 'package:asic_miner_website/Admin%20Pages/Add%20Miner%20Page/AddMinerPage.dart';
@@ -22,6 +24,7 @@ import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.da
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class ProfitabilityWidget extends StatefulWidget {
   ProfitabilityWidget({
@@ -31,8 +34,10 @@ class ProfitabilityWidget extends StatefulWidget {
     this.minerList = const [],
     this.isAdmin = false,
     this.callback,
+    this.shouldReloadCallback,
   });
   Function(MinerModel)? callback;
+  Function()? shouldReloadCallback;
   bool isAdmin;
   bool useViewMoreWidget;
   bool useElectricityCostInputs;
@@ -47,10 +52,36 @@ class ProfitabilityWidget extends StatefulWidget {
 class _ProfitabilityWidget extends State<ProfitabilityWidget> {
   int rowsPerPage = AdvancedPaginatedDataTable.defaultRowsPerPage;
   var source = ExampleSource();
+  bool loading = true;
+  double _timerValue = 0;
+  double _loadingMaxTime = 60;
+  DateTime _lastUpdate = DateTime.now();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (widget.useViewMoreWidget) startTimer();
+  }
+
+  void startTimer() {
+    const offsetTime = 250;
+    const oneSec = const Duration(milliseconds: offsetTime);
+    var _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          if (_timerValue >= _loadingMaxTime) {
+            _timerValue = 0;
+            widget.shouldReloadCallback?.call();
+            _lastUpdate = DateTime.now();
+            if (mounted) setState(() {});
+          } else {
+            _timerValue = _timerValue + (offsetTime / 1000);
+            if (mounted) setState(() {});
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -180,7 +211,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
                   child: CircularProgressIndicator(
                     backgroundColor: Color(0xFF39383D),
                     color: Color(0xFF39383D),
-                    value: 0.5,
+                    value: (_timerValue) * 1 / _loadingMaxTime, // 0.5,
                     valueColor: AlwaysStoppedAnimation<Color>(
                         DocColors.green.getValue()),
                   ),
@@ -189,7 +220,8 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
                   width: 15,
                 ),
                 MediumText(
-                  "Last updated Oct 29, 2021, 08:55 CT",
+                  "Last updated " +
+                      DateFormat('yyyy-MM-dd – kk:mm').format(_lastUpdate),
                   fontSize: FontSizes.s,
                 )
               ],
@@ -241,7 +273,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
               child: CircularProgressIndicator(
                 backgroundColor: Color(0xFF39383D),
                 color: Color(0xFF39383D),
-                value: 0.5,
+                value: (_timerValue) * 1 / _loadingMaxTime,
                 valueColor:
                     AlwaysStoppedAnimation<Color>(DocColors.green.getValue()),
               ),
@@ -250,7 +282,8 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
               width: 15,
             ),
             MediumText(
-              "Last updated Oct 29, 2021, 08:55 CT",
+              "Last updated " +
+                  DateFormat('yyyy-MM-dd – kk:mm').format(_lastUpdate),
               fontSize: FontSizes.s,
             )
           ],
@@ -298,6 +331,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
               showCheckboxColumn: false,
               horizontalMargin: 0,
               dataRowHeight: 69,
+              columnSpacing: 0,
               dividerThickness: 0.25,
             ),
           ),
@@ -387,104 +421,128 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
           }
         },
         cells: [
-          DataCell(Row(
-            children: [
-              Container(
-                width: 29,
-                height: 29,
-                decoration: BoxDecoration(
-                    color: UIHelper().fromStringToColor(miner.color),
-                    borderRadius: BorderRadius.circular(999)),
-              ),
-              HorizontalSpacing(),
-              MediumText(
-                miner.model,
-                color: DocColors.gray,
-                fontSize: FontSizes.xs,
-              ),
-            ],
+          DataCell(Container(
+            width: 200,
+            child: Row(
+              children: [
+                Container(
+                  width: 29,
+                  height: 29,
+                  decoration: BoxDecoration(
+                      color: UIHelper().fromStringToColor(miner.color),
+                      borderRadius: BorderRadius.circular(999)),
+                ),
+                HorizontalSpacing(),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 150),
+                  child: MediumText(
+                    miner.model,
+                    color: DocColors.gray,
+                    fontSize: FontSizes.xs,
+                  ),
+                ),
+              ],
+            ),
           )),
 
           //Release
           DataCell(
-            MediumText(
-              miner.release,
-              color: DocColors.white,
-              fontSize: FontSizes.xs,
+            Container(
+              width: 100,
+              child: MediumText(
+                miner.release,
+                color: DocColors.white,
+                fontSize: FontSizes.xs,
+              ),
             ),
           ),
 
           //Hashrate
-          DataCell(Row(
-            children: [
-              MediumText(
-                miner.hashrate,
-                color: DocColors.white,
-                fontSize: FontSizes.xs,
-              ),
-              MediumText(
-                ' ${miner.hashrateUnits}',
-                color: DocColors.gray,
-                fontSize: FontSizes.xs,
-              ),
-            ],
+          DataCell(Container(
+            width: 100,
+            child: Row(
+              children: [
+                MediumText(
+                  miner.hashrate,
+                  color: DocColors.white,
+                  fontSize: FontSizes.xs,
+                ),
+                MediumText(
+                  ' ${miner.hashrateUnits}',
+                  color: DocColors.gray,
+                  fontSize: FontSizes.xs,
+                ),
+              ],
+            ),
           )),
 
           //Power
-          DataCell(Row(
-            children: [
-              MediumText(
-                miner.power,
-                color: DocColors.white,
-                fontSize: FontSizes.xs,
-              ),
-              MediumText(
-                ' W',
-                color: DocColors.gray,
-                fontSize: FontSizes.xs,
-              ),
-            ],
+          DataCell(Container(
+            width: 100,
+            child: Row(
+              children: [
+                MediumText(
+                  miner.power,
+                  color: DocColors.white,
+                  fontSize: FontSizes.xs,
+                ),
+                MediumText(
+                  ' W',
+                  color: DocColors.gray,
+                  fontSize: FontSizes.xs,
+                ),
+              ],
+            ),
           )),
 
           //Noise
-          DataCell(Row(
-            children: [
-              MediumText(
-                miner.noise,
-                color: DocColors.white,
-                fontSize: FontSizes.xs,
-              ),
-              MediumText(
-                ' db',
-                color: DocColors.gray,
-                fontSize: FontSizes.xs,
-              ),
-            ],
+          DataCell(Container(
+            width: 100,
+            child: Row(
+              children: [
+                MediumText(
+                  miner.noise,
+                  color: DocColors.white,
+                  fontSize: FontSizes.xs,
+                ),
+                MediumText(
+                  ' db',
+                  color: DocColors.gray,
+                  fontSize: FontSizes.xs,
+                ),
+              ],
+            ),
           )),
 
           //Algo
           DataCell(
-            MediumText(
-              miner.algo,
-              color: DocColors.gray,
-              fontSize: FontSizes.s,
+            Container(
+              width: 100,
+              child: MediumText(
+                miner.algo,
+                color: DocColors.gray,
+                fontSize: FontSizes.s,
+              ),
             ),
           ),
 
           //Profitability
-          DataCell(Row(
-            children: [
-              MediumText(
-                '\$NAN',
-                color: DocColors.green,
-                fontSize: FontSizes.xs,
-              ),
-              MediumText(
-                '/yearly',
-                color: DocColors.gray,
-                fontSize: FontSizes.xs,
-              ),
-            ],
+          DataCell(Container(
+            width: 100,
+            child: Row(
+              children: [
+                MediumText(
+                  '\$NAN',
+                  color: DocColors.green,
+                  fontSize: FontSizes.xs,
+                ),
+                MediumText(
+                  '/yearly',
+                  color: DocColors.gray,
+                  fontSize: FontSizes.xs,
+                ),
+              ],
+            ),
           )),
 
           //Link
