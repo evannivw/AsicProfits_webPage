@@ -4,41 +4,45 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/Fonts.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-class BasicDropDown extends StatefulWidget
-{
-  BasicDropDown(
-    {
-      this.hintText = "",
-      this.dropList = const ['A','B','C'],
-      this.fontSizes = FontSizes.m,
-      this.initValue,
-    
-    }
-  );
+
+class BasicDropDown extends StatefulWidget {
+  BasicDropDown({
+    this.hintText = "",
+    this.dropList = const ['A', 'B', 'C'],
+    this.fontSizes = FontSizes.m,
+    this.initValue,
+    this.onValueChange,
+  });
   List<String> dropList;
   String hintText;
   FontSizes fontSizes;
   String? initValue;
+  final Function(String?)? onValueChange;
   @override
   State<StatefulWidget> createState() {
     return _BasicDropDown();
   }
 }
-class _BasicDropDown extends State<BasicDropDown>
-{
+
+class _BasicDropDown extends State<BasicDropDown> {
   String? _currentValue;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _currentValue = widget.initValue;
+    if (widget.dropList.contains(widget.initValue))
+      _currentValue = widget.initValue;
   }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      hint: MediumText(widget.hintText,fontSize: FontSizes.m,color: DocColors.gray,),
+      hint: MediumText(
+        widget.hintText,
+        fontSize: FontSizes.m,
+        color: DocColors.gray,
+      ),
       isExpanded: true,
       underline: Container(),
       dropdownColor: Color(0xFF26242A),
@@ -49,15 +53,18 @@ class _BasicDropDown extends State<BasicDropDown>
       items: widget.dropList.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: MediumText(value,fontSize: widget.fontSizes,),
+          child: MediumText(
+            value,
+            fontSize: widget.fontSizes,
+          ),
         );
       }).toList(),
       onChanged: (str) {
         setState(() {
           _currentValue = str;
+          widget.onValueChange?.call(str);
         });
       },
     );
   }
-  
 }

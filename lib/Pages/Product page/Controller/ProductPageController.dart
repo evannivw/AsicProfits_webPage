@@ -1,15 +1,22 @@
+import 'package:asic_miner_website/Backend/Firebase/Firestore/FirestoreDatabase.dart';
 import 'package:asic_miner_website/Models/HostingFacilitiesModel.dart';
 
-class ProductPageController
-{
+class ProductPageController {
   List<HostingFacilitiesModel> hostingFacilitiesList = [];
 
-  Future loadHostingFacilities() async
-  {
-    await Future.delayed(Duration(seconds: 1));
-    hostingFacilitiesList = List.generate(5, (id)
-    {
-      return HostingFacilitiesModel(namePlace: id.toString());
-    });
+  ///Loads hosting facilites and stored in hostingFacilitiesList
+  Future loadHostingFacilities() async {
+    var respuesta = await FirestoreDatabase<HostingFacilitiesModel>()
+        .get(FirestoreTable.hostings);
+    if (respuesta.error != null || respuesta.listValue == null) {
+      print(respuesta.error.toString());
+      return;
+    }
+    hostingFacilitiesList = respuesta.listValue!
+        .map((e) => HostingFacilitiesModel.fromJson(e))
+        .toList();
+    if (hostingFacilitiesList.length > 6) {
+      hostingFacilitiesList.removeRange(6, hostingFacilitiesList.length);
+    }
   }
 }

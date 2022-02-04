@@ -8,10 +8,9 @@ part of 'WhereToBuyModel.dart';
 
 WhereToBuyModel _$WhereToBuyModelFromJson(Map<String, dynamic> json) =>
     WhereToBuyModel(
-      id: json['id'] as String? ?? "",
       nameSeller: json['nameSeller'] as String? ?? "",
       subtitle: json['subtitle'] as String? ?? "",
-      country: json['country'] as String? ?? "",
+      countryImageURL: json['countryImageURL'] as String? ?? "",
       price: json['price'] as String? ?? "",
       available: json['available'] as String? ?? "",
       moreInfo: json['moreInfo'] as String? ?? "",
@@ -21,11 +20,10 @@ WhereToBuyModel _$WhereToBuyModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$WhereToBuyModelToJson(WhereToBuyModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'imageURL': instance.imageURL,
       'nameSeller': instance.nameSeller,
       'subtitle': instance.subtitle,
-      'country': instance.country,
+      'countryImageURL': instance.countryImageURL,
       'price': instance.price,
       'available': instance.available,
       'moreInfo': instance.moreInfo,

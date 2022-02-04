@@ -12,30 +12,34 @@ import 'package:asic_miner_website/TabPage%20View/Controller/TabPageViewControll
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
 import 'package:flutter/material.dart';
 
-class MobileDataRow extends StatefulWidget
-{
-  MobileDataRow({this.callback,currentMiner});
-  final MinerModel currentMiner = MinerModel();
+class MobileDataRow extends StatefulWidget {
+  MobileDataRow({this.callback, this.currentMiner});
+  MinerModel? currentMiner;
   Function? callback;
   @override
   State<StatefulWidget> createState() {
     return _MobileDataRow();
   }
-
 }
 
-class _MobileDataRow extends State<MobileDataRow>
-{
+class _MobileDataRow extends State<MobileDataRow> {
   bool _isExpanded = false;
+  MinerModel _miner = MinerModel();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _miner = widget.currentMiner ?? MinerModel();
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         widget.callback?.call();
       },
       child: Container(
-        margin: EdgeInsets.only(top:15,bottom: 15),
+        margin: EdgeInsets.only(top: 15, bottom: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -51,9 +55,15 @@ class _MobileDataRow extends State<MobileDataRow>
                   cornerRadius: 0,
                   margin: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
-                  child: MediumText("\$207.20",color: DocColors.green,fontSize: FontSizes.xs,),
+                  child: MediumText(
+                    "\$NA",
+                    color: DocColors.green,
+                    fontSize: FontSizes.xs,
+                  ),
                 ),
-                HorizontalSpacing(width: 5,),
+                HorizontalSpacing(
+                  width: 5,
+                ),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: DocColors.white.getValue(),
@@ -80,8 +90,7 @@ class _MobileDataRow extends State<MobileDataRow>
             color: DocColors.white.getValue(),
           ),
         ),*/
-      onExpansionChanged: (valor)
-      {
+      onExpansionChanged: (valor) {
         setState(() {
           _isExpanded = valor;
         });
@@ -98,84 +107,107 @@ class _MobileDataRow extends State<MobileDataRow>
         VerticalSpacing(),
         InfoCard("Algo", MediumText("EtHash")),
         VerticalSpacing(),
-        InfoCard("Profitability", coloredText("\$231.85", "/day",mainColor: DocColors.green)),
+        InfoCard("Profitability",
+            coloredText("\$231.85", "/day", mainColor: DocColors.green)),
         VerticalSpacing(),
         InfoCard("Link", linkButton("Visit")),
-        VerticalSpacing(height: 20,),
+        VerticalSpacing(
+          height: 20,
+        ),
       ],
     );
-  
   }
 
-  Widget title()
-  {
+  Widget title() {
     return Row(
       children: [
         Container(
           width: 29,
           height: 29,
           decoration: BoxDecoration(
-            color: UIHelper().fromStringToColor(widget.currentMiner.color),
-            borderRadius: BorderRadius.circular(999)
-          ),
+              color: UIHelper().fromStringToColor(_miner.color),
+              borderRadius: BorderRadius.circular(999)),
         ),
         HorizontalSpacing(),
-        MediumText(widget.currentMiner.model,fontSize: FontSizes.s,),
+        MediumText(
+          _miner.model,
+          fontSize: FontSizes.s,
+        ),
       ],
     );
   }
 
-  Widget InfoCard(String titulo,Widget data)
-  {
+  Widget InfoCard(String titulo, Widget data) {
     return Container(
-      padding: EdgeInsets.only(left:15,right: 15),
+      padding: EdgeInsets.only(left: 15, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             width: 85,
-            child: BoldText(titulo,color: DocColors.gray,fontSize: FontSizes.s,),
+            child: BoldText(
+              titulo,
+              color: DocColors.gray,
+              fontSize: FontSizes.s,
+            ),
           ),
-    
-          Container(width: 105,
+          Container(
+            width: 105,
             alignment: Alignment.centerLeft,
             child: data,
           ),
-          Container(width: 85,)
-    
+          Container(
+            width: 85,
+          )
         ],
       ),
     );
   }
 
-  Widget coloredText(String text, String unit,{DocColors mainColor = DocColors.white})
-  {
+  Widget coloredText(String text, String unit,
+      {DocColors mainColor = DocColors.white}) {
     return Row(
-          children: [
-            MediumText(text,color: mainColor,fontSize: FontSizes.s,),
-            MediumText(' ${unit}',color: DocColors.gray,fontSize: FontSizes.s,),
-          ],
-        );
+      children: [
+        MediumText(
+          text,
+          color: mainColor,
+          fontSize: FontSizes.s,
+        ),
+        MediumText(
+          ' ${unit}',
+          color: DocColors.gray,
+          fontSize: FontSizes.s,
+        ),
+      ],
+    );
   }
 
-  Widget linkButton(String text)
-  {
+  Widget linkButton(String text) {
     return BasicButton(
-            onPressed: (){},
-            width: null,
-            height: 29,
-            splashColor: DocColors.black,
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.zero,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                MediumText(text,fontSize: FontSizes.s,color: DocColors(Color(0xFF5192FE)),),
-                HorizontalSpacing(width: 5,),
-                Container(width: 12.5,height: 11.1,child: SVGWidgets.linkIcon,)
-              ],
-            ),
-          );
+      onPressed: () {},
+      width: null,
+      height: 29,
+      splashColor: DocColors.black,
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.zero,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          MediumText(
+            text,
+            fontSize: FontSizes.s,
+            color: DocColors(Color(0xFF5192FE)),
+          ),
+          HorizontalSpacing(
+            width: 5,
+          ),
+          Container(
+            width: 12.5,
+            height: 11.1,
+            child: SVGWidgets.linkIcon,
+          )
+        ],
+      ),
+    );
   }
-
 }

@@ -5,31 +5,44 @@
 </head>
 <body>
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 <style>
 #divCard {
   background-color: #202024;
   width: 424;
-  height: 200px;
+  height: 210px;
   max-width:424px;
-  max-height:200px;
+  max-height:210px;
   padding: 25px;
   margin: 20px;
-  border-radius: 10px;
-}
-#card{
-  background-color: #FFFFFF;
-  opacity:0.05;
-  max-width:50px;
-  max-height:50px;
-  width: 50px;
-  height: 50px;
-  padding: 15px;
-  margin: 5px;
   border-radius: 5px;
 }
-.card2{
-  background-color: #FFFFFF;
-  opacity:0.05;
+.titleText
+{
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+}
+.modelText
+{
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  margin-top: 0px;
+  margin-bottom: 2px;
+}
+.minerImage{
+  max-width:59px;
+  max-height:81px;
+  width: 59px;
+  height: 81px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.minerCard{
+  background-color: #363639;
+  opacity:1;
   max-width:121px;
   max-height:121px;
   width: 121px;
@@ -75,18 +88,23 @@ div.scrollmenu {
 <path d="M13.9118 8.01996C9.37463 9.13449 4.63082 9.09708 0.111816 7.91101C0.636677 11.6217 2.58702 14.9818 5.54883 17.278C8.67983 14.557 9.33579 13.594 13.9488 8.08801L13.9118 8.01996Z" fill="white"/>
 </svg>
 <br>
+
 <br>
 <div id="minersList" style="padding-left:0px" class="scrollmenu"></div>  
 </div>
-<script src="https://firebasestorage.googleapis.com/v0/b/test-server-933b0.appspot.com/o/widget.js?alt=media&token=9a39aeff-371e-4f65-947a-bdff25dcee33"></script>
+<script src="https://firebasestorage.googleapis.com/v0/b/test-6a45b.appspot.com/o/Test%2FAsic%20profits%2FwidgetDocument.js?alt=media&token=c4982fd5-8917-46d0-acc9-482780fc7d08"></script>
 <!--<script>
   let data = ["Ram", "Shyam", "Sita", "Gita"];
 
   let list = document.getElementById("minersList");
   data.forEach((item) => {
     let li = document.createElement("div");
-    li.classList.add("card2")
-    //li.innerText = item;
+    li.classList.add("minerCard")
+    li.innerHTML += '<div align = "center"><IMG align="center" src="http://foo.com/animage.gif" class = "minerImage"><p align = "left" style="color:white;" class="titleText">Miner name</p><p align="left" style="color:#858587;" class="modelText">Miner model</p></div><br>'
+    /*let inner = document.createElement("div")
+    inner.classList.add("minerImage")
+    inner.innerHTML = "Name of the miner"
+    li.appendChild(inner)*/
     list.appendChild(li);
   });
 </script>-->

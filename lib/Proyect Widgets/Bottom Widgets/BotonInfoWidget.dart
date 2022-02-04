@@ -11,56 +11,61 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/Fonts.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Semi_BoldText.dart';
+import 'package:asic_miner_website/Helpers/WindowHelper.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
 import 'package:flutter/material.dart';
-class BottomInfoWidget extends StatefulWidget
-{
+
+class BottomInfoWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _BottomInfoWidget();
   }
-
 }
-class _BottomInfoWidget extends State<BottomInfoWidget>
-{
+
+class _BottomInfoWidget extends State<BottomInfoWidget> {
   @override
   Widget build(BuildContext context) {
-    return SceneController.viewType == ViewType.mobile ?
-        mobileView():desktopView();
+    return SceneController.viewType == ViewType.mobile
+        ? mobileView()
+        : desktopView();
   }
 
-  Widget desktopView()
-  {
+  Widget desktopView() {
     return Column(
       children: [
-        VerticalSpacing(height: 100,),
-        Divider(color: DocColors.gray.getValue(),thickness: 0.25,),
-        VerticalSpacing(height: 30,),
-
+        VerticalSpacing(
+          height: 100,
+        ),
+        Divider(
+          color: DocColors.gray.getValue(),
+          thickness: 0.25,
+        ),
+        VerticalSpacing(
+          height: 30,
+        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 1135,minWidth: 700),
+            constraints: BoxConstraints(maxWidth: 1135, minWidth: 700),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                
-                infoRow(
-                  "Asic Profits",
-                  ['Miners     ','In stock','Opportunities','Hosting facilities']  
-                ),
-                infoRow(
-                  "Tools",
-                  ['Directories','Manufacturers','Partners','Widget   ']  
-                ),
-                infoRow(
-                  "Resources",
-                  ['Help       ','FAQ       ','Contact us','Newsletter']  
-                ),
-                infoRow(
-                  "Business",
-                  ['Terms and conditions','Privacy policy','Advertise','Donate']  
-                ),
+                infoRow("Asic Profits", [
+                  'Miners     ',
+                  'In stock',
+                  'Opportunities',
+                  'Hosting facilities'
+                ]),
+                infoRow("Tools",
+                    ['Directories', 'Manufacturers', 'Partners', 'Widget   ']),
+                infoRow("Resources",
+                    ['Help       ', 'FAQ       ', 'Contact us', 'Newsletter']),
+                infoRow("Business", [
+                  'Terms and conditions',
+                  'Privacy policy',
+                  'Advertise',
+                  'Donate'
+                ]),
 
                 //Get widget
                 CardWidget(
@@ -76,12 +81,13 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            width: 115,
-                            height: 20,
-                            child:  SVGWidgets.asicIcon
-                          ),
+                              width: 115,
+                              height: 20,
+                              child: SVGWidgets.asicIcon),
                           BasicButton(
-                            onPressed: (){},
+                            onPressed: () {
+                              WindowHelper().copyWidget();
+                            },
                             baseColor: DocColors.blue,
                             width: null,
                             height: null,
@@ -90,7 +96,6 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
                           )
                         ],
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -102,7 +107,6 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
                     ],
                   ),
                 )
-              
               ],
             ),
           ),
@@ -111,12 +115,12 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
     );
   }
 
-
-  Widget mobileView()
-  {
+  Widget mobileView() {
     return Column(
       children: [
-        VerticalSpacing(height: 50,),
+        VerticalSpacing(
+          height: 50,
+        ),
 
         //First info row
         SingleChildScrollView(
@@ -127,27 +131,31 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  width: SceneController.currentMaxWidth/2,
-                  child: infoRow(
-                    "Asic Profits",
-                    ['Miners     ','In stock','Opportunities','Hosting facilities']  
-                  ),
+                  width: SceneController.currentMaxWidth / 2,
+                  child: infoRow("Asic Profits", [
+                    'Miners     ',
+                    'In stock',
+                    'Opportunities',
+                    'Hosting facilities'
+                  ]),
                 ),
                 Container(
-                  width: SceneController.currentMaxWidth/2,
-                  child: infoRow(
-                    "Tools",
-                    ['Directories','Manufacturers','Partners','Widget   ']  
-                  ),
+                  width: SceneController.currentMaxWidth / 2,
+                  child: infoRow("Tools", [
+                    'Directories',
+                    'Manufacturers',
+                    'Partners',
+                    'Widget   '
+                  ]),
                 ),
-                 
-                
               ],
             ),
           ),
         ),
 
-        VerticalSpacing(height: 20,),
+        VerticalSpacing(
+          height: 20,
+        ),
 
         //Second info row
         SingleChildScrollView(
@@ -158,26 +166,31 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  width: SceneController.currentMaxWidth/2,
-                  child: infoRow(
-                    "Resources",
-                    ['Help       ','FAQ       ','Contact us','Newsletter']  
-                  ),
+                  width: SceneController.currentMaxWidth / 2,
+                  child: infoRow("Resources", [
+                    'Help       ',
+                    'FAQ       ',
+                    'Contact us',
+                    'Newsletter'
+                  ]),
                 ),
                 Container(
-                  width: SceneController.currentMaxWidth/2,
-                  child: infoRow(
-                    "Business",
-                    ['Terms and conditions','Privacy policy','Advertise','Donate']  
-                  ),
+                  width: SceneController.currentMaxWidth / 2,
+                  child: infoRow("Business", [
+                    'Terms and conditions',
+                    'Privacy policy',
+                    'Advertise',
+                    'Donate'
+                  ]),
                 ),
-                
               ],
             ),
           ),
         ),
 
-        VerticalSpacing(height: 30,),
+        VerticalSpacing(
+          height: 30,
+        ),
 
         //Get widget
         CardWidget(
@@ -188,17 +201,18 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BoldText("Asic Miner Values",fontSize: FontSizes.xl,),
-
-              mobileGpuCard(width: 302,height: 158),
-              mobileGpuCard(width: 302,height: 158),
-              mobileGpuCard(width: 302,height: 158),
-
+              BoldText(
+                "Asic Miner Values",
+                fontSize: FontSizes.xl,
+              ),
+              mobileGpuCard(width: 302, height: 158),
+              mobileGpuCard(width: 302, height: 158),
+              mobileGpuCard(width: 302, height: 158),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BasicButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     baseColor: DocColors.blue,
                     width: 132,
                     height: 51,
@@ -207,17 +221,14 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
                   ),
                 ],
               )
-             
             ],
           ),
         )
-              
       ],
     );
   }
-  
-  Widget mobileGpuCard({double width = 121,double height = 121})
-  {
+
+  Widget mobileGpuCard({double width = 121, double height = 121}) {
     return CardWidget(
       width: width,
       height: height,
@@ -234,8 +245,12 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MediumText("Bitmain",fontSize: const FontSizes(19),),
-              MediumText("Antminer E9 (3Gh)",
+              MediumText(
+                "Bitmain",
+                fontSize: const FontSizes(19),
+              ),
+              MediumText(
+                "Antminer E9 (3Gh)",
                 color: DocColors.gray,
                 fontSize: const FontSizes(16),
               )
@@ -245,10 +260,8 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
       ),
     );
   }
-  
 
-  Widget gpuCard({double width = 121,double height = 121})
-  {
+  Widget gpuCard({double width = 121, double height = 121}) {
     return CardWidget(
       width: width,
       height: height,
@@ -266,8 +279,12 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SemiBoldText("Bitmain",fontSize: const FontSizes(10),),
-              MediumText("Antminer E9 (3Gh)",
+              SemiBoldText(
+                "Bitmain",
+                fontSize: const FontSizes(10),
+              ),
+              MediumText(
+                "Antminer E9 (3Gh)",
                 color: DocColors.gray,
                 fontSize: const FontSizes(10),
               )
@@ -277,30 +294,29 @@ class _BottomInfoWidget extends State<BottomInfoWidget>
       ),
     );
   }
-  
-  
-  Widget infoRow(String title,List<String> texts)
-  {
+
+  Widget infoRow(String title, List<String> texts) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        BoldText(title,fontSize: FontSizes.m,),
+        BoldText(
+          title,
+          fontSize: FontSizes.m,
+        ),
         VerticalSpacing(),
-        for (var text in texts)
-        infoButton(text),
+        for (var text in texts) infoButton(text),
       ],
     );
   }
-  
-  Widget infoButton(String text)
-  {
+
+  Widget infoButton(String text) {
     return BasicButton(
-      onPressed: (){},
+      onPressed: () {},
       cornerRadius: 5,
       padding: EdgeInsets.zero,
       width: null,
-      child: MediumText(text,color: DocColors.gray),
+      child: MediumText(text, color: DocColors.gray),
     );
   }
 }

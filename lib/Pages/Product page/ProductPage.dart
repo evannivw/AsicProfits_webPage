@@ -26,47 +26,44 @@ import 'package:asic_miner_website/TabPage%20View/Controller/TabPageViewControll
 import '../../Proyect Widgets/Bottom Widgets/WeeklyAsicWidget.dart';
 import 'package:flutter/material.dart';
 
-class ProductPage extends StatefulWidget
-{
-  ProductPage({@required this.currentMiner});
+class ProductPage extends StatefulWidget {
+  ProductPage({Key? key, @required this.currentMiner, tabPageViewController})
+      : super(key: key);
   MinerModel? currentMiner;
+  final TabPageViewController tabPageViewController = TabPageViewController();
   @override
   State<StatefulWidget> createState() {
     return _ProductPage();
   }
-  
 }
-class _ProductPage extends State<ProductPage>
-{
+
+class _ProductPage extends State<ProductPage> {
   int _currentPage = 0;
+  MinerModel _currentMiner = MinerModel();
   ProductPageController controller = ProductPageController();
   @override
   void initState() {
     super.initState();
+    _currentMiner = widget.currentMiner ?? MinerModel();
     loadHostingFacilities();
   }
 
-  void loadHostingFacilities()async
-  {
+  void loadHostingFacilities() async {
     await controller.loadHostingFacilities();
-    if(mounted)
-    setState(() {
-      
-    });
+    if (mounted) setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return SceneController.isMobilView ?
-    ProductPageMobileView(
-      currentMiner: widget.currentMiner,
-      currentHostingFacilities: controller.hostingFacilitiesList,
-    ) 
-    : 
-    ProductPageDesktopView(
-      currentMiner: widget.currentMiner,
-      currentHostingFacilities: controller.hostingFacilitiesList,
-    );
+    return SceneController.isMobilView
+        ? ProductPageMobileView(
+            currentMiner: _currentMiner,
+            currentHostingFacilities: controller.hostingFacilitiesList,
+          )
+        : ProductPageDesktopView(
+            controller: controller,
+            currentMiner: _currentMiner,
+            currentHostingFacilities: controller.hostingFacilitiesList,
+          );
   }
-
 }

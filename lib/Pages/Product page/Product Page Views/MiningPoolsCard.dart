@@ -12,69 +12,86 @@ import 'package:asic_miner_website/Models/MiningPoolModel.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
 import 'package:flutter/material.dart';
 
-class MiningPoolsCard extends StatelessWidget
-{
-  MiningPoolsCard({@required miningPool});
+class MiningPoolsCard extends StatelessWidget {
+  MiningPoolsCard({@required this.miningPool});
 
-  final MiningPoolModel miningPool = MiningPoolModel();
+  MiningPoolModel? miningPool;
+  MiningPoolModel _miningPool = MiningPoolModel();
   @override
   Widget build(BuildContext context) {
-    return SceneController.isMobilView ?
-    mobileView() : desktopView();
+    _miningPool = miningPool ?? MiningPoolModel();
+    return SceneController.isMobilView ? mobileView() : desktopView();
   }
 
-  Widget mobileView()
-  {
-    return CardWidget(
-      height: 57,
-      color: DocColors(Color(0xFF27272B)),
-      margin: EdgeInsets.only(top:10,bottom: 5),
-      padding: EdgeInsets.only(left: 15,right: 15),
-      alignment: Alignment.centerLeft,
-      hoverColor: DocColors(Color(0x05FFFFFF)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          //Imagen
-          Container(width: 102,height: 23,color: DocColors.blue_2.getValue(),),
-          
-          //Link
-          BoldText(miningPool.name,fontSize: FontSizes.s,),
-          
-          
-          //Referral Code
-          MediumText(miningPool.referalCode,color: DocColors.green,),
-          
-          //Button
-          BasicButton(
-            onPressed: (){
-              WindowHelper().openInNewTab(miningPool.visitLink);
-            },
-            width: 66,
-            height: 29,
-            padding: EdgeInsets.zero,
-            baseColor: DocColors.transparent,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MediumText("Visit",color: DocColors(Color(0xFF5192FE)),),
-                HorizontalSpacing(width: 5,),
-                SVGWidgets.linkIcon,
-              ],
+  Widget mobileView() {
+    return GestureDetector(
+      onTap: () {
+        WindowHelper().openInNewTab(_miningPool.visitLink);
+      },
+      child: CardWidget(
+        height: 57,
+        color: DocColors(Color(0xFF27272B)),
+        margin: EdgeInsets.only(top: 10, bottom: 5),
+        padding: EdgeInsets.only(left: 15, right: 15),
+        alignment: Alignment.centerLeft,
+        hoverColor: DocColors(Color(0x05FFFFFF)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            //Imagen
+            Container(
+              width: 102,
+              height: 23,
+              child: Image.network(_miningPool.visitLink),
             ),
-          )
-        ],
+
+            //Link
+            BoldText(
+              _miningPool.name,
+              fontSize: FontSizes.s,
+            ),
+
+            //Referral Code
+            MediumText(
+              _miningPool.referalCode,
+              color: DocColors.green,
+            ),
+
+            //Button
+            BasicButton(
+              onPressed: () {
+                WindowHelper().openInNewTab(_miningPool.visitLink);
+              },
+              width: 66,
+              height: 29,
+              padding: EdgeInsets.zero,
+              baseColor: DocColors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MediumText(
+                    "Visit",
+                    color: DocColors(Color(0xFF5192FE)),
+                  ),
+                  HorizontalSpacing(
+                    width: 5,
+                  ),
+                  SVGWidgets.linkIcon,
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Widget desktopView()
-  {
+  Widget desktopView() {
     return CardWidget(
       height: 57,
       color: DocColors(Color(0xFF27272B)),
-      margin: EdgeInsets.only(top:10,bottom: 5),
-      padding: EdgeInsets.only(left: 15,right: 15),
+      margin: EdgeInsets.only(top: 10, bottom: 5),
+      padding: EdgeInsets.only(left: 15, right: 15),
       alignment: Alignment.centerLeft,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -85,35 +102,55 @@ class MiningPoolsCard extends StatelessWidget
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //Imagen
-              Container(width: 102,height: 23,color: DocColors.blue_2.getValue(),),
-              
+              Container(
+                width: 111,
+                height: 36,
+                child: Image.network(_miningPool.imageURL),
+              ),
+
               //Link
-              Column(
-                children: [
-                  MediumText(miningPool.name,color: DocColors.green,),
-                  MediumText(miningPool.webPage,color: DocColors.gray,fontSize: FontSizes.xs,),
-                ],
+              Container(
+                width: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MediumText(
+                      _miningPool.name,
+                      color: DocColors.green,
+                    ),
+                    MediumText(
+                      _miningPool.webPage,
+                      color: DocColors.gray,
+                      fontSize: FontSizes.xs,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
               ),
-              
+
               //Mining plans
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  for(var coin in miningPool.miningPlans)
-                  coinWidget(coin),
-                ],
+              Container(
+                width: 250,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for (var coin in _miningPool.miningPlans) coinWidget(coin),
+                  ],
+                ),
               ),
-              
+
               //Referral Code
-              MediumText("“${miningPool.referalCode}"),
-              
+              Container(
+                  width: 100, child: MediumText("“${_miningPool.referalCode}")),
+
               //Fees
-              MediumText("${miningPool.fees}%"),
-              
+              Container(width: 100, child: MediumText("${_miningPool.fees}%")),
+
               //Button
               BasicButton(
-                onPressed: (){
-                  WindowHelper().openInNewTab(miningPool.imageURL);
+                onPressed: () {
+                  WindowHelper().openInNewTab(_miningPool.imageURL);
                 },
                 width: 66,
                 height: 29,
@@ -127,24 +164,22 @@ class MiningPoolsCard extends StatelessWidget
       ),
     );
   }
-  
-  Widget coinWidget(MinableCoinModel coin)
-  {
+
+  Widget coinWidget(MinableCoinModel coin) {
+    if (coin.imageURL.isEmpty) {
+      return Container();
+    }
     return Container(
       width: 32,
       height: 32,
       margin: EdgeInsets.only(right: 7.5),
       decoration: BoxDecoration(
-        color: Color(0xFF333336),
-        borderRadius: BorderRadius.circular(999)
-      ),
+          color: Color(0xFF333336), borderRadius: BorderRadius.circular(999)),
       padding: EdgeInsets.all(7.5),
       child: Image.network(
         coin.imageURL,
-        fit:BoxFit.contain,
+        fit: BoxFit.contain,
       ),
     );
   }
-
-
 }

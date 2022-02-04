@@ -20,13 +20,14 @@ HostingFacilitiesModel _$HostingFacilitiesModelFromJson(
       energy: json['energy'] as String? ?? "Green",
       imageURL: json['imageURL'] as String? ?? "",
       visitLink: json['visitLink'] as String? ?? "",
+      date:
+          json['date'] == null ? null : DateTime.parse(json['date'] as String),
     );
 
 Map<String, dynamic> _$HostingFacilitiesModelToJson(
         HostingFacilitiesModel instance) =>
     <String, dynamic>{
-      'imageURL': instance.imageURL,
-      'visitLink': instance.visitLink,
+      'id': instance.id,
       'namePlace': instance.namePlace,
       'nameState': instance.nameState,
       'nameCountry': instance.nameCountry,
@@ -35,5 +36,7 @@ Map<String, dynamic> _$HostingFacilitiesModelToJson(
       'security': instance.security,
       'MQO': instance.MQO,
       'energy': instance.energy,
-      'id': instance.id,
+      'imageURL': instance.imageURL,
+      'visitLink': instance.visitLink,
+      'date': instance.date?.toIso8601String(),
     };

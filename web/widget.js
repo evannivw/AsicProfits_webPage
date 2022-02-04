@@ -7,3 +7,4 @@ let data = ["Ram", "Shyam", "Sita", "Gita"];
     //li.innerText = item;
     list.appendChild(li);
   });
+  

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:asic_miner_website/BasicWidgets/ButtonWidgets/BasicButton.dart';
 import 'package:asic_miner_website/BasicWidgets/CardWidgets/CardWidget.dart';
 import 'package:asic_miner_website/BasicWidgets/Colors/Doc_Colors.dart';
@@ -6,20 +8,21 @@ import 'package:asic_miner_website/BasicWidgets/Spacing/VerticalSpacing.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Bold_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
+import 'package:asic_miner_website/Helpers/UIHelper.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
 import 'package:flutter/material.dart';
 
-class BuyingOptionCard extends StatelessWidget
-{
-  BuyingOptionCard({@required currentMiner});
-  final MinerModel currentMiner = MinerModel();
+class BuyingOptionCard extends StatelessWidget {
+  BuyingOptionCard(this.currentMiner);
+  MinerModel? currentMiner;
+  MinerModel _miner = MinerModel();
   @override
   Widget build(BuildContext context) {
+    _miner = currentMiner ?? MinerModel();
     return card();
   }
-  
-  Widget card()
-  {
+
+  Widget card() {
     return CardWidget(
       width: 257.5,
       height: 277,
@@ -28,28 +31,23 @@ class BuyingOptionCard extends StatelessWidget
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          
           //First container
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   //Name
                   Row(
                     children: [
-
                       //Circle
                       Container(
                         width: 29,
                         height: 29,
                         decoration: BoxDecoration(
-                          color: DocColors.white.getValue(),
-                          borderRadius:BorderRadius.circular(999)
-                        ),
+                            color: UIHelper().fromStringToColor(_miner.color),
+                            borderRadius: BorderRadius.circular(999)),
                       ),
 
                       HorizontalSpacing(),
@@ -58,20 +56,38 @@ class BuyingOptionCard extends StatelessWidget
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BoldText("Bitmain",fontSize: FontSizes.xs,),
-                          MediumText(currentMiner.model,fontSize: FontSizes.xs,color: DocColors.gray,)
+                          BoldText(
+                            _miner.manu,
+                            fontSize: FontSizes.xs,
+                          ),
+                          ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: 100),
+                            child: MediumText(
+                              _miner.model,
+                              fontSize: FontSizes.xs,
+                              color: DocColors.gray,
+                            ),
+                          )
                         ],
                       )
                     ],
                   ),
 
-                  VerticalSpacing(height: 5,),
+                  VerticalSpacing(
+                    height: 5,
+                  ),
 
                   //Precio/day
                   Row(
                     children: [
-                      MediumText('\$231.85',color: DocColors.green,),
-                      MediumText('/day',color: DocColors.gray,),
+                      MediumText(
+                        '\$231.85',
+                        color: DocColors.green,
+                      ),
+                      MediumText(
+                        '/day',
+                        color: DocColors.gray,
+                      ),
                     ],
                   )
                 ],
@@ -79,50 +95,64 @@ class BuyingOptionCard extends StatelessWidget
 
               //Imagen
               Container(
-                width:69,
+                width: 69,
                 height: 95,
-                child: Image.asset('assets/images/miner.png'),
+                child: Image.network(_miner.imageURL),
               )
             ],
           ),
 
-          VerticalSpacing(height: 5,),
+          VerticalSpacing(
+            height: 5,
+          ),
 
           containerCard('Income'),
           containerCard('Electricity'),
           containerCard('Profit'),
-          
+
           VerticalSpacing(),
-          
+
           BasicButton(
-            onPressed: (){},
+            onPressed: () {},
             width: null,
             height: 29,
             text: "Buy",
             textColor: DocColors.white,
             baseColor: DocColors(Color(0xFF39383D)),
           )
-
-          
         ],
       ),
     );
   }
 
-  Widget containerCard(String title)
-  {
+  Widget containerCard(String title) {
     return Column(
       children: [
         //VerticalSpacing(),
-        Divider(color: DocColors.gray.getValue(),thickness: 0.25,height: 12.5,),
+        Divider(
+          color: DocColors.gray.getValue(),
+          thickness: 0.25,
+          height: 12.5,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MediumText(title,fontSize: FontSizes.xs,),
+            MediumText(
+              title,
+              fontSize: FontSizes.xs,
+            ),
             Row(
               children: [
-                MediumText('\$231.85',color: DocColors.green,fontSize: FontSizes.xs,),
-                MediumText('/yearly',color: DocColors.gray,fontSize: FontSizes.xs,),
+                MediumText(
+                  '\$231.85',
+                  color: DocColors.green,
+                  fontSize: FontSizes.xs,
+                ),
+                MediumText(
+                  '/yearly',
+                  color: DocColors.gray,
+                  fontSize: FontSizes.xs,
+                ),
               ],
             )
           ],
