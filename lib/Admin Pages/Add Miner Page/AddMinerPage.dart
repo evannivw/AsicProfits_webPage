@@ -112,7 +112,24 @@ class _AddMinerPage extends PageWidget<AddMinerPage> {
           height: 60,
           thickness: 0.25,
         ),
-        inputWidget("Algorythm", controller: controller.algoTEC),
+        dropDownWidget("Algorythm", controller.algo, [
+          "sha-256",
+          "scrypt",
+          "x11",
+          "groestl",
+          "neoscrypt",
+          "lyra2rev2",
+          "ethash",
+          "equihash",
+          "beamhashiii",
+          "randomx",
+          "kawpow",
+          "etchash",
+          "verthash"
+        ], (str) {
+          controller.algo = str;
+        }),
+        //inputWidget("Algorythm", controller: controller.algoTEC),
         inputWidget("Efficiency (j/Mh)", controller: controller.efficiencyTEC),
         Divider(
           color: DocColors.gray.getValue(),

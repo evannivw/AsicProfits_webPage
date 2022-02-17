@@ -15,16 +15,21 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Custom_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/Fonts.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
+import 'package:asic_miner_website/Helpers/MinerServiceHelper.dart';
 import 'package:asic_miner_website/Helpers/UIHelper.dart';
 import 'package:asic_miner_website/Helpers/WindowHelper.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
 import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Asic%20Profits%20Views/MobileDataRow.dart';
+import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Controller/ProfitabilityWidgetController.dart';
 import 'package:asic_miner_website/Pages/Product%20page/ProductPage.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
+import '../../../Backend/MinerStats/MinerStatsApi.dart';
+import 'dart:math';
 
 class ProfitabilityWidget extends StatefulWidget {
   ProfitabilityWidget({
@@ -35,9 +40,11 @@ class ProfitabilityWidget extends StatefulWidget {
     this.isAdmin = false,
     this.callback,
     this.shouldReloadCallback,
+    this.controller,
   });
   Function(MinerModel)? callback;
   Function()? shouldReloadCallback;
+  ProfitabilityWidgetController? controller;
   bool isAdmin;
   bool useViewMoreWidget;
   bool useElectricityCostInputs;
@@ -56,24 +63,43 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
   double _timerValue = 0;
   double _loadingMaxTime = 60;
   DateTime _lastUpdate = DateTime.now();
+  Timer? _timer;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.useViewMoreWidget) startTimer();
+    if (widget.useViewMoreWidget) {
+      startTimer();
+      widget.controller?.addListener(updateProfitabilityListener);
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _timer?.cancel();
+  }
+
+  void updateProfitabilityListener() {
+    widget.minerList = widget.controller?.currentList ?? [];
+    //print("listen for update profitablity: " +
+    //   widget.minerList.length.toString());
+    calculateProfitability();
   }
 
   void startTimer() {
     const offsetTime = 250;
     const oneSec = const Duration(milliseconds: offsetTime);
-    var _timer = Timer.periodic(
+    _timer = Timer.periodic(
       oneSec,
       (Timer timer) => setState(
         () {
           if (_timerValue >= _loadingMaxTime) {
             _timerValue = 0;
-            widget.shouldReloadCallback?.call();
+            //widget.shouldReloadCallback?.call();
             _lastUpdate = DateTime.now();
+            calculateProfitability();
             if (mounted) setState(() {});
           } else {
             _timerValue = _timerValue + (offsetTime / 1000);
@@ -82,6 +108,39 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
         },
       ),
     );
+  }
+
+  List<num> profitability(dynamic data, MinerModel miner) {
+    num profit = 0.0;
+    num electricityCost = 0.0;
+    try {
+      for (int i = 0; i < data.length; i++) {
+        var calculo =
+            MinerServiceHelper().calculateProfitability(miner, data[i]);
+        if (profit < calculo[0]) {
+          profit = calculo[0];
+          electricityCost = calculo[1];
+        }
+      }
+    } catch (e) {
+      print("error: " + e.toString());
+    }
+    return [profit, electricityCost];
+  }
+
+  void calculateProfitability() async {
+    for (int i = 0; i < widget.minerList.length; i++) {
+      var miner = widget.minerList[i];
+      var hashrate = "${miner.algo}";
+      var data =
+          await MinerStatsApi().getProfitability(params: "algo=${miner.algo}");
+      var calculo = profitability(data, miner);
+      miner.profitability = calculo[0];
+      miner.electricityCost = calculo[1];
+      miner.income = miner.profitability + miner.electricityCost;
+      widget.minerList[i] = miner;
+    }
+    if (mounted) setState(() {});
   }
 
   @override
@@ -532,12 +591,12 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
             child: Row(
               children: [
                 MediumText(
-                  '\$NAN',
+                  '\$${miner.profitability.toStringAsFixed(2)}',
                   color: DocColors.green,
                   fontSize: FontSizes.xs,
                 ),
                 MediumText(
-                  '/yearly',
+                  '/day',
                   color: DocColors.gray,
                   fontSize: FontSizes.xs,
                 ),

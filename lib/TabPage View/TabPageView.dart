@@ -94,7 +94,7 @@ class _TabPageView extends PageWidget<TabPageView> {
         ThankYouView(tabPageViewController: controller),
       ],
     );
-    return ExpandablePageView(
+    /*return ExpandablePageView(
       //controller: controller.pageController,
       onPageChanged: onPageChanged,
       initialPage: controller.currentPage,
@@ -120,7 +120,7 @@ class _TabPageView extends PageWidget<TabPageView> {
         HostingAplicactionPage(tabPageViewController: controller),
         ThankYouView(tabPageViewController: controller),
       ],
-    );
+    );*/
   }
 
   void onPageChanged(int page) {

@@ -14,6 +14,7 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Semi_BoldText.dart';
 import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Asic%20Profits%20Views/ProfitabilityWidget.dart';
 import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Controller/AsicProfitsMainController.dart';
+import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Controller/ProfitabilityWidgetController.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Bottom%20Widgets/BotonInfoWidget.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Bottom%20Widgets/WeeklyAsicWidget2.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Buying%20Options/BuyingOpportunitiesWidget.dart';
@@ -39,7 +40,8 @@ class AsicProfitsMain extends StatefulWidget {
 
 class _AsicProfitsMain extends State<AsicProfitsMain> {
   AsicProfitsMainController controller = AsicProfitsMainController();
-
+  ProfitabilityWidgetController profitabilityController =
+      ProfitabilityWidgetController();
   @override
   void initState() {
     super.initState();
@@ -49,6 +51,9 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
   void loadAll({bool loadDeal = true}) async {
     await controller.loadAll(loadDeals: loadDeal);
     setState(() {});
+    await Future.delayed(Duration(milliseconds: 300));
+    //print("list quantity: " + controller.minersList.length.toString());
+    profitabilityController.updateProfitability(controller.minersList);
   }
 
   @override
@@ -68,6 +73,7 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
         container2(),
         ProfitabilityWidget(
           minerList: controller.minersList,
+          controller: profitabilityController,
           callback: (miner) async {
             widget.tabPageViewController?.setCurrentMiner(miner);
             await Future.delayed(Duration(milliseconds: 50));

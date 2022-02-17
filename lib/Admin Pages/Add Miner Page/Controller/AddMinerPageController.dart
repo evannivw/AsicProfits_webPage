@@ -27,7 +27,7 @@ class AddMinerPageController {
   TextEditingController humidityTEC = TextEditingController();
   TextEditingController weightTEC = TextEditingController();
   TextEditingController sizeTEC = TextEditingController();
-  TextEditingController algoTEC = TextEditingController();
+  String algo = "";
   TextEditingController efficiencyTEC = TextEditingController();
   TextEditingController hashrateTEC = TextEditingController();
   TextEditingController powerTEC = TextEditingController();
@@ -53,12 +53,12 @@ class AddMinerPageController {
     humidityTEC = TextEditingController(text: miner.humidity);
     weightTEC = TextEditingController(text: miner.weight);
     sizeTEC = TextEditingController(text: miner.size);
-    algoTEC = TextEditingController(text: miner.algo);
+    algo = miner.algo;
     efficiencyTEC = TextEditingController(text: miner.efficiency);
     hashrateTEC = TextEditingController(text: miner.hashrate);
     powerTEC = TextEditingController(text: miner.power);
-    costperkwTEC = TextEditingController(text: "");
-    poolFeeTEC = TextEditingController(text: "");
+    costperkwTEC = TextEditingController(text: miner.costPerKW.toString());
+    poolFeeTEC = TextEditingController(text: miner.poolFee);
     visitLinkTEC = TextEditingController(text: miner.visitLink);
     status = miner.status;
     color = miner.color.isEmpty ? "Yellow" : miner.color;
@@ -132,7 +132,7 @@ class AddMinerPageController {
     _miner.humidity = humidityTEC.text;
     _miner.weight = weightTEC.text;
     _miner.size = sizeTEC.text;
-    _miner.algo = algoTEC.text;
+    _miner.algo = algo;
     _miner.efficiency = efficiencyTEC.text;
     _miner.power = powerTEC.text;
     _miner.hashrate = hashrateTEC.text;
@@ -144,6 +144,8 @@ class AddMinerPageController {
     _miner.imageURL = imageURL;
     _miner.color = color;
     _miner.status = status;
+    _miner.costPerKW = num.tryParse(costperkwTEC.text) ?? 0;
+    _miner.poolFee = poolFeeTEC.text;
     return _miner;
   }
 }

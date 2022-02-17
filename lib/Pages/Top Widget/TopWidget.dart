@@ -230,9 +230,9 @@ class _TopWidget extends State<TopWidget> {
         ),
         BasicButton(
             text: "In Stock",
-            baseColor: getButtonColor(MainPage.Hosting.index),
+            baseColor: getButtonColor(MainPage.ThankYou.index),
             onPressed: () {
-              setTappedButton(MainPage.Hosting);
+              setTappedButton(MainPage.ThankYou);
             }),
         SizedBox(
           width: 10,

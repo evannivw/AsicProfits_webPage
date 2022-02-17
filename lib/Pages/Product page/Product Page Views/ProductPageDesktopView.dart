@@ -206,37 +206,40 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
                   ),
                   gpuChartSpecs([
                     MediumText("Income:"),
-                    MediumText("\$218.86/day"),
-                    MediumText("\$6,565.66/month"),
-                    MediumText("\$78,787.92/year"),
+                    MediumText(
+                        "\$${_minerModel.income.toStringAsFixed(2)}/day"),
+                    MediumText(
+                        "\$${(_minerModel.income * 30).toStringAsFixed(2)}/month"),
+                    MediumText(
+                        "\$${(_minerModel.income * 30 * 12).toStringAsFixed(2)}/year"),
                   ]),
                   gpuChartSpecs([
                     MediumText("Electricity:"),
                     MediumText(
-                      "-\$11.66/day",
+                      "-\$${_minerModel.electricityCost.toStringAsFixed(2)}/day",
                       color: DocColors.red,
                     ),
                     MediumText(
-                      "-\$349.66/month",
+                      "-\$${(_minerModel.electricityCost * 30).toStringAsFixed(2)}/month",
                       color: DocColors.red,
                     ),
                     MediumText(
-                      "-\$4,195.93/year",
+                      "-\$${(_minerModel.electricityCost * 30 * 12).toStringAsFixed(2)}/year",
                       color: DocColors.red,
                     ),
                   ]),
                   gpuChartSpecs([
                     MediumText("Profit:"),
                     MediumText(
-                      "\$207.20/day",
+                      "\$${_minerModel.profitability.toStringAsFixed(2)}/day",
                       color: DocColors.green,
                     ),
                     MediumText(
-                      "\$6,565.66/month",
+                      "\$${(_minerModel.profitability * 30).toStringAsFixed(2)}/month",
                       color: DocColors.green,
                     ),
                     MediumText(
-                      "\$74,591.99/year",
+                      "\$${(_minerModel.profitability * 30 * 12).toStringAsFixed(2)}/year",
                       color: DocColors.green,
                     ),
                   ], borderColor: DocColors.green),
@@ -482,7 +485,7 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
               Row(
                 children: [
                   MediumText(
-                    "\$168.39",
+                    "\$${_minerModel.profitability.toStringAsFixed(2)}",
                     color: DocColors.green,
                   ),
                   MediumText(

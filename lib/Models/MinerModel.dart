@@ -20,6 +20,8 @@ class MinerModel {
   String color;
   String release;
   String hashrate;
+  num costPerKW;
+  String poolFee;
   String hashrateUnits;
   String power;
   String noise;
@@ -37,6 +39,10 @@ class MinerModel {
   String efficiency;
   String imageURL;
   String status;
+  num income = 0;
+  num profitability = 0;
+  num electricityCost = 0;
+
   List<MinableCoinModel> minableCoinList = [];
   List<WhereToBuyModel> whereToBuyList = [];
   List<MiningPoolModel> miningPoolList = [];
@@ -59,6 +65,8 @@ class MinerModel {
     this.noise = "0",
     this.algo = "EtHash",
     this.visitLink = "",
+    this.costPerKW = 0,
+    this.poolFee = "",
     this.manu = "0",
     this.desc = "0",
     this.voltage = "0",
@@ -75,6 +83,7 @@ class MinerModel {
     this.date,
     this.imageURL = "",
     this.status = "",
+    this.profitability = 0,
   });
 
   /*//Convert class in to json 

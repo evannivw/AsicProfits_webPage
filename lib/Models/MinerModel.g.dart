@@ -17,6 +17,8 @@ MinerModel _$MinerModelFromJson(Map<String, dynamic> json) => MinerModel(
       noise: json['noise'] as String? ?? "0",
       algo: json['algo'] as String? ?? "EtHash",
       visitLink: json['visitLink'] as String? ?? "",
+      costPerKW: json['costPerKW'] as num? ?? 0,
+      poolFee: json['poolFee'] as String? ?? "",
       manu: json['manu'] as String? ?? "0",
       desc: json['desc'] as String? ?? "0",
       voltage: json['voltage'] as String? ?? "0",
@@ -43,6 +45,7 @@ MinerModel _$MinerModelFromJson(Map<String, dynamic> json) => MinerModel(
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       imageURL: json['imageURL'] as String? ?? "",
       status: json['status'] as String? ?? "",
+      profitability: json['profitability'] as num? ?? 0,
     );
 
 Map<String, dynamic> _$MinerModelToJson(MinerModel instance) =>
@@ -52,6 +55,8 @@ Map<String, dynamic> _$MinerModelToJson(MinerModel instance) =>
       'color': instance.color,
       'release': instance.release,
       'hashrate': instance.hashrate,
+      'costPerKW': instance.costPerKW,
+      'poolFee': instance.poolFee,
       'hashrateUnits': instance.hashrateUnits,
       'power': instance.power,
       'noise': instance.noise,
@@ -69,6 +74,7 @@ Map<String, dynamic> _$MinerModelToJson(MinerModel instance) =>
       'efficiency': instance.efficiency,
       'imageURL': instance.imageURL,
       'status': instance.status,
+      'profitability': instance.profitability,
       'minableCoinList':
           instance.minableCoinList.map((e) => e.toJson()).toList(),
       'whereToBuyList': instance.whereToBuyList.map((e) => e.toJson()).toList(),
