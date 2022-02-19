@@ -65,7 +65,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     String url = Uri.base.toString();
     print("URL: " + url);
-    //print("Miner model: "+jsonEncode(MinerModel()).toString());
     return MaterialApp(
       title: 'ASIC Profits',
       debugShowCheckedModeBanner: false,
@@ -73,7 +72,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: kDebugMode
-          ? /* AdminMain() */ const TabPageView(title: "ASIC Profits main")
+          ? /*AdminMain()*/ const TabPageView(title: "ASIC Profits main")
           : url.toLowerCase().contains("admin")
               ? AdminLogin()
               : const TabPageView(title: "ASIC Profits main"),

@@ -27,13 +27,14 @@ class MinerServiceHelper {
   }
 
   List<num> calculateProfitability(MinerModel miner, dynamic data) {
-    num profit = 0;
+    num profit = -1000;
     num electricityCost = 0;
     try {
-      num net_hash = data["network_hashrate"] ?? 0;
-      num reward_block = data["reward_block"] ?? 0;
+      num net_hash = data["network_hashrate"];
+      num reward_block = data["reward_block"];
       num net_difficulty = data["difficulty"];
       num miner_hash = getMinerHashrate(miner);
+
       num diff = net_difficulty * pow(2, 32);
       //print("diff: " + diff.toString());
       num calculatedProfit_coins = (reward_block * miner_hash * 86400) / diff;
@@ -41,18 +42,22 @@ class MinerServiceHelper {
       num cost = ((num.tryParse(miner.power) ?? 0) / 1000) * 24;
       electricityCost = cost * miner.costPerKW;
       num currentProfit = calculatedProfit - electricityCost;
-      if (profit < currentProfit && net_hash > 0) {
+      //print("calculatedProfit_coins: " + calculatedProfit_coins.toString());
+      //print("calculatedProfit: " + calculatedProfit.toString());
+      //print("currentProfit: " + currentProfit.toString());
+      if (net_hash > 0) {
         profit = currentProfit;
         /*print(cost_dollars);
         print(calculatedProfit);
         print(miner_hash);*/
-        print("coin: " + data["coin"]);
-        print("power cost: \$" + electricityCost.toString());
-        print("current profit: \$" + calculatedProfit.toString());
-        print("new profit: \$" + profit.toString());
+        print("Coin: " + data["coin"]);
+        print("Power cost: \$" + electricityCost.toString());
+        print("Income: \$" + calculatedProfit.toString());
+        print("Profit: \$" + profit.toString());
       }
     } catch (e) {
-      print(e);
+      print(data);
+      print("calculo error: " + e.toString());
     }
     return [profit, electricityCost];
   }

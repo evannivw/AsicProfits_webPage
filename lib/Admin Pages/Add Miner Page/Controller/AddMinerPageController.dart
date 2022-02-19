@@ -61,6 +61,8 @@ class AddMinerPageController {
     poolFeeTEC = TextEditingController(text: miner.poolFee);
     visitLinkTEC = TextEditingController(text: miner.visitLink);
     status = miner.status;
+    hashrateUnits = miner.hashrateUnits;
+    imageURL = miner.imageURL;
     color = miner.color.isEmpty ? "Yellow" : miner.color;
     if (miner.id.isEmpty) {
       id = FirestoreDatabase().getKey(FirestoreTable.miners);

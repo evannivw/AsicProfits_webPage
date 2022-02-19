@@ -111,7 +111,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
   }
 
   List<num> profitability(dynamic data, MinerModel miner) {
-    num profit = 0.0;
+    num profit = -1000.0;
     num electricityCost = 0.0;
     try {
       for (int i = 0; i < data.length; i++) {
@@ -139,6 +139,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
       miner.electricityCost = calculo[1];
       miner.income = miner.profitability + miner.electricityCost;
       widget.minerList[i] = miner;
+      print("current profit: \$" + miner.profitability.toString());
     }
     if (mounted) setState(() {});
   }
@@ -592,7 +593,8 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
               children: [
                 MediumText(
                   '\$${miner.profitability.toStringAsFixed(2)}',
-                  color: DocColors.green,
+                  color:
+                      miner.profitability < 0 ? DocColors.red : DocColors.green,
                   fontSize: FontSizes.xs,
                 ),
                 MediumText(
