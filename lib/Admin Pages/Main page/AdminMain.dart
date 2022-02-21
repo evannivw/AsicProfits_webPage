@@ -7,6 +7,7 @@ import 'package:asic_miner_website/Admin%20Pages/Main%20page/Controller/AdminMai
 import 'package:asic_miner_website/BasicWidgets/ButtonWidgets/BasicButton.dart';
 import 'package:asic_miner_website/BasicWidgets/CardWidgets/CardWidget.dart';
 import 'package:asic_miner_website/BasicWidgets/Colors/Doc_Colors.dart';
+import 'package:asic_miner_website/BasicWidgets/Custom%20Dialog/CustomDialog.dart';
 import 'package:asic_miner_website/BasicWidgets/PageWidget/page_widget.dart';
 import 'package:asic_miner_website/BasicWidgets/Scene%20controller/SceneController.dart';
 import 'package:asic_miner_website/BasicWidgets/Spacing/HorizontalSpacing.dart';
@@ -15,6 +16,7 @@ import 'package:asic_miner_website/BasicWidgets/Text%20field/BasicTextField.dart
 import 'package:asic_miner_website/BasicWidgets/Texts/Bold_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
+import 'package:asic_miner_website/Helpers/UIHelper.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
 import 'package:asic_miner_website/Models/PartnersModel.dart';
 import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Asic%20Profits%20Views/ProfitabilityWidget.dart';
@@ -44,6 +46,13 @@ class _AdminMain extends PageWidget<AdminMain> {
   void pushMenu(Widget route) async {
     await Future.delayed(Duration(milliseconds: 0));
     SceneController.push(context, nextPage: route);
+  }
+
+  void newValueToChart() async {
+    if (controller.minersList.length == 0) return;
+    UIHelper().showLoading(context);
+    await controller.addNewChatData();
+    UIHelper().hideLoading(context);
   }
 
   @override
@@ -158,6 +167,14 @@ class _AdminMain extends PageWidget<AdminMain> {
         ),
         VerticalSpacing(
           height: 10,
+        ),
+        BasicButton(
+          width: 200,
+          baseColor: DocColors.blue,
+          onPressed: () {
+            newValueToChart();
+          },
+          text: "Add new value to chart",
         ),
         ProfitabilityWidget(
           useElectricityCostInputs: false,

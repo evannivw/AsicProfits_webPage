@@ -18,6 +18,7 @@ import 'package:asic_miner_website/Proyect%20Widgets/Bottom%20Widgets/WeeklyAsic
 import 'package:asic_miner_website/Proyect%20Widgets/Buying%20Options/BuyingOpportunitiesWidget.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Chart/CustomChart.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'MiningPoolsCard.dart';
@@ -40,11 +41,29 @@ class ProductPageDesktopView extends StatefulWidget {
 
 class _ProductPageDesktopView extends State<ProductPageDesktopView> {
   MinerModel _minerModel = MinerModel();
+  List<ChartData> listaChartData = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _minerModel = widget.currentMiner ?? MinerModel();
+    loadChartData();
+  }
+
+  void loadChartData() async {
+    if (widget.currentMiner != null) {
+      print("Loading chart data: " + widget.currentMiner!.id.toString());
+      var lista =
+          await widget.controller.loadChartData(widget.currentMiner!) as List;
+      listaChartData = lista
+          .map((e) => ChartData(
+              x: DateTime.fromMillisecondsSinceEpoch(
+                  (e["date"] as Timestamp).millisecondsSinceEpoch),
+              y: e["profitability"]))
+          .toList();
+      print("Length lista: " + listaChartData.length.toString());
+      if (mounted) setState(() {});
+    }
   }
 
   @override
@@ -199,7 +218,9 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
                   ),
                   Container(
                     height: 150,
-                    child: CustomChart(),
+                    child: CustomChart(
+                      listaData: listaChartData,
+                    ),
                   ),
                   VerticalSpacing(
                     height: 20,

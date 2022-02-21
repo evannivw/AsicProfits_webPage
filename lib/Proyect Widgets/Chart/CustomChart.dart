@@ -5,6 +5,7 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/Fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class ChartData {
   ChartData({this.x, this.y});
@@ -46,7 +47,7 @@ class _CustomChart extends State<CustomChart> {
               leftTitles: SideTitles(
                 showTitles: true,
                 margin: widget.useSmallChart ? 2 : 10,
-                interval: 2,
+                interval: 5,
                 getTextStyles: (context, value) => GoogleFonts.getFont(
                   Fonts.medium.getValue(),
                   color: widget.useSmallChart
@@ -60,7 +61,12 @@ class _CustomChart extends State<CustomChart> {
               bottomTitles: SideTitles(
                 showTitles: true,
                 margin: widget.useSmallChart ? 2 : 10,
-                interval: 5,
+                interval: 1000000,
+                getTitles: (value) {
+                  var date = DateTime.fromMillisecondsSinceEpoch(value.round());
+                  String formattedDate = DateFormat('MMM').format(date);
+                  return formattedDate;
+                },
                 getTextStyles: (context, value) => GoogleFonts.getFont(
                   Fonts.medium.getValue(),
                   color: widget.useSmallChart
@@ -80,25 +86,29 @@ class _CustomChart extends State<CustomChart> {
           ),
           lineBarsData: [
             LineChartBarData(
-              isCurved: true,
-              colors: [DocColors.green.getValue()],
-              barWidth: 1,
-              isStrokeCapRound: true,
-              dotData: FlDotData(show: false),
-              shadow: Shadow(blurRadius: 4, color: DocColors.green.getValue()),
-              spots: const [
-                FlSpot(1, 1),
-                FlSpot(3, 2.8),
-                FlSpot(7, 1.2),
-                FlSpot(10, 2.8),
-                FlSpot(12, 2.6),
-                FlSpot(13, 3.9),
-              ],
-            )
+                isCurved: true,
+                colors: [DocColors.green.getValue()],
+                barWidth: 1,
+                isStrokeCapRound: true,
+                dotData: FlDotData(show: false),
+                shadow:
+                    Shadow(blurRadius: 4, color: DocColors.green.getValue()),
+                spots: getList())
           ]),
       swapAnimationDuration: Duration(milliseconds: 150),
       swapAnimationCurve: Curves.linear,
     );
+  }
+
+  List<FlSpot> getList() {
+    List<FlSpot> lista = [];
+    for (int i = 0; i < widget.listaData.length; i++) {
+      lista.add(FlSpot(
+          (widget.listaData[i].x!.millisecondsSinceEpoch + (i * 10)).toDouble(),
+          (widget.listaData[i].y!) + (i * 0.000001)));
+    }
+    print("Lista flspot: " + lista.toString());
+    return lista;
   }
 
   static _createSampleData() {

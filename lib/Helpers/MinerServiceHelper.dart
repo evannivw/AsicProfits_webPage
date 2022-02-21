@@ -26,10 +26,36 @@ class MinerServiceHelper {
     return hash;
   }
 
+  List<num> calculateProfitabilityFromArray(
+      MinerModel miner, List<dynamic> data) {
+    num profit = -1000.0;
+    num electricityCost = 0.0;
+    try {
+      for (int i = 0; i < data.length; i++) {
+        var calculo = calculateProfitability(miner, data[i]);
+        if (profit < calculo[0]) {
+          profit = calculo[0];
+          electricityCost = calculo[1];
+        }
+      }
+    } catch (e) {
+      print("error: " + e.toString());
+    }
+    print(" Profit: \$" + profit.toString());
+    print(" Power cost: \$" + electricityCost.toString());
+    return [profit, electricityCost];
+  }
+
   List<num> calculateProfitability(MinerModel miner, dynamic data) {
     num profit = -1000;
     num electricityCost = 0;
     try {
+      if (data["network_hashrate"] is String ||
+          data["reward_block"] is String ||
+          data["difficulty"] is String ||
+          data["price"] is String) {
+        return [0, 0];
+      }
       num net_hash = data["network_hashrate"];
       num reward_block = data["reward_block"];
       num net_difficulty = data["difficulty"];
@@ -45,15 +71,15 @@ class MinerServiceHelper {
       //print("calculatedProfit_coins: " + calculatedProfit_coins.toString());
       //print("calculatedProfit: " + calculatedProfit.toString());
       //print("currentProfit: " + currentProfit.toString());
-      if (net_hash > 0) {
+      if (net_hash > 0 && currentProfit < 1000) {
         profit = currentProfit;
         /*print(cost_dollars);
         print(calculatedProfit);
         print(miner_hash);*/
         print("Coin: " + data["coin"]);
-        print("Power cost: \$" + electricityCost.toString());
-        print("Income: \$" + calculatedProfit.toString());
-        print("Profit: \$" + profit.toString());
+        print(" Power cost: \$" + electricityCost.toString());
+        print(" Income: \$" + calculatedProfit.toString());
+        print(" Profit: \$" + profit.toString());
       }
     } catch (e) {
       print(data);

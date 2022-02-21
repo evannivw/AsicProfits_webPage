@@ -1,6 +1,9 @@
 import 'package:asic_miner_website/Backend/Firebase/Firestore/FirestoreDatabase.dart';
+import 'package:asic_miner_website/Backend/MinerStats/MinerStatsApi.dart';
+import 'package:asic_miner_website/Helpers/MinerServiceHelper.dart';
 import 'package:asic_miner_website/Models/DealModel.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class AdminMainPageController {
@@ -27,5 +30,24 @@ class AdminMainPageController {
     }
     deal = DealModel.fromJson(dealRespuesta.value);
     print("deal spots: " + deal.spots);
+  }
+
+  Future addNewChatData() async {
+    for (var i = 0; i < minersList.length; i++) {
+      var miner = minersList[i];
+      var data =
+          await MinerStatsApi().getProfitability(params: "algo=${miner.algo}");
+      var calculo = MinerServiceHelper()
+          .calculateProfitabilityFromArray(minersList[0], data);
+      print(" Profit(1): \$" + calculo[0].toString());
+      print(" Power cost(2): \$" + calculo[1].toString());
+      await FirebaseFirestore.instance.collection("chart_data").add({
+        "id": miner.id,
+        "date": DateTime.now(),
+        "profitability": calculo[0],
+        "income": (calculo[0] + calculo[1]),
+        "cost": calculo[1],
+      });
+    }
   }
 }
