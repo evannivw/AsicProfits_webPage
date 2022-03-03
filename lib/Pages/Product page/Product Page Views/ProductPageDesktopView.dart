@@ -48,6 +48,8 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
     super.initState();
     _minerModel = widget.currentMiner ?? MinerModel();
     loadChartData();
+    print("IMAGEN");
+    print(_minerModel.imageURL);
   }
 
   void loadChartData() async {

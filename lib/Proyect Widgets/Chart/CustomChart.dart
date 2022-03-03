@@ -86,7 +86,7 @@ class _CustomChart extends State<CustomChart> {
           ),
           lineBarsData: [
             LineChartBarData(
-                isCurved: true,
+                isCurved: false,
                 colors: [DocColors.green.getValue()],
                 barWidth: 1,
                 isStrokeCapRound: true,
@@ -102,6 +102,10 @@ class _CustomChart extends State<CustomChart> {
 
   List<FlSpot> getList() {
     List<FlSpot> lista = [];
+    if (widget.listaData.isNotEmpty) {
+      lista.add(
+          FlSpot((widget.listaData[0].x!.millisecondsSinceEpoch - 200000), 0));
+    }
     for (int i = 0; i < widget.listaData.length; i++) {
       lista.add(FlSpot(
           (widget.listaData[i].x!.millisecondsSinceEpoch + (i * 10)).toDouble(),
