@@ -403,9 +403,14 @@ class _TopWidget extends State<TopWidget> {
   }
 
   Widget logo() {
-    return Container(
-        alignment: Alignment.centerLeft,
-        width: SceneController.isMobilView ? 149 : 175,
-        child: SVGWidgets.asicIcon);
+    return InkWell(
+      onTap: () {
+        setTappedButton(MainPage.Main);
+      },
+      child: Container(
+          alignment: Alignment.centerLeft,
+          width: SceneController.isMobilView ? 149 : 175,
+          child: SVGWidgets.asicIcon),
+    );
   }
 }
