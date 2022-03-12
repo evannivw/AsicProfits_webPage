@@ -47,7 +47,7 @@ class _CustomChart extends State<CustomChart> {
               leftTitles: SideTitles(
                 showTitles: true,
                 margin: widget.useSmallChart ? 2 : 10,
-                interval: 5,
+                interval: 10,
                 getTextStyles: (context, value) => GoogleFonts.getFont(
                   Fonts.medium.getValue(),
                   color: widget.useSmallChart
@@ -61,7 +61,7 @@ class _CustomChart extends State<CustomChart> {
               bottomTitles: SideTitles(
                 showTitles: true,
                 margin: widget.useSmallChart ? 2 : 10,
-                interval: 1000000,
+                interval: 100000000,
                 getTitles: (value) {
                   var date = DateTime.fromMillisecondsSinceEpoch(value.round());
                   String formattedDate = DateFormat('MMM').format(date);
@@ -111,7 +111,7 @@ class _CustomChart extends State<CustomChart> {
           (widget.listaData[i].x!.millisecondsSinceEpoch + (i * 10)).toDouble(),
           (widget.listaData[i].y!) + (i * 0.000001)));
     }
-    print("Lista flspot: " + lista.toString());
+    //print("Lista flspot: " + lista.toString());
     return lista;
   }
 

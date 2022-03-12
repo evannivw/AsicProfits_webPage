@@ -48,8 +48,6 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
     super.initState();
     _minerModel = widget.currentMiner ?? MinerModel();
     loadChartData();
-    print("IMAGEN");
-    print(_minerModel.imageURL);
   }
 
   void loadChartData() async {
@@ -84,7 +82,7 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
               color: DocColors.white.getValue(),
             ),
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 100),
+              constraints: BoxConstraints(maxWidth: 1000),
               child: MediumText(
                 _minerModel.model,
               ),
@@ -100,9 +98,9 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
         VerticalSpacing(
           height: 100,
         ),
-        WeeklyAsicWidget2(),
-        BuyingOpportunitiesWidget(),
-        BottomInfoWidget()
+        //WeeklyAsicWidget2(),
+        //BuyingOpportunitiesWidget(),
+        //BottomInfoWidget()
       ],
     );
   }
@@ -112,11 +110,11 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SpecsRowWidget(),
-        whereToBuyWidget(),
+        //whereToBuyWidget(),
         VerticalSpacing(
           height: 30,
         ),
-        miningPoolsWidget(),
+        //miningPoolsWidget(),
       ],
     );
   }
@@ -153,7 +151,7 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
                     VerticalSpacing(
                       height: 5,
                     ),
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         gpuCardButton(SVGWidgets.chatIcon),
@@ -162,7 +160,7 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
                         gpuCardButton(SVGWidgets.redditIcon),
                         gpuCardButton(SVGWidgets.shareIcon),
                       ],
-                    ),
+                    ),*/
                     VerticalSpacing(
                       height: 40,
                     ),
@@ -219,51 +217,51 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
                     height: 20,
                   ),
                   Container(
-                    height: 150,
+                    height: 160,
                     child: CustomChart(
                       listaData: listaChartData,
                     ),
                   ),
                   VerticalSpacing(
-                    height: 20,
+                    height: 30,
                   ),
                   gpuChartSpecs([
                     MediumText("Income:"),
-                    MediumText(
-                        "\$${_minerModel.income.toStringAsFixed(2)}/day"),
-                    MediumText(
-                        "\$${(_minerModel.income * 30).toStringAsFixed(2)}/month"),
-                    MediumText(
-                        "\$${(_minerModel.income * 30 * 12).toStringAsFixed(2)}/year"),
+                    greenText(
+                        "${_minerModel.income?.toStringAsFixed(2)}", "day"),
+                    greenText(
+                        "${(_minerModel.income! * 30).toStringAsFixed(2)}",
+                        "month"),
+                    greenText(
+                        "${(_minerModel.income! * 30 * 12).toStringAsFixed(2)}",
+                        "year"),
                   ]),
                   gpuChartSpecs([
                     MediumText("Electricity:"),
-                    MediumText(
-                      "-\$${_minerModel.electricityCost.toStringAsFixed(2)}/day",
-                      color: DocColors.red,
-                    ),
-                    MediumText(
-                      "-\$${(_minerModel.electricityCost * 30).toStringAsFixed(2)}/month",
-                      color: DocColors.red,
-                    ),
-                    MediumText(
-                      "-\$${(_minerModel.electricityCost * 30 * 12).toStringAsFixed(2)}/year",
-                      color: DocColors.red,
+                    redText(
+                        "-${_minerModel.electricityCost?.toStringAsFixed(2)}",
+                        "day"),
+                    redText(
+                        "-${(_minerModel.electricityCost! * 30).toStringAsFixed(2)}",
+                        "month"),
+                    redText(
+                      "-${(_minerModel.electricityCost! * 30 * 12).toStringAsFixed(2)}",
+                      "year",
                     ),
                   ]),
                   gpuChartSpecs([
                     MediumText("Profit:"),
-                    MediumText(
-                      "\$${_minerModel.profitability.toStringAsFixed(2)}/day",
-                      color: DocColors.green,
+                    greenText(
+                      "${_minerModel.profitability!.toStringAsFixed(2)}",
+                      "day",
                     ),
-                    MediumText(
-                      "\$${(_minerModel.profitability * 30).toStringAsFixed(2)}/month",
-                      color: DocColors.green,
+                    greenText(
+                      "${(_minerModel.profitability! * 30).toStringAsFixed(2)}",
+                      "month",
                     ),
-                    MediumText(
-                      "\$${(_minerModel.profitability * 30 * 12).toStringAsFixed(2)}/year",
-                      color: DocColors.green,
+                    greenText(
+                      "${(_minerModel.profitability! * 30 * 12).toStringAsFixed(2)}",
+                      "year",
                     ),
                   ], borderColor: DocColors.green),
                   VerticalSpacing(
@@ -313,6 +311,36 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget redText(String info, String day) {
+    return Row(
+      children: [
+        MediumText(
+          "\$$info",
+          color: DocColors.red,
+        ),
+        MediumText(
+          "/$day",
+          color: DocColors.gray,
+        ),
+      ],
+    );
+  }
+
+  Widget greenText(String info, String day) {
+    return Row(
+      children: [
+        MediumText(
+          "\$$info",
+          color: DocColors.green,
+        ),
+        MediumText(
+          "/$day",
+          color: DocColors.gray,
+        ),
+      ],
     );
   }
 
@@ -508,7 +536,7 @@ class _ProductPageDesktopView extends State<ProductPageDesktopView> {
               Row(
                 children: [
                   MediumText(
-                    "\$${_minerModel.profitability.toStringAsFixed(2)}",
+                    "\$${_minerModel.profitability!.toStringAsFixed(2)}",
                     color: DocColors.green,
                   ),
                   MediumText(

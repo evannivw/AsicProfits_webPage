@@ -61,11 +61,11 @@ class ProductPageController {
           var elementDate = a["date"] as Timestamp;
           var currentDate = b["date"] as Timestamp;
           var compare = elementDate.compareTo(currentDate);
-          print("compare: " + compare.toString());
+          //print("compare: " + compare.toString());
           return compare;
         },
       );
-      print(lista);
+      //print(lista);
       return lista;
     }
     return [];

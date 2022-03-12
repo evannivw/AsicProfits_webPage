@@ -54,7 +54,7 @@ class _TabPageView extends PageWidget<TabPageView> {
           tabPageViewController: controller,
         ),
         SizedBox(
-          height: 50,
+          height: 20,
         ),
         pageView()
       ],

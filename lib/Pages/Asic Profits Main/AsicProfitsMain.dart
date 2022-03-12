@@ -11,6 +11,7 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Bold_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/FontSizes.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Fuentes/Fonts.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Medium_Text.dart';
+import 'package:asic_miner_website/BasicWidgets/Texts/Regular_Text.dart';
 import 'package:asic_miner_website/BasicWidgets/Texts/Semi_BoldText.dart';
 import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Asic%20Profits%20Views/ProfitabilityWidget.dart';
 import 'package:asic_miner_website/Pages/Asic%20Profits%20Main/Controller/AsicProfitsMainController.dart';
@@ -67,11 +68,36 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
 
   Widget desktopView() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        container1(),
-        VerticalSpacing(height: 30),
-        container2(),
+        //container1(),
+        //VerticalSpacing(height: 30),
+        //container2(),
+        BoldText(
+          "Profitability",
+          fontSize: SceneController.isMobilView ? FontSizes(35) : FontSizes(40),
+        ),
+        VerticalSpacing(),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MediumText(
+                "In mining we trust.",
+                fontSize: FontSizes(16),
+              ),
+              MediumText(
+                "Live profit estimates and hosting. ",
+                fontSize: FontSizes(16),
+                color: DocColors.gray,
+              ),
+            ],
+          ),
+        ),
+        VerticalSpacing(),
         ProfitabilityWidget(
+          title: "Miners",
           minerList: controller.minersList,
           controller: profitabilityController,
           callback: (miner) async {
@@ -83,9 +109,12 @@ class _AsicProfitsMain extends State<AsicProfitsMain> {
             loadAll(loadDeal: false);
           },
         ),
-        WeeklyAsicWidget2(),
-        SceneController.isMobilView ? Container() : BuyingOpportunitiesWidget(),
-        SceneController.isMobilView ? Container() : BottomInfoWidget(),
+        VerticalSpacing(
+          height: 200,
+        )
+        //WeeklyAsicWidget2(),
+        //SceneController.isMobilView ? Container() : BuyingOpportunitiesWidget(),
+        //SceneController.isMobilView ? Container() : BottomInfoWidget(),
       ],
     );
   }

@@ -35,7 +35,7 @@ class ProfitabilityWidget extends StatefulWidget {
   ProfitabilityWidget({
     this.useViewMoreWidget = true,
     this.useElectricityCostInputs = true,
-    this.title = "Profitability",
+    this.title = "",
     this.minerList = const [],
     this.isAdmin = false,
     this.callback,
@@ -64,6 +64,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
   double _loadingMaxTime = 60;
   DateTime _lastUpdate = DateTime.now();
   Timer? _timer;
+  String currentCost = "0.12";
   @override
   void initState() {
     // TODO: implement initState
@@ -134,10 +135,11 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
       var hashrate = "${miner.algo}";
       var data =
           await MinerStatsApi().getProfitability(params: "algo=${miner.algo}");
+      miner.costPerKW = num.parse(currentCost);
       var calculo = profitability(data, miner);
       miner.profitability = calculo[0];
       miner.electricityCost = calculo[1];
-      miner.income = miner.profitability + miner.electricityCost;
+      miner.income = miner.profitability! + miner.electricityCost!;
       widget.minerList[i] = miner;
       print("current profit: \$" + miner.profitability.toString());
     }
@@ -204,12 +206,20 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
             padding: EdgeInsets.only(left: 10, right: 10, bottom: 5),
             child: BasicTextField(
               maxLength: 4,
+              onValueChange: (str) {
+                if (num.tryParse(str) != null) {
+                  currentCost = str;
+                }
+              },
             )),
         HorizontalSpacing(),
         MediumText("KWh"),
         HorizontalSpacing(),
         BasicButton(
-            onPressed: () {},
+            onPressed: () {
+              print("calculate profitabililty");
+              calculateProfitability();
+            },
             baseColor: DocColors.blue,
             width: 86,
             height: 36,
@@ -491,6 +501,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
                   decoration: BoxDecoration(
                       color: UIHelper().fromStringToColor(miner.color),
                       borderRadius: BorderRadius.circular(999)),
+                  child: ClipOval(child: Image.network(miner.logoURL)),
                 ),
                 HorizontalSpacing(),
                 ConstrainedBox(
@@ -592,9 +603,10 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
             child: Row(
               children: [
                 MediumText(
-                  '\$${miner.profitability.toStringAsFixed(2)}',
-                  color:
-                      miner.profitability < 0 ? DocColors.red : DocColors.green,
+                  '\$${miner.profitability?.toStringAsFixed(2)}',
+                  color: miner.profitability! < 0
+                      ? DocColors.red
+                      : DocColors.green,
                   fontSize: FontSizes.xs,
                 ),
                 MediumText(
@@ -611,7 +623,7 @@ class _ProfitabilityWidget extends State<ProfitabilityWidget> {
             width: 66,
             height: 29,
             onPressed: () {
-              WindowHelper().openInNewTab(miner.visitLink);
+              widget.callback?.call(miner);
             },
             text: "Visit",
             baseColor: DocColors(Color(0xFF39383D)),

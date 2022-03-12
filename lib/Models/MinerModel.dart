@@ -38,10 +38,11 @@ class MinerModel {
   String size;
   String efficiency;
   String imageURL;
+  String logoURL;
   String status;
-  num income = 0;
-  num profitability = 0;
-  num electricityCost = 0;
+  num? income = 0;
+  num? profitability = 0;
+  num? electricityCost = 0;
 
   List<MinableCoinModel> minableCoinList = [];
   List<WhereToBuyModel> whereToBuyList = [];
@@ -82,8 +83,8 @@ class MinerModel {
     this.miningPoolList = const [],
     this.date,
     this.imageURL = "",
+    this.logoURL = "",
     this.status = "",
-    this.profitability = 0,
   });
 
   /*//Convert class in to json 

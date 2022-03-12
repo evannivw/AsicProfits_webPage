@@ -36,6 +36,7 @@ class AddMinerPageController {
   TextEditingController visitLinkTEC = TextEditingController();
   String hashrateUnits = "H/s";
   String imageURL = "";
+  String logoURL = "";
   String id = "";
   String color = "";
   String status = "";
@@ -63,6 +64,7 @@ class AddMinerPageController {
     status = miner.status;
     hashrateUnits = miner.hashrateUnits;
     imageURL = miner.imageURL;
+    logoURL = miner.logoURL;
     color = miner.color.isEmpty ? "Yellow" : miner.color;
     if (miner.id.isEmpty) {
       id = FirestoreDatabase().getKey(FirestoreTable.miners);
@@ -144,6 +146,7 @@ class AddMinerPageController {
     _miner.whereToBuyList = currentWhereToBuy;
     _miner.visitLink = visitLinkTEC.text;
     _miner.imageURL = imageURL;
+    _miner.logoURL = logoURL;
     _miner.color = color;
     _miner.status = status;
     _miner.costPerKW = num.tryParse(costperkwTEC.text) ?? 0;

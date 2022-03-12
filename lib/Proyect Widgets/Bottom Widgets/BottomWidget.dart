@@ -13,43 +13,47 @@ import 'package:asic_miner_website/BasicWidgets/Texts/Regular_Text.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
 import 'package:flutter/material.dart';
 
-class BottomWidget extends StatelessWidget
-{
+class BottomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VerticalSpacing(height: 100,),
-        SceneController.viewType == ViewType.mobile ?
-        mobileView(context) : desktopView(context)
+        VerticalSpacing(
+          height: 100,
+        ),
+        SceneController.viewType == ViewType.mobile
+            ? mobileView(context)
+            : desktopView(context)
       ],
     );
   }
-  
-  Widget desktopView(context)
-  {
-    return 
-        CardWidget(
-          color: DocColors(Color(0x03FFFFFF)),
-          cornerRadius: 0,
-          height: 55,
-          margin: EdgeInsets.zero,
-          width: MediaQuery.of(context).size.width+300,
-          padding: EdgeInsets.only(left:20,right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+  Widget desktopView(context) {
+    return CardWidget(
+      color: DocColors(Color(0x03FFFFFF)),
+      cornerRadius: 0,
+      height: 55,
+      margin: EdgeInsets.zero,
+      width: MediaQuery.of(context).size.width + 300,
+      padding: EdgeInsets.only(left: 40, right: 40),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  RegularText(
-                    "© 2021 ASIC Profits: In mining we trust",
-                    color: DocColors.gray,
-                    fontSize: FontSizes.s,
-                  ),
-                  HorizontalSpacing(width: 20,),
-                ],
+              RegularText(
+                "© 2021 ASIC Profits: In mining we trust",
+                color: DocColors.gray,
+                fontSize: FontSizes.s,
               ),
-              Row(
+            ],
+          ),
+          RegularText(
+            "In Mining We Trust",
+            color: DocColors.gray,
+            fontSize: FontSizes.s,
+          ),
+          /*Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   
@@ -95,93 +99,90 @@ class BottomWidget extends StatelessWidget
 
                 ],
               ),
-            ],
-          ),
-        );
+              */
+        ],
+      ),
+    );
   }
 
-  Widget mobileView(context)
-  {
-    return 
-        CardWidget(
-          color: DocColors(Color(0x03FFFFFF)),
-          cornerRadius: 0,
-          height: 145,
-          margin: EdgeInsets.zero,
-          width: MediaQuery.of(context).size.width+300,
-          padding: EdgeInsets.only(left:20,right: 20,top:15,bottom: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget mobileView(context) {
+    return CardWidget(
+      color: DocColors(Color(0x03FFFFFF)),
+      cornerRadius: 0,
+      height: 145,
+      margin: EdgeInsets.zero,
+      width: MediaQuery.of(context).size.width + 300,
+      padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 20),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            //Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Instagram
-                    button(
-                      (){},
-                      SVGWidgets.instagramIcon,
-                    ),
-                    HorizontalSpacing(),
-          
-                    //Discord
-                    button(
-                      (){},
-                      SVGWidgets.discordIcon,
-                    ),
-                    HorizontalSpacing(),
-          
-                    //Linked in
-                    button(
-                      (){},
-                      SVGWidgets.linkedInIcon,
-                    ),
-                    HorizontalSpacing(),
-          
-                    //Telegram?
-                    button(
-                      (){},
-                      SVGWidgets.telegramIcon,
-                    ),
-                    HorizontalSpacing(),
-          
-                    //Twitter
-                    button(
-                      (){},
-                      SVGWidgets.twitterIcon,
-                    ),
-          
-                  ],
+                //Instagram
+                button(
+                  () {},
+                  SVGWidgets.instagramIcon,
                 ),
-                
-                VerticalSpacing(height: 20,),
+                HorizontalSpacing(),
 
-                //Text
-                CustomText(
-                  "© 2022 ASIC Profits, Inc\nIn mining we trust",
-                  color: DocColors.gray,
-                  fontSize: FontSizes.s,
-                  fontFamily: Fonts.regular,
-                  maxLines: 5,
-                  textAlign: TextAlign.center,
+                //Discord
+                button(
+                  () {},
+                  SVGWidgets.discordIcon,
+                ),
+                HorizontalSpacing(),
+
+                //Linked in
+                button(
+                  () {},
+                  SVGWidgets.linkedInIcon,
+                ),
+                HorizontalSpacing(),
+
+                //Telegram?
+                button(
+                  () {},
+                  SVGWidgets.telegramIcon,
+                ),
+                HorizontalSpacing(),
+
+                //Twitter
+                button(
+                  () {},
+                  SVGWidgets.twitterIcon,
                 ),
               ],
             ),
-          ),
-        );
+
+            VerticalSpacing(
+              height: 20,
+            ),
+
+            //Text
+            CustomText(
+              "© 2022 ASIC Profits, Inc\nIn mining we trust",
+              color: DocColors.gray,
+              fontSize: FontSizes.s,
+              fontFamily: Fonts.regular,
+              maxLines: 5,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  Widget button(Function() callback, Widget child,{double size = 36})
-  {
+  Widget button(Function() callback, Widget child, {double size = 36}) {
     return BasicButton(
-            onPressed: callback,
-            width: 36,
-            height: 36,
-            padding: EdgeInsets.all(10),
-            baseColor: DocColors(Color(0xFF38373C)),
-            child: child
-          );
+        onPressed: callback,
+        width: 36,
+        height: 36,
+        padding: EdgeInsets.all(10),
+        baseColor: DocColors(Color(0xFF38373C)),
+        child: child);
   }
-
 }

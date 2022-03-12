@@ -17,6 +17,7 @@ class AdminMainPageController {
       print(respuesta.error.toString());
       return;
     }
+    //print(respuesta.listValue);
     minersList =
         respuesta.listValue!.map((e) => MinerModel.fromJson(e)).toList();
 

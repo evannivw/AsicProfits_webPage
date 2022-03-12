@@ -87,17 +87,19 @@ class _AddMinerPage extends PageWidget<AddMinerPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        dropDownWidget("Color", controller.color, ["Yellow", "Red", "Blue"],
+        /*dropDownWidget("Color", controller.color, ["Yellow", "Red", "Blue"],
             (str) {
           controller.color = str;
-        }),
+        }),*/
+        logoInput("Logo company"),
         dropDownWidget("Status", controller.status, ["enable", "disable"],
             (str) {
           controller.status = str;
         }),
         inputWidget("Model", controller: controller.modelTEC),
         inputWidget("Manufacturer", controller: controller.manuTEC),
-        inputWidget("Description", controller: controller.descTEC),
+        inputWidget("Description",
+            controller: controller.descTEC, maxLength: 500),
         inputWidget("Release date", controller: controller.releaseTEC),
         inputWidget("Noise (db)", controller: controller.noiseTEC),
         inputWidget("Fan(s)", controller: controller.fansTEC),
@@ -416,6 +418,49 @@ class _AddMinerPage extends PageWidget<AddMinerPage> {
                     controller.imageURL != ""
                         ? "Image loaded"
                         : "Load miner image",
+                    color: DocColors.gray,
+                  ))),
+        ],
+      ),
+    );
+  }
+
+  Widget logoInput(String title) {
+    return Container(
+      margin: EdgeInsets.only(top: 10, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MediumText(
+            title,
+            color: DocColors.gray,
+          ),
+          VerticalSpacing(
+            height: 5,
+          ),
+          BasicButton(
+              onPressed: () {
+                ImagePicker.pick((p0) async {
+                  UIHelper().showLoading(context);
+                  var url = await FirebaseStorage().uploadImage(
+                      p0, "miners/" + controller.id, "logo_company");
+                  UIHelper().hideLoading(context);
+                  setState(() {
+                    controller.logoURL = url;
+                  });
+                });
+              },
+              width: 600,
+              height: 50,
+              cornerRadius: 5,
+              baseColor: DocColors(Color(0xFF333237).withOpacity(0.35)),
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: IgnorePointer(
+                  ignoring: true,
+                  child: MediumText(
+                    controller.logoURL != ""
+                        ? "Image loaded"
+                        : "Load company image",
                     color: DocColors.gray,
                   ))),
         ],

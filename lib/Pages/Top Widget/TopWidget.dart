@@ -81,7 +81,7 @@ class _TopWidget extends State<TopWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           logo(),
-          desktopButtons(),
+          //desktopButtons(),
           registro(),
         ],
       ),
@@ -94,6 +94,12 @@ class _TopWidget extends State<TopWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Image.asset(
+            "assets/images/coins_array.png",
+            width: 175,
+            height: 111,
+          ),
+          /*
           BasicButton(
             onPressed: () {},
             width: 36,
@@ -124,6 +130,7 @@ class _TopWidget extends State<TopWidget> {
               ],
             ),
           ),
+          */
         ],
       ),
     );
@@ -133,14 +140,14 @@ class _TopWidget extends State<TopWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        BasicButton(
+        /*BasicButton(
           onPressed: () {},
           width: 36,
           height: 36,
           baseColor: DocColors.gray_2,
           child: SVGWidgets.notificationsIcon,
         ),
-        HorizontalSpacing(),
+        HorizontalSpacing(),*/
         BasicButton(
           onPressed: () async {
             CustomDialog.makeDialog(
@@ -409,7 +416,7 @@ class _TopWidget extends State<TopWidget> {
       },
       child: Container(
           alignment: Alignment.centerLeft,
-          width: SceneController.isMobilView ? 149 : 175,
+          width: SceneController.isMobilView ? 149 : 180,
           child: SVGWidgets.asicIcon),
     );
   }
