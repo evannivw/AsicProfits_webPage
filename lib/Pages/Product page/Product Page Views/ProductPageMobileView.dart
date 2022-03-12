@@ -15,11 +15,13 @@ import 'package:asic_miner_website/Helpers/WindowHelper.dart';
 import 'package:asic_miner_website/Models/HostingFacilitiesModel.dart';
 import 'package:asic_miner_website/Models/MinableCoinModel.dart';
 import 'package:asic_miner_website/Models/MinerModel.dart';
+import 'package:asic_miner_website/Pages/Product%20page/Controller/ProductPageController.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Bottom%20Widgets/BotonInfoWidget.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Bottom%20Widgets/WeeklyAsicWidget2.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Buying%20Options/BuyingOpportunitiesWidget.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Chart/CustomChart.dart';
 import 'package:asic_miner_website/Proyect%20Widgets/Icon%20Widget/SVGWidgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'MiningPoolsCard.dart';
@@ -27,12 +29,13 @@ import 'WhereToBuyCard.dart';
 
 class ProductPageMobileView extends StatefulWidget {
   ProductPageMobileView(
-      {@required this.currentMiner,
+      {controller,
+      @required this.currentMiner,
       @required this.currentHostingFacilities = const []});
 
   MinerModel? currentMiner;
   List<HostingFacilitiesModel> currentHostingFacilities;
-
+  final ProductPageController controller = ProductPageController();
   @override
   State<StatefulWidget> createState() {
     return _ProductPageMobileView();
@@ -41,11 +44,29 @@ class ProductPageMobileView extends StatefulWidget {
 
 class _ProductPageMobileView extends State<ProductPageMobileView> {
   MinerModel _miner = MinerModel();
+  List<ChartData> listaChartData = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _miner = widget.currentMiner ?? MinerModel();
+    loadChartData();
+  }
+
+  void loadChartData() async {
+    if (widget.currentMiner != null) {
+      print("Loading chart data: " + widget.currentMiner!.id.toString());
+      var lista =
+          await widget.controller.loadChartData(widget.currentMiner!) as List;
+      listaChartData = lista
+          .map((e) => ChartData(
+              x: DateTime.fromMillisecondsSinceEpoch(
+                  (e["date"] as Timestamp).millisecondsSinceEpoch),
+              y: e["profitability"]))
+          .toList();
+      print("Length lista: " + listaChartData.length.toString());
+      if (mounted) setState(() {});
+    }
   }
 
   @override
@@ -94,7 +115,7 @@ class _ProductPageMobileView extends State<ProductPageMobileView> {
         VerticalSpacing(
           height: 60,
         ),
-        whereToBuyWidget(),
+        //whereToBuyWidget(),
       ],
     );
   }
@@ -337,8 +358,10 @@ class _ProductPageMobileView extends State<ProductPageMobileView> {
   //Chart of the data of GPU
   Widget chartWidget() {
     return Container(
-      height: 150,
-      child: CustomChart(),
+      height: 200,
+      child: CustomChart(
+        listaData: listaChartData,
+      ),
     );
   }
 

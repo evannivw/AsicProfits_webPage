@@ -109,7 +109,7 @@ class BottomWidget extends StatelessWidget {
     return CardWidget(
       color: DocColors(Color(0x03FFFFFF)),
       cornerRadius: 0,
-      height: 145,
+      height: 98,
       margin: EdgeInsets.zero,
       width: MediaQuery.of(context).size.width + 300,
       padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 20),
@@ -118,7 +118,7 @@ class BottomWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //Buttons
-            Row(
+            /* Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //Instagram
@@ -159,7 +159,7 @@ class BottomWidget extends StatelessWidget {
 
             VerticalSpacing(
               height: 20,
-            ),
+            ),*/
 
             //Text
             CustomText(

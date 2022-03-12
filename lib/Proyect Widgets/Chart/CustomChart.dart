@@ -31,6 +31,7 @@ class _CustomChart extends State<CustomChart> {
   Widget build(BuildContext context) {
     return LineChart(
       LineChartData(
+          maxY: 150,
           backgroundColor: DocColors.transparent.getValue(),
           borderData: FlBorderData(
               border:

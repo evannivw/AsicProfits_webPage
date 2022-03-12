@@ -56,7 +56,7 @@ class _MobileDataRow extends State<MobileDataRow> {
                   margin: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
                   child: MediumText(
-                    "\$NA",
+                    "\$${_miner.profitability?.toStringAsFixed(2)}",
                     color: DocColors.green,
                     fontSize: FontSizes.xs,
                   ),
@@ -127,6 +127,7 @@ class _MobileDataRow extends State<MobileDataRow> {
           decoration: BoxDecoration(
               color: UIHelper().fromStringToColor(_miner.color),
               borderRadius: BorderRadius.circular(999)),
+          child: ClipOval(child: Image.network(_miner.logoURL)),
         ),
         HorizontalSpacing(),
         MediumText(

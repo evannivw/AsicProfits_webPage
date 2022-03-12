@@ -54,12 +54,18 @@ class _SideView extends State<SideView> {
                     MainPage.Hosting
                   ]),
                   currentDivider(),
-                  expandedButton("Oportunities", [], routes: [MainPage.Main]),
-                  currentDivider(),
+                  //expandedButton("Oportunities", [], routes: [MainPage.Main]),
+                  //currentDivider(),
                   expandedButton(
-                    "Directories",
+                    "In stock",
                     ["Manufacteres", "Vendors"],
                     routes: [MainPage.Main, MainPage.Vendors],
+                  ),
+                  currentDivider(),
+                  expandedButton(
+                    "Partners",
+                    ["Hosting facilities"],
+                    routes: [MainPage.Hosting],
                   ),
                   currentDivider(),
                   expandedButton("Help", [

@@ -68,9 +68,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ASIC Profits',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: kDebugMode
           ? /*AdminMain()*/ const TabPageView(title: "ASIC Profits main")
           : url.toLowerCase().contains("admin")

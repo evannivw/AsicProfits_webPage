@@ -57,6 +57,7 @@ class _ProductPage extends State<ProductPage> {
   Widget build(BuildContext context) {
     return SceneController.isMobilView
         ? ProductPageMobileView(
+            controller: controller,
             currentMiner: _currentMiner,
             currentHostingFacilities: controller.hostingFacilitiesList,
           )
